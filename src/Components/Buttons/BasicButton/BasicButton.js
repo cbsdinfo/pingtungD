@@ -13,11 +13,11 @@ import BasicButtonSecondaryTheme from './Theme/SecondaryTheme'
 //#region 切換預設樣式
 const switchDefaultTheme = (themeName) => {
     switch (themeName) {
-        case "BasicButtonSecondaryTheme":
+        case "SecondaryTheme":
             return BasicButtonSecondaryTheme;
-        case "BasicButtonDisableTheme":
+        case "DisableTheme":
             return BasicButtonDisableTheme;
-        case "BasicButtonPrimaryTheme":
+        case "PrimaryTheme":
             return BasicButtonPrimaryTheme;
         default:
             return BasicButtonDefaultTheme;
@@ -31,13 +31,13 @@ export const BasicButtonBase = (props) => {
     return (
         <BasicContainer
             {...(!(props.disable) && props)}
-            baseDefaultTheme={"BasicContainerDefaultTheme"}
-            theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.baseDefaultTheme), "container"), ...(props.disable && BasicButtonDisableTheme.container) }}
+            baseDefaultTheme={"DefaultTheme"}
+            theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.disable ? "DisableTheme" : props.baseDefaultTheme), "container") }}
         >
             {props.icon}
             <Text
-                baseDefaultTheme={"TextDefaultTheme"}
-                theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.baseDefaultTheme), "text"), ...(props.disable && BasicButtonDisableTheme.text) }}
+                baseDefaultTheme={"DefaultTheme"}
+                theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.disable ? "DisableTheme" : props.baseDefaultTheme), "text") }}
             >
                 {props?.text ?? "按鈕"}
             </Text>

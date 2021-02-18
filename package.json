@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@microsoft/signalr": "^5.0.0",
     "@storybook/addon-actions": "^6.0.7",
     "@storybook/addon-knobs": "^6.0.7",
     "@storybook/addon-links": "^6.0.7",
@@ -13,15 +14,23 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.6.3",
     "css-in-js-utils": "^3.0.4",
+    "html-react-parser": "^1.1.2",
     "lodash": "^4.17.19",
+    "re-resizable": "^6.9.0",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
+    "react-beautiful-dnd": "^13.0.0",
     "react-code-blocks": "0.0.8",
+    "react-dnd": "^11.1.3",
+    "react-dnd-html5-backend": "^11.1.3",
     "react-dom": "^16.13.1",
+    "react-quill": "^1.3.5",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.3",
     "react-select": "^3.1.0",
+    "recharts": "^1.8.5",
     "rxjs": "^6.6.0",
     "simplebar-react": "^2.2.1",
     "storybook-addon-styled-component-theme": "^1.3.0",
@@ -29,11 +38,11 @@
     "unfetch": "^4.1.0"
   },
   "scripts": {
-    "start": "SET PORT=1234 && react-scripts start",
+    "start": "SET PORT=1803 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook"
+    "doc": "start-storybook"
   },
   "eslintConfig": {
     "extends": "react-app"

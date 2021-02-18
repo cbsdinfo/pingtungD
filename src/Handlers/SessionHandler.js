@@ -30,10 +30,34 @@ const removeItemSession = (itemName) => {
 const clearSession = () => {
     sessionStorage.clear();
 };
+
 //#region 用來刪除陣列內物件 "指定物件key的值" 等於 "指定value"
 const removeByKeyItemSession = (itemName, key, equalValue) => {
     //必為陣列
     setStringifyItemSession(itemName, (getParseItemSession(itemName) ?? []).filter(i => i?.[key] !== equalValue));
 }
+//#endregion
 
-export { setItemSession, setStringifyItemSession, getItemSession, getParseItemSession, removeItemSession, clearSession, removeByKeyItemSession };
+//#region 新增一個成員至陣列最後
+const pushItemSession = (itemName, item) => {
+    //必為陣列
+    let arr = getParseItemSession(itemName) ?? [];
+    arr.push(item)
+    setStringifyItemSession(itemName, arr);
+}
+//#endregion
+
+//#region 新增一個成員至陣列最後，且檢查無重複 "指定物件key的值" 等於 "指定value"
+const pushAndNotExsistItemSession = (itemName, key, equalValue, item) => {
+    //必為陣列
+    // 比較原陣列 與 移除重複項後的陣列 長度是否一致
+    let oriArr = (getParseItemSession(itemName) ?? []);
+    let arr = (getParseItemSession(itemName) ?? []).filter(i => i?.[key] !== equalValue);
+    if (oriArr.length === arr.length) {
+        arr.push(item)
+        setStringifyItemSession(itemName, arr);
+    }
+}
+//#endregion
+
+export { setItemSession, setStringifyItemSession, getItemSession, getParseItemSession, removeItemSession, clearSession, removeByKeyItemSession, pushItemSession, pushAndNotExsistItemSession };

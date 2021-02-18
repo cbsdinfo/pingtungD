@@ -62,7 +62,7 @@ export const BackstageLeftSideMenuBarBase = (props) => {
                             theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme("DefaultTheme"), "menuArea") }}
                         >
                             {/* 在這裡遍歷MenuItem */}
-
+                            {props.menuItem}
                         </BasicContainer>
                     </ScrollBar>
                 </BasicContainer>)
@@ -99,6 +99,7 @@ export const BackstageLeftSideMenuBarBase = (props) => {
                             theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme("BasicContainerDefaultTheme"), "collapseMenuArea") }}
                         >
                             {/* 在這裡遍歷MenuItem */}
+                            {props.menuItem}
                         </BasicContainer>
                     </ScrollBar>
                 </BasicContainer>)

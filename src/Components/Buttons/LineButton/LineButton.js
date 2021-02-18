@@ -15,11 +15,11 @@ import LineButtonSecondaryTheme from './Theme/SecondaryTheme'
 //#region 切換預設樣式
 const switchDefaultTheme = (themeName) => {
     switch (themeName) {
-        case "LineButtonSecondaryTheme":
+        case "SecondaryTheme":
             return LineButtonSecondaryTheme;
-        case "LineButtonDisableTheme":
+        case "DisableTheme":
             return LineButtonDisableTheme;
-        case "LineButtonPrimaryTheme":
+        case "PrimaryTheme":
             return LineButtonPrimaryTheme;
         default:
             return LineButtonDefaultTheme;
@@ -33,13 +33,13 @@ export const LineButtonBase = (props) => {
     return (
         <BasicContainer
             {...(!(props.disable) && props)}
-            baseDefaultTheme={"BasicContainerDefaultTheme"}
-            theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.baseDefaultTheme), "container"), ...(props.disable && LineButtonDisableTheme.container) }}
+            baseDefaultTheme={"DefaultTheme"}
+            theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.disable ? "DisableTheme" : props.baseDefaultTheme), "container") }}
         >
             {props.icon}
             <Text
-                baseDefaultTheme={"TextDefaultTheme"}
-                theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.baseDefaultTheme), "text"), ...(props.disable && LineButtonDisableTheme.text) }}
+                baseDefaultTheme={"DefaultTheme"}
+                theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.disable ? "DisableTheme" : props.baseDefaultTheme), "text") }}
             >
                 {props?.text ?? "按鈕"}
             </Text>

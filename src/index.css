@@ -5,6 +5,107 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+body .ant-tooltip-inner {
+  user-select: none;
+  cursor: default;
+}
+
+body .ant-picker-panel {
+  width: 100%
+}
+body .ant-picker-panel .ant-picker-year-panel {
+  width: 100%
+}
+
+body .ant-picker-panel .ant-picker-decade-panel {
+  width: 100%
+}
+
+body .ant-picker-panel .ant-picker-quarter-panel {
+  width: 100%
+}
+
+body .ant-picker-panel .ant-picker-month-panel {
+  width: 100%
+}
+
+body .ant-picker-panel .ant-picker-week-panel {
+  width: 100%
+}
+
+body .ant-picker-panel .ant-picker-date-panel {
+  width: 100%
+}
+
+body .ant-picker-panel .ant-picker-content {
+  width: 100%
+}
+
+body .ant-picker-panel .ant-picker-time-panel {
+  width: 100%
+}
+
+/* TimePicker 滾動條美化 */
+body .ant-picker-time-panel-column::-webkit-scrollbar {
+      width: 0.5em;
+      height: initial;
+}
+
+body .ant-picker-time-panel-column::-webkit-scrollbar-track {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin:0px 0.1rem 5px 0;
+}
+
+body .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background:rgba(0, 0, 0, 0.25);
+}
+
+body .ant-picker-time-panel-column:hover::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* body .ant-select-dropdown {
+  animation-duration: 0s !important;
+} */
+
+body .ant-select-item {
+  transition: none;
+  cursor: default;
+}
+
+body .rc-virtual-list-holder {
+  max-height: 320px !important;
+}
+
+body .ant-select-item-option-content {
+  color:rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: normal;
+  cursor: default;
+}
+
+body .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  color:rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: normal;
+  cursor: default;
+}
+
+body .ant-select-item.ant-select-item-option.ant-select-item-option-disabled > .ant-select-item-option-content {
+  color: rgba(0, 0, 0, 0.45) !important;
+  font-size: 14px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: normal;
 }
 
 code {

@@ -16,14 +16,14 @@ const size = {
                     desktopL : 2560px
     */
 
-    mobileS: '321px',
-    mobileM: '376px',
-    mobileL: '426px',
-    tablet: '769px',
-    laptop: '1025px',
-    laptopL: '1441px',
-    desktop: '1921px',
-    desktopL: '2561px',
+    mobileS: '320px',
+    mobileM: '375px',
+    mobileL: '425px',
+    tablet: '768px',
+    laptop: '1024px',
+    laptopL: '1440px',
+    desktop: '1920px',
+    desktopL: '2560px',
 
     /* 
        Date   : 2020-05-22 14:03:07

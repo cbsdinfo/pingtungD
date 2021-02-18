@@ -28,6 +28,7 @@
     varValue : 要設定的值 Any
     
     Example:
+    
 ```js
 //設定選擇的日期
 globalContextService.set("HomePage","SelectedDate","2020-11-11"); 
@@ -36,6 +37,7 @@ globalContextService.set("HomePage","SelectedDates",{Date1: "2010-10-02" });
 
 globalContextService.set("HomePage","SelectedDates", 100); 
 ```
+
 ### 2.2. get 函數
     提供取得文本值的函數。接受 0 個以上的字串參數，分別是 : 
     pageKey : 所在頁面名稱 String

@@ -66,10 +66,11 @@ export default {
             //#endregion
             //#region 覆寫樣式
             width: "100%",
-            height: "100rem",//"fit-content",//"calc( 100% - 4rem )",
+            //height: "100rem",//"fit-content",//"calc( 100% - 4rem )",
             left: 0,
             top: 0,
-            backgroundColor: "#ffffff"
+            backgroundColor: "#ffffff",
+            padding: "24px 0 0 0"
             //#endregion
         }
     },
@@ -92,6 +93,7 @@ export default {
             left: 0,
             top: 0,
             backgroundColor: "#ffffff",
+            zIndex: 2
             //boxShadow: "inset -1px 0px 0px #f0f0f0"
             //#endregion
         }
@@ -141,10 +143,11 @@ export default {
             //#endregion
             //#region 覆寫樣式
             width: "100%",
-            height: "100rem",//"fit-content",//"calc( 100% - 4rem )",
+            //height: "100rem",//"fit-content",//"calc( 100% - 4rem )",
             left: 0,
             top: 0,
-            backgroundColor: "#ffffff"
+            backgroundColor: "#ffffff",
+            padding: "24px 0 0 0"
             //#endregion
         }
     },

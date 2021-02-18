@@ -8,6 +8,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { globalContextService } from "./Store/GlobalContext";
+import Array from './Handlers/Prototype/Array'
 
 
 ReactDOM.render(

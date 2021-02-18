@@ -60,4 +60,9 @@ const addYear = (date, years) => {
 }
 //#endregion
 
-export { dateTrans, dateTransAndGetWeek, addDays, addMonths, addYear };
+//#region moment 取出字串
+const fmt = (momentObj, format = `YYYY-MM-DD HH:mm:ss`) => {
+    return momentObj.format(`${format}`);
+}
+//#endregion
+export { dateTrans, dateTransAndGetWeek, addDays, addMonths, addYear, fmt };
