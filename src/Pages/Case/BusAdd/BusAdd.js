@@ -132,7 +132,7 @@ export const BusAdd = (props) => {
             fetch(`${APIUrl}users/getclient?id=${urlParams.get("userId")}`, // users/getclient?id=6717458081668177920
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -206,7 +206,7 @@ export const BusAdd = (props) => {
         fetch(`${APIUrl}busUsers/add`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

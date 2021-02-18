@@ -54,7 +54,7 @@ export const Record = (props) => {
             fetch(`${APIUrl}Users/GetUnPermissionUserType?userId=${getParseItemLocalStorage("UserID")}&UID=${getParseItemLocalStorage("UserAccount")}`, //Users/GetUnPermissionUserType
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -165,7 +165,7 @@ export const Record = (props) => {
                 await fetch(`${APIUrl}OrderOf${item}/load?page=1&limit=99999&StartDate=${startData}&EndDate=${endDate}`, //orderOfSelfPayUsers/load?page=1&limit=99999&StartDate=2021-01-21%2000:00:00&EndDate=2021-02-28%2023:59:59
                     {
                         headers: {
-                            "X-Token": getParseItemLocalStorage("CAuth"),
+                            "X-Token": getParseItemLocalStorage("DAuth"),
                             "content-type": "application/json; charset=utf-8",
                         },
                         method: "GET"

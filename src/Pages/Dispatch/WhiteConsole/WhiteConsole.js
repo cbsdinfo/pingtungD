@@ -160,7 +160,7 @@ export const WhiteConsole = (props) => {
             fetch(`${APIUrl}orderOfSelfPayUsers/loadNoOrg`, // users/getclient?id=6717458081668177920
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -237,7 +237,7 @@ export const WhiteConsole = (props) => {
             fetch(`${APIUrl}despatchOfSelfPayUsers/load?page=1&limit=99999`, // users/getclient?id=6717458081668177920
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -328,7 +328,7 @@ export const WhiteConsole = (props) => {
             fetch(`${APIUrl}driverInfos/load?limit=99999&page=1`, // 
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -392,7 +392,7 @@ export const WhiteConsole = (props) => {
             fetch(`${APIUrl}cars/load?limit=99999&page=1`, // 
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -470,7 +470,7 @@ export const WhiteConsole = (props) => {
                 // 注意!! 目前尚未提供查詢管理單位API，可能因為權限而取不到值，所以目前這裡一律寫死A單位 orgId，直到未來提供新的查詢API
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -535,7 +535,7 @@ export const WhiteConsole = (props) => {
         fetch(`${APIUrl}orderOfSelfPayUsers/updateOrgId`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -593,7 +593,7 @@ export const WhiteConsole = (props) => {
         fetch(`${APIUrl}despatchOfSelfPayUsers/addOrUpdate`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -653,7 +653,7 @@ export const WhiteConsole = (props) => {
         fetch(`${APIUrl}DespatchOfSelfPayUsers/CancelDespatch`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -713,7 +713,7 @@ export const WhiteConsole = (props) => {
         fetch(`${APIUrl}orderOfSelfPayUsers/cancelOrderReq`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -773,7 +773,7 @@ export const WhiteConsole = (props) => {
         fetch(`${APIUrl}OrderOfSelfPayUsers/Update`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -836,7 +836,7 @@ export const WhiteConsole = (props) => {
         fetch(`${APIUrl}orderOfSelfPayUsers/delete`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

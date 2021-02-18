@@ -63,7 +63,7 @@ export const RecordDetail = (props) => {
             fetch(`${APIUrl}OrderOf${caseSwitch(urlParams.get("case"))}/Get?id=${urlParams.get("CaseId")}`, ///api/OrderOfCaseUsers/Get?id=
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"

@@ -83,7 +83,7 @@ export const DriversEdit = (props) => {
             fetch(`${APIUrl}categorys/load?page=1&limit=99999&TypeId=SYS_DRIVER_LICENSE`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -147,7 +147,7 @@ export const DriversEdit = (props) => {
             fetch(`${APIUrl}categorys/load?page=1&limit=99999&TypeId=SYS_DRIVER_INSURANCE`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_INSURANCE
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -211,7 +211,7 @@ export const DriversEdit = (props) => {
             fetch(`${APIUrl}check/getorgs`, // check/getorgs?token=5262a5b3
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -288,7 +288,7 @@ export const DriversEdit = (props) => {
             fetch(`${APIUrl}driverInfos/get?id=${urlParams.get("driversId")}`, // driverInfos/get?id=6725152393893814273
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -382,7 +382,7 @@ export const DriversEdit = (props) => {
         fetch(`${APIUrl}driverInfos/update`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

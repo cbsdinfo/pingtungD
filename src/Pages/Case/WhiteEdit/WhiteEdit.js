@@ -132,7 +132,7 @@ export const WhiteEdit = (props) => {
             fetch(`${APIUrl}users/getclient?id=${urlParams.get("userId")}`, // users/getclient?id=6717458081668177920
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -210,7 +210,7 @@ export const WhiteEdit = (props) => {
             fetch(`${APIUrl}selfpayusers/get?id=${urlParams.get("caseUserId")}`, // selfpayusers/get?id=6718179154760081408  (以白牌 CaseUser table ID)
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -284,7 +284,7 @@ export const WhiteEdit = (props) => {
         fetch(`${APIUrl}selfpayusers/update`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

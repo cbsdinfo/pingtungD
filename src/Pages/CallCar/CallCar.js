@@ -81,7 +81,7 @@ export const CallCar = (props) => {
             fetch(`${APIUrl}Users/GetClient?id=${getParseItemLocalStorage("UserID")}`, //users/get
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -145,7 +145,7 @@ export const CallCar = (props) => {
             fetch(`${APIUrl}Users/GetUnPermissionUserType?userId=${getParseItemLocalStorage("UserID")}&UID=${getParseItemLocalStorage("UserAccount")}`, //Users/GetUnPermissionUserType
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -164,7 +164,7 @@ export const CallCar = (props) => {
                         fetch(`${APIUrl}orgs/LoadOrgB`, // orgs/LoadOrgB
                             {
                                 headers: {
-                                    "X-Token": getParseItemLocalStorage("CAuth"),
+                                    "X-Token": getParseItemLocalStorage("DAuth"),
                                     "content-type": "application/json; charset=utf-8",
                                 },
                                 method: "GET"
@@ -245,7 +245,7 @@ export const CallCar = (props) => {
                                 await fetch(`${APIUrl}${item.userType}s/Get?id=${item.caseId}`, //CaseUsers/Get
                                     {
                                         headers: {
-                                            "X-Token": getParseItemLocalStorage("CAuth"),
+                                            "X-Token": getParseItemLocalStorage("DAuth"),
                                             "content-type": "application/json; charset=utf-8",
                                         },
                                         method: "GET"
@@ -400,7 +400,7 @@ export const CallCar = (props) => {
             fetch(`${APIUrl}categorys/load?page=1&limit=99999&TypeId=SYS_CAR`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -475,7 +475,7 @@ export const CallCar = (props) => {
         fetch(`${APIUrl}CaseUserDiscounts/GetDiscountData?caseuserId=${caseId}`, //CaseUserDiscounts/GetDiscountData?caseuserId=6746156401844330496
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "GET"
@@ -552,7 +552,7 @@ export const CallCar = (props) => {
             fetch(`${APIUrl}busStationLiness/load?page=1&limit=99999`, // busStationLiness/load?page=1&limit=99999              
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -617,7 +617,7 @@ export const CallCar = (props) => {
             fetch(`${APIUrl}busStationss/load?page=1&limit=99999`, // busStationss/load?page=1&limit=99999          
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -682,7 +682,7 @@ export const CallCar = (props) => {
             fetch(`${APIUrl}busStationLiness/get?id=${stationId}`, // busStationLiness/get?id=6725790941894451200       
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -742,7 +742,7 @@ export const CallCar = (props) => {
         fetch(`${APIUrl}Maps/Route`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

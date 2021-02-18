@@ -83,7 +83,7 @@ export const UserInfo = (props) => {
             fetch(`${APIUrl}Users/GetClient?id=${getParseItemLocalStorage("UserID")}`, //users/get
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -147,7 +147,7 @@ export const UserInfo = (props) => {
             fetch(`${APIUrl}Users/GetUnPermissionUserType?userId=${getParseItemLocalStorage("UserID")}&UID=${getParseItemLocalStorage("UserAccount")}`, //Users/GetUnPermissionUserType
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -184,7 +184,7 @@ export const UserInfo = (props) => {
                                 await fetch(`${APIUrl}${item.userType}s/Get?id=${item.caseId}`, //CaseUsers/Get
                                     {
                                         headers: {
-                                            "X-Token": getParseItemLocalStorage("CAuth"),
+                                            "X-Token": getParseItemLocalStorage("DAuth"),
                                             "content-type": "application/json; charset=utf-8",
                                         },
                                         method: "GET"
@@ -326,7 +326,7 @@ export const UserInfo = (props) => {
         fetch(`${APIUrl}CaseUserDiscounts/GetDiscountData?caseuserId=${caseId}`, //CaseUserDiscounts/GetDiscountData?caseuserId=6746156401844330496
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "GET"
@@ -400,7 +400,7 @@ export const UserInfo = (props) => {
         fetch(`${APIUrl}Users/ChangePassword`, ///api/Users/ChangePassword
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -485,7 +485,7 @@ export const UserInfo = (props) => {
         fetch(`${APIUrl}Maps/Geocode?_addr=${addr}`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "Get",
@@ -557,7 +557,7 @@ export const UserInfo = (props) => {
         fetch(`${APIUrl}selfpayusers/add`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

@@ -87,7 +87,7 @@ export const CarsEdit = (props) => {
             fetch(`${APIUrl}driverInfos/load?page=1&limit=99999`, //driverInfos/load?page=1&limit=999
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -152,7 +152,7 @@ export const CarsEdit = (props) => {
             fetch(`${APIUrl}categorys/load?page=1&limit=99999&TypeId=SYS_CAR`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -216,7 +216,7 @@ export const CarsEdit = (props) => {
             fetch(`${APIUrl}categorys/load?page=1&limit=99999&TypeId=SYS_CAR_DEVICE`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -280,7 +280,7 @@ export const CarsEdit = (props) => {
             fetch(`${APIUrl}categorys/load?page=1&limit=99999&TypeId=SYS_CAR_INSURANCE`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -345,7 +345,7 @@ export const CarsEdit = (props) => {
             fetch(`${APIUrl}categorys/load?page=1&limit=99999&TypeId=SYS_CAR_LICENSE`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -409,7 +409,7 @@ export const CarsEdit = (props) => {
             fetch(`${APIUrl}check/getorgs`, // check/getorgs?token=5262a5b3
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -486,7 +486,7 @@ export const CarsEdit = (props) => {
             fetch(`${APIUrl}cars/get?id=${urlParams.get("carsId")}`, // driverInfos/get?id=6725152393893814273
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -585,7 +585,7 @@ export const CarsEdit = (props) => {
         fetch(`${APIUrl}cars/update`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

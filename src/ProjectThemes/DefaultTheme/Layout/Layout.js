@@ -539,14 +539,14 @@ export default {
     },
     //#endregion
 
-    //#region 側邊欄按鈕容器
-    titleBarLeftSIdeBtnContainerMobileM: {
+    //#region 登入容器
+    titleBarLoginContainerMobileM: {
         basic: (style, props) => ({
             ...style,
             height: "56px",
-            width: "56px",
-            padding: "16px",
-            backgroundColor: "#00628F"
+            width: "64px",
+            padding: "12px 0 0 0 ",
+            backgroundColor: "#fff"
         })
     },
     //#endregion
@@ -557,20 +557,34 @@ export default {
             ...style,
             height: "56px",
             width: "calc( 100% - 56px - 64px )",
-            backgroundColor: "#00628F",
-            textAlign: "center"
+            backgroundColor: "#fff",
+            textAlign: "center",
         })
     },
     //#endregion
 
-    //#region 登入容器
-    titleBarLoginContainerMobileM: {
+    //#region Logo容器文字
+    titleBarLogoContainerTextMobileM: {
+        basic: (style, props) => ({
+            ...style,
+            textAlign: "center",
+            color: "rgba(0,57,121,1)",
+            fontWeight: 700,
+            fontSize: "1rem",
+            padding: "8px 0 0 0",
+            height: "100%"
+        })
+    },
+    //#endregion
+
+    //#region 側邊欄按鈕容器
+    titleBarLeftSIdeBtnContainerMobileM: {
         basic: (style, props) => ({
             ...style,
             height: "56px",
-            width: "64px",
-            padding: "12px 0 0 0 ",
-            backgroundColor: "#00628F"
+            width: "56px",
+            padding: "16px",
+            backgroundColor: "#fff"
         })
     },
     //#endregion

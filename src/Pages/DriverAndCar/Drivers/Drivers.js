@@ -146,7 +146,7 @@ export const Drivers = (props) => {
             fetch(`${APIUrl}driverInfos/load?page=1&limit=99999`, //driverInfos/load?page=1&limit=99999
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -221,7 +221,7 @@ export const Drivers = (props) => {
         fetch(`${APIUrl}driverInfos/delete`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

@@ -2,6 +2,7 @@ export { MobileMPlacard } from './MobileMPlacard/MobileMPlacard';
 export { TabletPlacard } from './TabletPlacard/TabletPlacard';
 export { LaptopPlacard } from './LaptopPlacard/LaptopPlacard';
 export { Layout } from './Layout/Layout'
+export { TitleBar } from './TitleBar/TitleBar'
 export { MainPageContainer } from './MainPageContainer/MainPageContainer'
 export { MainPageTitleBar } from './MainPageTitleBar/MainPageTitleBar'
 export { MainPageSubTitleBar } from './MainPageSubTitleBar/MainPageSubTitleBar'

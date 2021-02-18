@@ -64,7 +64,7 @@ export const WhiteOrder = (props) => {
             fetch(`${APIUrl}orderOfSelfPayUsers/load?page=1&limit=99999`, // orderOfSelfPayUsers/load?page=1&limit=99999
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"

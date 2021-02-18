@@ -113,7 +113,7 @@ export const RoleManager = (props) => {
             await fetch(`${APIUrl}roles/load?page=${page}&limit=${limit}&key=${key}`,
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -189,7 +189,7 @@ export const RoleManager = (props) => {
             await fetch(`${APIUrl}users/loadByRole?page=${page}&limit=${limit}&roleId=${role?.id}`,  //    
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                 })
@@ -270,7 +270,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}roles/add`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -341,7 +341,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}roles/update`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -412,7 +412,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}roles/Delete`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -471,7 +471,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}check/GetOrgsTree`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "GET"
@@ -541,7 +541,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}users/load?page=${page}&limit=${limit}&orgId=${orgId}&key=${key}`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "GET"
@@ -618,7 +618,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}AccessObjs/AssignRoleUsers`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -696,7 +696,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}check/getmodules`, // api/check/getmodules?token=60fd8ba0
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
             })
@@ -784,7 +784,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}modules/loadforrole?firstId=${firstId}`, // modules/loadforrole?firstId=bd094755-3d3d-4cab-ac6e-e6169ca35637
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
             })
@@ -853,7 +853,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}modules/loadmenus?moduleId=`, // modules/loadmenus?moduleId=
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
             })
@@ -921,7 +921,7 @@ export const RoleManager = (props) => {
         fetch(`${APIUrl}modules/loadmenusforrole?moduleId=&firstId=${firstId}`, // modules/loadmenusforrole?moduleId=&firstId=0a7ebd0c-78d6-4fbc-8fbe-6fc25c3a932d
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
             })
@@ -990,7 +990,7 @@ export const RoleManager = (props) => {
         await fetch(`${APIUrl}accessobjs/unassign`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -1050,7 +1050,7 @@ export const RoleManager = (props) => {
         await fetch(`${APIUrl}accessobjs/unassign`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -1120,7 +1120,7 @@ export const RoleManager = (props) => {
         await fetch(`${APIUrl}accessobjs/assign`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -1180,7 +1180,7 @@ export const RoleManager = (props) => {
         await fetch(`${APIUrl}accessobjs/assign`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

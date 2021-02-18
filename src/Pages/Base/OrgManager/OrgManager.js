@@ -110,7 +110,7 @@ export const OrgManager = (props) => {
             fetch(`${APIUrl}check/GetOrgsTree`,
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -188,7 +188,7 @@ export const OrgManager = (props) => {
             fetch(`${APIUrl}check/GetSubOrgs?orgId=${orgId}&limit=${limit}&page=${page}`,
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -282,7 +282,7 @@ export const OrgManager = (props) => {
         fetch(`${APIUrl}orgs/update`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -354,7 +354,7 @@ export const OrgManager = (props) => {
         fetch(`${APIUrl}orgs/add`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -426,7 +426,7 @@ export const OrgManager = (props) => {
         fetch(`${APIUrl}orgs/Delete`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -484,7 +484,7 @@ export const OrgManager = (props) => {
         fetch(`${APIUrl}Users/LoadByOrg?orgId=${orgId}&limit=${limit}&page=${page}`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
             })
@@ -552,7 +552,7 @@ export const OrgManager = (props) => {
         fetch(`${APIUrl}users/load?page=${page}&limit=${limit}&key=${key}&orgId=${orgId}`,     // users/load?page=1&limit=15&orgId=&key=
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
             })
@@ -620,7 +620,7 @@ export const OrgManager = (props) => {
         fetch(`${APIUrl}AccessObjs/AssignOrgUsers`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

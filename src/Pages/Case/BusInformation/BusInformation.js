@@ -138,7 +138,7 @@ export const BusInformation = (props) => {
             fetch(`${APIUrl}users/getclient?id=${urlParams.get("userId")}`, // users/getclient?id=6717458081668177920
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -217,7 +217,7 @@ export const BusInformation = (props) => {
             fetch(`${APIUrl}busUsers/get?id=${urlParams.get("caseUserId")}`, // api/busUsers/get?id=6724691099893932033  (以幸福巴士 CaseUser table ID)
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"

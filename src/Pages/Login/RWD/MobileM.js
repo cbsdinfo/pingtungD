@@ -8,12 +8,16 @@ import { ReactComponent as Admin } from '../../../Assets/img/Admin.svg'
 import { ReactComponent as Lock } from '../../../Assets/img/Lock.svg'
 import { ReactComponent as Phone } from '../../../Assets/img/Phone.svg'
 import { ReactComponent as AuthCode } from '../../../Assets/img/AuthCode.svg'
+import { ReactComponent as LoginLogoNewTaipei } from '../../../Assets/img/LoginLogoNewTaipei.svg'
+import { ReactComponent as LoginSplitLine } from '../../../Assets/img/LoginSplitLine.svg'
+import { ReactComponent as LoginInfoIcon } from '../../../Assets/img/LoginInfoIcon.svg'
 import { BasicContainer, Container, ScrollBar, Radio, SubContainer, Text, FormContainer, FormRow, NewSelector, TextInput, BasicButton, Checkbox, CheckboxItem, modalsService, InfoModal, globalContextService, DateTimePicker, RadioItem } from '../../../Components';
 import { MapGoogleInput, MobileMPlacard } from '../../../ProjectComponent';
 import moment from 'moment';
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { cityAndCountiesLite, Counties } from '../../../Mappings/Mappings';
 import { isEqual, isNil } from 'lodash';
+import LoginBg from '../../../Assets/img/LoginBg.png'
 
 //#region 倒數10秒
 const TimeCounter = (props) => {
@@ -71,7 +75,8 @@ const MobileMBase = (props) => {
                         theme={mobileM.aboveContainer}
                     >
                         {/* 背景自適應 */}
-                        <MobileMbg style={mobileM.bgImage} />
+                        {/* <MobileMbg style={mobileM.bgImage} /> */}
+                        <img src={LoginBg} style={{ width: "100%" }} alt="fireSpot" />
 
                         {/* 登入框容器 */}
                         <Container
@@ -90,6 +95,30 @@ const MobileMBase = (props) => {
                                         baseDefaultTheme={"DefaultTheme"}
                                         theme={mobileM.loginFormContainer}
                                     >
+                                        {/* 登入表單半圓容器 */}
+                                        <Container
+                                            baseDefaultTheme={"DefaultTheme"}
+                                            theme={mobileM.loginFormCricleContainer}
+                                        >
+                                            {/* 登入表單半圓 */}
+                                            <BasicContainer
+                                                baseDefaultTheme={"DefaultTheme"}
+                                                theme={mobileM.loginFormCricle}
+                                            />
+                                            {/* 新北圖標 */}
+                                            <LoginLogoNewTaipei style={mobileM.loginFormCricleLogo} />
+
+                                        </Container>
+
+                                        {/* Logo標題文字 */}
+                                        <Text
+                                            theme={mobileM.titleBarLogoContainerTextMobileM}
+                                        >
+                                            屏東市政府
+                                            <br />
+                                            長照交通接送統一預約服務及管理系統
+                                        </Text>
+
                                         {/* 登入表單標題 */}
                                         <Text
                                             baseDefaultTheme={"DefaultTheme"}
@@ -98,12 +127,12 @@ const MobileMBase = (props) => {
                                             登入
                                         </Text>
                                         {/* 登入表單次標題 */}
-                                        <Text
+                                        {/* <Text
                                             baseDefaultTheme={"DefaultTheme"}
                                             theme={mobileM.loginFormSubTitle}
                                         >
                                             為了保障您的帳號安全，建議您最少於三個月變更一次密碼。
-                                        </Text>
+                                        </Text> */}
                                         {/* 登入表單組件 */}
                                         <FormContainer
                                             baseDefaultTheme={"DefaultTheme"}
@@ -117,14 +146,15 @@ const MobileMBase = (props) => {
                                             <FormRow baseDefaultTheme={"DefaultTheme"}>
                                                 {/* 帳號 Account */}
                                                 <TextInput
+                                                    topLabel={<>User</>}
                                                     baseDefaultTheme={"DefaultTheme"}
                                                     type="text"
                                                     placeholder={"請輸入您的帳號"}
-                                                    leftIcon={
-                                                        <Admin
-                                                            style={mobileM.loginFormAccountLeftIcon}
-                                                        />
-                                                    }
+                                                    // leftIcon={
+                                                    //     <Admin
+                                                    //         style={mobileM.loginFormAccountLeftIcon}
+                                                    //     />
+                                                    // }
                                                     theme={mobileM.loginFormAccount}
                                                     value={globalContextService.get("LoginPage", "Account") ?? ""}
                                                     onChange={(e, value, onInitial) => {
@@ -135,15 +165,16 @@ const MobileMBase = (props) => {
                                             <FormRow baseDefaultTheme={"DefaultTheme"}>
                                                 {/* 密碼 Password */}
                                                 <TextInput
+                                                    topLabel={<>Password</>}
                                                     baseDefaultTheme={"DefaultTheme"}
                                                     type="password"
                                                     openEye
                                                     placeholder={"請輸入您的密碼"}
-                                                    leftIcon={
-                                                        <Lock
-                                                            style={mobileM.loginFormPasswordLeftIcon}
-                                                        />
-                                                    }
+                                                    // leftIcon={
+                                                    //     <Lock
+                                                    //         style={mobileM.loginFormPasswordLeftIcon}
+                                                    //     />
+                                                    // }
                                                     theme={mobileM.loginFormPassword}
                                                     value={globalContextService.get("LoginPage", "Password") ?? ""}
                                                     onChange={(e, value, onInitial) => {
@@ -151,6 +182,57 @@ const MobileMBase = (props) => {
                                                     }}
                                                 />
                                             </FormRow>
+
+                                            {/* 忘記密碼連結 */}
+                                            <FormRow baseDefaultTheme={"DefaultTheme"}>
+                                                <SubContainer
+                                                    baseDefaultTheme={"DefaultTheme"}
+                                                    theme={mobileM.loginFormForgetPassContainer}
+                                                >
+                                                    <BasicContainer
+                                                        baseDefaultTheme={"DefaultTheme"}
+                                                        theme={mobileM.loginFormForgetPassSubContainer}
+                                                    >
+                                                        <Text
+                                                            baseDefaultTheme={"DefaultTheme"}
+                                                            theme={mobileM.loginFormForgetPassText}
+                                                            onClick={() => { props.setWhichForm("SingUp") }}
+                                                        >
+                                                            註冊
+                                                        </Text>
+
+                                                        <BasicContainer
+                                                            theme={mobileM.loginFormForgetPassTextIconsContainer}
+                                                        >
+                                                            <LoginSplitLine />
+                                                            <LoginInfoIcon style={{ position: "relative", left: "5px" }} />
+                                                        </BasicContainer>
+                                                        <Text
+                                                            baseDefaultTheme={"DefaultTheme"}
+                                                            theme={mobileM.loginFormForgetPassText}
+                                                            onClick={() => { props.setWhichForm("ForgetPass") }}
+                                                        >
+                                                            忘記密碼？
+                                                        </Text>
+
+                                                        {/* <Text
+                                                            theme={mobileM.loginFormNoteText}
+                                                        >
+                                                            <BasicContainer theme={mobileM.loginFormBlueIcon} />
+                                                            此註冊頁僅提供預約共享車隊叫車服務，如需預約長照相關業務，請撥打 1966 服務專線，將會有專員提供服務。
+                                                        </Text>
+
+                                                        <Text
+                                                            theme={mobileM.loginFormNoteText}
+                                                        >
+                                                            <BasicContainer theme={mobileM.loginFormBlueIcon} />
+                                                            若已有長照資格，需預約共享車隊服務，請在登入後選擇用戶專區進行服務開通。
+                                                        </Text> */}
+
+                                                    </BasicContainer>
+                                                </SubContainer>
+                                            </FormRow>
+
                                             <FormRow baseDefaultTheme={"DefaultTheme"}>
                                                 {/* 登入按鈕 */}
                                                 <SubContainer
@@ -199,49 +281,6 @@ const MobileMBase = (props) => {
                                                             // })
                                                         }}
                                                     />
-                                                </SubContainer>
-                                            </FormRow>
-                                            {/* 忘記密碼連結 */}
-                                            <FormRow baseDefaultTheme={"DefaultTheme"}>
-                                                <SubContainer
-                                                    baseDefaultTheme={"DefaultTheme"}
-                                                    theme={mobileM.loginFormForgetPassContainer}
-                                                >
-                                                    <BasicContainer
-                                                        baseDefaultTheme={"DefaultTheme"}
-                                                        theme={mobileM.loginFormForgetPassSubContainer}
-                                                    >
-                                                        <Text
-                                                            baseDefaultTheme={"DefaultTheme"}
-                                                            theme={mobileM.loginFormForgetPassText}
-                                                            onClick={() => { props.setWhichForm("SingUp") }}
-                                                        >
-                                                            註冊
-                                                        </Text>
-
-                                                        <Text
-                                                            baseDefaultTheme={"DefaultTheme"}
-                                                            theme={mobileM.loginFormForgetPassText}
-                                                            onClick={() => { props.setWhichForm("ForgetPass") }}
-                                                        >
-                                                            忘記密碼？
-                                                        </Text>
-
-                                                        <Text
-                                                            theme={mobileM.loginFormNoteText}
-                                                        >
-                                                            <BasicContainer theme={mobileM.loginFormBlueIcon} />
-                                                            此註冊頁僅提供預約共享車隊叫車服務，如需預約長照相關業務，請撥打 1966 服務專線，將會有專員提供服務。
-                                                        </Text>
-
-                                                        <Text
-                                                            theme={mobileM.loginFormNoteText}
-                                                        >
-                                                            <BasicContainer theme={mobileM.loginFormBlueIcon} />
-                                                            若已有長照資格，需預約共享車隊服務，請在登入後選擇用戶專區進行服務開通。
-                                                        </Text>
-
-                                                    </BasicContainer>
                                                 </SubContainer>
                                             </FormRow>
                                         </FormContainer>

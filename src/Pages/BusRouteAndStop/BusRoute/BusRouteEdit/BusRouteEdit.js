@@ -84,7 +84,7 @@ export const BusRouteEdit = (props) => {
             fetch(`${APIUrl}busStationss/load?page=1&limit=99999`, //busStationss/load?page=1&limit=999
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -161,7 +161,7 @@ export const BusRouteEdit = (props) => {
             fetch(`${APIUrl}busStationLiness/get?id=${urlParams.get("id")}`, // busStationLiness/get?id=6726142567196958721
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -222,7 +222,7 @@ export const BusRouteEdit = (props) => {
         fetch(`${APIUrl}busStationLiness/update`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

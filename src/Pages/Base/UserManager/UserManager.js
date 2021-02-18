@@ -101,7 +101,7 @@ export const UserManager = (props) => {
             fetch(`${APIUrl}check/GetOrgsTree`,
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -179,7 +179,7 @@ export const UserManager = (props) => {
             fetch(`${APIUrl}users/load?page=${page}&limit=${limit}&orgId=${orgId}&key=${key}`,
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -260,7 +260,7 @@ export const UserManager = (props) => {
         fetch(`${APIUrl}users/addorupdate`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -332,7 +332,7 @@ export const UserManager = (props) => {
         fetch(`${APIUrl}users/addorupdate`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -404,7 +404,7 @@ export const UserManager = (props) => {
         fetch(`${APIUrl}users/delete`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -471,7 +471,7 @@ export const UserManager = (props) => {
         fetch(`${APIUrl}roles/loadforuser?userId=${userId}`, // &limit=${limit}&page=${page}
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
             })
@@ -539,7 +539,7 @@ export const UserManager = (props) => {
         fetch(`${APIUrl}roles/load`, // users/load?page=${page}&limit=${limit}&key=${key}&orgId=${orgId}`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
             })
@@ -607,7 +607,7 @@ export const UserManager = (props) => {
         await fetch(`${APIUrl}accessobjs/unassign`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -667,7 +667,7 @@ export const UserManager = (props) => {
         await fetch(`${APIUrl}accessobjs/assign`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

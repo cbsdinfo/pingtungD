@@ -3,8 +3,10 @@ export default {
     outContainer: {
         basic: (style, props) => ({
             ...style,
-            height: `calc( ${props.height}px - 56px - 48px )`,
-            top: "56px",
+            // height: `calc( ${props.height}px - 56px - 48px )`,
+            height: `calc( ${props.height}px )`,
+            // top: "56px",
+            backgroundColor: "#3c4856"
         })
     },
     //#endregion
@@ -26,7 +28,8 @@ export default {
             ...style,
             // height: "477px"
             minHeight: props?.bigHeight ? "940px" : "630px",
-            height: `calc( ${props.height}px - 56px - 48px )`,
+            // height: `calc( ${props.height}px - 56px - 48px )`,
+            height: `calc( ${props.height}px )`,
         })
     },
     //#endregion
@@ -61,12 +64,60 @@ export default {
             justifyContent: "center",
             alignItems: "center",
             padding: "24px 24px 0",
-            height: `calc( ${props.height}px - 104px )`
+            // height: `calc( ${props.height}px - 104px )`
+            height: `calc( ${props.height}px )`
         })
     },
     //#endregion
 
     //#region 登入表單 相關樣式
+    //#region 登入表單半圓容器
+    loginFormCricleContainer: {
+        basic: (style, props) => ({
+            ...style,
+            justifyContent: "center",
+            alignItems: "center",
+            height: "65px",
+            position: "absolute",
+            top: "-65px"
+        })
+    },
+    //#endregion
+    //#region 登入表單半圓
+    loginFormCricle: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            // maxWidth: "490px",
+            width: "130px",
+            height: "65px",
+            // height: "auto",
+            // minHeight: "460px",
+            backgroundColor: "#ffffff",
+            //boxShadow: "0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05)",
+            borderRadius: "130px 130px 0 0;"
+        })
+    },
+    //#endregion
+    //#region 新北圖標
+    loginFormCricleLogo: {
+        position: "absolute",
+        top: "10px"
+    },
+    //#endregion
+    //#region Logo標題文字
+    titleBarLogoContainerTextMobileM: {
+        basic: (style, props) => ({
+            ...style,
+            textAlign: "center",
+            color: "rgba(0,57,121,1)",
+            fontWeight: 700,
+            fontSize: "1rem",
+            padding: "24px 0 0 0",
+            height: "100%"
+        })
+    },
+    //#endregion
     //#region 登入表單容器
     loginFormContainer: {
         basic: (style, props) => ({
@@ -87,7 +138,7 @@ export default {
     loginFormTitle: {
         basic: (style, props) => ({
             ...style,
-            color: "#FF7A45",
+            color: "rgba(76,118,156,1)",
             fontSize: "20px",
             fontWeight: "bold",
             display: "block",
@@ -146,7 +197,10 @@ export default {
         topLabel: {
             basic: (style, props) => ({
                 ...style,
-                height: "0px"
+                height: "24px",
+                top: "10px",
+                color: "rgba(135,135,135,1)",
+                fontSize: "11px",
             })
         },
         textInputContainer: {
@@ -154,18 +208,21 @@ export default {
                 //console.log(props)
                 return {
                     ...style,
-                    color: (props.focus || props.hover) ? "#FF7A45" : "rgba(0, 0, 0, 0.65)"
+                    color: (props.focus || props.hover) ? "rgba(72,72,72,1)" : "rgba(0, 0, 0, 0.65)"
                 }
             }
         },
         textInput: {
             basic: (style, props) => ({
                 ...style,
+                border: "unset",
+                borderBottom: "1px solid #3D3D3D",
+                borderRadius: "0px",
                 //#region 當有開啟 openEye 並且 hover 或 focus 時變色
                 ...(
                     props.openEye && {
-                        border: `1px solid ${(props.focus || props.hover) ? "#FF7A45" : "#d9d9d9"}`,
-                        boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(255, 122, 69, 0.2)" : null
+                        borderBottom: `1px solid ${(props.focus || props.hover) ? "#7DBBD2" : "#3D3D3D"}`,
+                        // boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(255, 122, 69, 0.2)" : null
                     }
                 ),
                 //#endregion
@@ -173,12 +230,12 @@ export default {
             }),
             hover: {
                 //#region 覆寫樣式
-                border: "1px solid #FF7A45",
+                borderBottom: "1px solid #7DBBD2",
                 //#endregion
             },
             focus: {
-                border: "1px solid #FF7A45",
-                boxShadow: "0px 0px 0px 2px rgba(255, 122, 69, 0.2)"
+                borderBottom: "1px solid #7DBBD2",
+                // boxShadow: "0px 0px 0px 2px rgba(255, 122, 69, 0.2)"
             }
         }
     },
@@ -205,7 +262,10 @@ export default {
         topLabel: {
             basic: (style, props) => ({
                 ...style,
-                height: "0px"
+                height: "24px",
+                top: "10px",
+                color: "rgba(135,135,135,1)",
+                fontSize: "11px",
             })
         },
         textInputContainer: {
@@ -213,18 +273,21 @@ export default {
                 //console.log(props)
                 return {
                     ...style,
-                    color: (props.focus || props.hover) ? "#FF7A45" : "rgba(0, 0, 0, 0.65)"
+                    color: (props.focus || props.hover) ? "rgba(72,72,72,1)" : "rgba(0, 0, 0, 0.65)"
                 }
             }
         },
         textInput: {
             basic: (style, props) => ({
                 ...style,
+                border: "unset",
+                borderBottom: "1px solid #3D3D3D",
+                borderRadius: "0px",
                 //#region 當有開啟 openEye 並且 hover 或 focus 時變色
                 ...(
                     props.openEye && {
-                        border: `1px solid ${(props.focus || props.hover) ? "#FF7A45" : "#d9d9d9"}`,
-                        boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(255, 122, 69, 0.2)" : null
+                        borderBottom: `1px solid ${(props.focus || props.hover) ? "#7DBBD2" : "#3D3D3D"}`,
+                        // boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(255, 122, 69, 0.2)" : null
                     }
                 ),
                 //#endregion
@@ -232,12 +295,12 @@ export default {
             }),
             hover: {
                 //#region 覆寫樣式
-                border: "1px solid #FF7A45",
+                borderBottom: "1px solid #7DBBD2",
                 //#endregion
             },
             focus: {
-                border: "1px solid #FF7A45",
-                boxShadow: "0px 0px 0px 2px rgba(255, 122, 69, 0.2)"
+                borderBottom: "1px solid #7DBBD2",
+                // boxShadow: "0px 0px 0px 2px rgba(255, 122, 69, 0.2)"
             }
         }
     },
@@ -257,22 +320,22 @@ export default {
             basic: (style, props) => ({
                 ...style,
                 width: "100%",
-                background: "#FF7A45",
+                background: "rgba(60,72,86,1)",
                 boxShadow: "0px 2px 0px rgba(0, 0, 0, 0.043)",
-                borderRadius: "2px",
-                height: "32px"
+                borderRadius: "28px",
+                height: "48px"
             }),
             hover: (style, props) => ({
                 ...style,
-                backgroundColor: "rgba(255, 122, 69, 0.8)"
+                backgroundColor: "rgba(60,72,86, 0.8)"
             })
         },
         text: {
             basic: (style, props) => ({
                 ...style,
-                fontSize: "14px",
+                fontSize: "24px",
                 lineHeight: "32px",
-                top: "-3px"
+                top: "7px"
             }),
         }
     },
@@ -305,11 +368,21 @@ export default {
             display: "inline-block",
             textAlign: "right",
             fontSize: "14px",
-            color: "#ff7a45",
+            color: "rgba(56,56,56,1)",
             cursor: "pointer",
             lineHeight: "22px",
             userSelect: "none",
             margin: "0 0 0 8px"
+        })
+    },
+    //#endregion
+    //#region 忘記密碼圖標
+    loginFormForgetPassTextIconsContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            padding: "0 0 0 4px",
+            verticalAlign: "middle",
         })
     },
     //#endregion

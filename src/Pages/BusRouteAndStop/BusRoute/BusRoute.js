@@ -75,7 +75,7 @@ export const BusRoute = (props) => {
             await fetch(`${APIUrl}busStationLiness/load?page=1&limit=99999`, //cars/load?page=1&limit=20&OrgId=
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -156,7 +156,7 @@ export const BusRoute = (props) => {
         fetch(`${APIUrl}busStationLiness/delete`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

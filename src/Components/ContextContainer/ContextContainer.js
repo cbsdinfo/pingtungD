@@ -36,7 +36,7 @@ export const ContextContainerBase = (props) => {
             */}
             {/* <Layout /> */}
             {/* <BackstagePageTabBar /> */}
-            {/* {(localStorage.getItem("CAuth") !== null) && */}
+            {/* {(localStorage.getItem("DAuth") !== null) && */}
             <>
                 <Layout />
                 {/* <MenuBar />

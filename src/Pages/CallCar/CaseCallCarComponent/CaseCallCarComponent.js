@@ -104,7 +104,7 @@ export const CaseCallCarComponent = (props) => {
         fetch(`${APIUrl}OrderOfCaseUsers/GetCaseOrderAmt${paramStr}`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "Get",
@@ -174,7 +174,7 @@ export const CaseCallCarComponent = (props) => {
         fetch(`${APIUrl}OrderOfCaseUsers/Add`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",

@@ -7,10 +7,10 @@ import { TextInput } from '../../Components/Form/TextInput/TextInput';
 import { ReactComponent as Eye } from '../../Components/Form/TextInput/Assets/img/Eye.svg'
 import { clearLocalStorage, clearSession, setItemLocalStorage, setStringifyItemLocalStorage } from '../../Handlers/'
 import { useAsync } from '../../SelfHooks/useAsync'
-import { LaptopL } from './RWD/LaptopL';
-import { Laptop } from './RWD/Laptop';
+// import { LaptopL } from './RWD/LaptopL';
+// import { Laptop } from './RWD/Laptop';
 import { MobileM } from './RWD/MobileM';
-import { Tablet } from './RWD/Tablet';
+// import { Tablet } from './RWD/Tablet';
 import { isNil } from 'lodash';
 import { useWindowSize } from '../../SelfHooks/useWindowSize';
 import { useHistory } from 'react-router-dom';
@@ -184,7 +184,7 @@ export const Login = (props) => {
                 if (PreResult.code === 200) {
                     //成功取得使用者名稱 與 ID
                     setItemLocalStorage("UserName", JSON.stringify(PreResult.result?.name));
-                    setItemLocalStorage("CAuth", JSON.stringify(token));
+                    setItemLocalStorage("DAuth", JSON.stringify(token));
                     setItemLocalStorage("UserID", JSON.stringify(PreResult.result?.id));
                     setItemLocalStorage("UserAccount", JSON.stringify(PreResult.result?.account));
                     controllGCS("Login");
@@ -270,7 +270,7 @@ export const Login = (props) => {
         //         if (PreResult.code === 200) {
         //             setItemLocalStorage("Orgs", JSON.stringify(PreResult.result));
         //             setStringifyItemLocalStorage("UseOrg", { id: PreResult.result?.[0]?.id, name: PreResult.result?.[0]?.name });
-        //             setItemLocalStorage("CAuth", JSON.stringify(token));
+        //             setItemLocalStorage("DAuth", JSON.stringify(token));
         //         } else {
         //             throw PreResult.message;
         //         }
@@ -378,7 +378,7 @@ export const Login = (props) => {
                 if (PreResult.code === 200) {
                     //成功取得使用者名稱 與 ID
                     setItemLocalStorage("UserName", JSON.stringify(PreResult.result?.name));
-                    setItemLocalStorage("CAuth", JSON.stringify(token));
+                    setItemLocalStorage("DAuth", JSON.stringify(token));
                     setItemLocalStorage("UserID", JSON.stringify(PreResult.result?.id));
                 } else {
                     throw PreResult.message;
@@ -411,7 +411,7 @@ export const Login = (props) => {
 
     return (
         <>
-            {
+            {/* {
                 1440 <= Width &&
                 <LaptopL
                     WhichForm={WhichForm}
@@ -425,8 +425,8 @@ export const Login = (props) => {
                     loginExecute={LoginExecute}
                     loginPending={LoginPending}
                 />
-            }
-            {
+            } */}
+            {/* {
                 (1024 <= Width && Width < 1440) &&
                 <Laptop
                     WhichForm={WhichForm}
@@ -440,8 +440,8 @@ export const Login = (props) => {
                     loginExecute={LoginExecute}
                     loginPending={LoginPending}
                 />
-            }
-            {
+            } */}
+            {/* {
                 (768 <= Width && Width < 1024) &&
                 <Tablet
                     WhichForm={WhichForm}
@@ -455,9 +455,9 @@ export const Login = (props) => {
                     loginExecute={LoginExecute}
                     loginPending={LoginPending}
                 />
-            }
+            } */}
             {
-                Width < 768 &&
+                // Width < 768 &&
                 <MobileM
                     WhichForm={WhichForm}
                     setWhichForm={setWhichForm}

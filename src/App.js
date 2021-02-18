@@ -29,11 +29,12 @@ function App() {
   const [APIAppKey, setAPIAppKey] = useState("openauth");
   const [Value, Switch, Open, Close] = useSwitch();//控制重新渲染路由
   const [Collapse, setCollapse] = useState(false); // 控制768以上畫面，左側欄收合情況
+  const [DrawerCollapse, setDrawerCollapse] = useState(true); // 抽屜收合
 
   return (
     <>
       <DndProvider backend={HTML5Backend}>
-        < Context.Provider value={{ APIUrl, APIAppKey, Theme, setTheme, Switch, Collapse, setCollapse }}>
+        < Context.Provider value={{ APIUrl, APIAppKey, Theme, setTheme, Switch, Collapse, setCollapse, DrawerCollapse, setDrawerCollapse }}>
           <ContextContainer />
         </Context.Provider>
       </DndProvider>

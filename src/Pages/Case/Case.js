@@ -205,7 +205,7 @@ export const Case = (props) => {
         fetch(`${APIUrl}users/addorupdateclient`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -406,7 +406,7 @@ export const Case = (props) => {
             fetch(`${APIUrl}users/loadwithtype?page=1&limit=99999&orgId=`, // users/loadwithtype?page=1&limit=20&orgId=
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("CAuth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"
@@ -481,7 +481,7 @@ export const Case = (props) => {
         fetch(`${APIUrl}users/unlock`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -563,7 +563,7 @@ export const Case = (props) => {
         fetch(`${APIUrl}orgs/LoadOrgB`, // orgs/LoadOrgB
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "GET"
@@ -621,7 +621,7 @@ export const Case = (props) => {
         fetch(`${APIUrl}caseusers/get?id=${caseUserId}`, // caseusers/get?id=6718179154760081408
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "GET"
@@ -693,7 +693,7 @@ export const Case = (props) => {
         fetch(`${APIUrl}caseusers/updateorgb`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
@@ -766,7 +766,7 @@ export const Case = (props) => {
         fetch(`${APIUrl}CaseUserDiscounts/GetDiscountData?caseid=${selectRowId}`, // CaseUserDiscounts/GetDiscountData?caseid=6718179154760081408
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "GET"
@@ -824,7 +824,7 @@ export const Case = (props) => {
         fetch(`${APIUrl}CaseUserDiscounts/add`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("CAuth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
