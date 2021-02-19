@@ -13,42 +13,33 @@ import { ReactComponent as OrderSvg } from '../Assets/img/BackstageLeftSideMenuB
 import { ReactComponent as RouteAndStopSvg } from '../Assets/img/BackstageLeftSideMenuBar/RouteAndStop.svg'
 import { ReactComponent as ContactSvg } from '../Assets/img/BackstageLeftSideMenuBar/Contact.svg'
 
-import { News } from '../Pages/News/News';
-import { CallCar } from '../Pages/CallCar/CallCar';
+import { TodayTask } from '../Pages/TodayTask/TodayTask';
+import { TaskHistory } from '../Pages/TaskHistory/TaskHistory';
+import { Income } from '../Pages/Income/Income';
+import { Contact } from '../Pages/Contact/Contact';
+import { School } from '../Pages/School/School';
+import { DayCheck } from '../Pages/DayCheck/DayCheck';
 
 //#region 快速叫車
-import { FastCallCar } from '../Pages/FastCallCar/FastCallCar';
-import { AddFastCallCar } from '../Pages/FastCallCar/AddFastCallCar/AddFastCallCar';
-import { EditFastCallCar } from '../Pages/FastCallCar/EditFastCallCar/EditFastCallCar';
+// import { FastCallCar } from '../Pages/FastCallCar/FastCallCar';
+// import { AddFastCallCar } from '../Pages/FastCallCar/AddFastCallCar/AddFastCallCar';
+// import { EditFastCallCar } from '../Pages/FastCallCar/EditFastCallCar/EditFastCallCar';
 //#endregion
-import { BusRoute } from '../Pages/BusRoute/BusRoute';
-// 訂單檢視
-import { Record } from '../Pages/Record/Record';
-import { RecordDetail } from '../Pages/Record/RecordDetail/RecordDetail';
-
-import { UserInfo } from '../Pages/UserInfo/UserInfo';
-import { Contact } from '../Pages/Contact/Contact';
-import { QAndA } from '../Pages/QAndA/QAndA';
-import { from } from 'rxjs';
 
 //#region 
 export const urlMapping = {
 
-   "/News": <News />,// 最新消息
-   "/CallCar": <CallCar />,// 預約訂車
+   // "/FastCallCar": <FastCallCar />,// 快速叫車
+   // "/FastCallCar/Add": <AddFastCallCar />,// 新增常用路線
+   // "/FastCallCar/Edit": <EditFastCallCar />,// 編輯常用路線
 
-   "/FastCallCar": <FastCallCar />,// 快速叫車
-   "/FastCallCar/Add": <AddFastCallCar />,// 新增常用路線
-   "/FastCallCar/Edit": <EditFastCallCar />,// 編輯常用路線
-
-   "/BusRoute": <BusRoute />,// 快速叫車
-
-   "/Record": <Record />,// 訂單檢視
-   "/Record/Detail": <RecordDetail />,// 訂單乘車明細
-
-   "/UserInfo": <UserInfo />,// 用戶資料
-   "/Contact": <Contact />,// 聯繫客服
-   "/QAndA": <QAndA />,// 常見問題
+   // 忘記密碼 ForgetPass
+   "/TodayTask": <TodayTask />, // 今日任務
+   "/TaskHistory": <TaskHistory />, // 任務歷程
+   "/Income": <Income />, // 收入列表
+   "/Contact": <Contact />, // 聯繫行控
+   "/School": <School />, // 司機學院
+   "/DayCheck": <DayCheck />, // 每日檢查
 
    "/Login": < Login />,// 登入畫面
    "/404": <Error404 />,// 404錯誤畫面

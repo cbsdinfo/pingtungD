@@ -22,10 +22,17 @@ import whiteCallCarComponent from './Pages/CallCar/WhiteCallCarComponent/WhiteCa
 import fastCallCar from './Pages/FastCallCar/FastCallCar'
 
 import record from './Pages/Record/Record'
-import userInfo from './Pages/UserInfo/UserInfo'
-import contact from './Pages/Contact/Contact'
 import qAndA from './Pages/QAndA/QAndA'
 import order from './Pages/Order/Order'
+import userInfo from './Pages/UserInfo/UserInfo'
+//#region 
+import todayTask from './Pages/TodayTask/TodayTask'
+import taskHistory from './Pages/TaskHistory/TaskHistory'
+import income from './Pages/Income/Income'
+import contact from './Pages/Contact/Contact'
+import school from './Pages/School/School'
+import dayCheck from './Pages/DayCheck/DayCheck'
+
 // import busRoute from './Pages/BusRouteAndStop/BusRoute/BusRoute'
 import pickUpData from './Pages/Report/PickUpData/PickUpData'
 import revenue from './Pages/Report/Revenue/Revenue'
@@ -104,7 +111,7 @@ export default {
         //#endregion
 
         //#region 聯繫客服
-        contact,
+        // contact,
         //#endregion
 
         //#region 常見問題
@@ -140,6 +147,15 @@ export default {
         //#region 派車調度
         whiteConsole, // 白牌車調度台
         busConsole, // 幸福巴士調度台
+        //#endregion
+
+        //#region 司機端
+        todayTask, // 今日任務
+        taskHistory, // 任務歷程
+        income, // 收入列表
+        contact, // 聯繫行控
+        school, // 司機學院
+        dayCheck, // 每日檢查
         //#endregion
 
     }

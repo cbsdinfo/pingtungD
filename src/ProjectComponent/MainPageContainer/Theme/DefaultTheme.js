@@ -698,6 +698,7 @@ export default {
                 width: "100%",
                 top: "56px",
                 height: `calc( ${props.height}px - 56px ${props?.outSideTopComponentHeight && `- ${props?.outSideTopComponentHeight}px `})`,
+
                 //#endregion
             }
         }
