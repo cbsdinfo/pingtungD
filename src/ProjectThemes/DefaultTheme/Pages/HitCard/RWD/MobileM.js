@@ -1,4 +1,17 @@
 export default {
+    //#region 標題名稱
+    titleBar: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            fontWeight: 700,
+            fontSize: "30px",
+            lineHeight: "56px",
+            color: "#3C4856",
+        })
+    },
+    //#endregion
+
     //#region MainPageContainer 背景色調節
     mainPageContainer: {
         basicOutsideOutContainer: {
@@ -16,6 +29,7 @@ export default {
                     ...style,
                     backgroundColor: "#3c4856",
                     height: `calc( ${props.height}px - 56px )`,
+                    padding: "16px"
                 }
             }
         },
@@ -24,6 +38,7 @@ export default {
                 return {
                     ...style,
                     padding: "0", //188 是授權圖高度
+                    backgroundColor: "#3c4856",
                     // height:""
                 }
             }
@@ -31,68 +46,61 @@ export default {
     },
     //#endregion
 
-    //#region 司機名、打卡按鈕列
-    driverNameAndTickContainer: {
-        basic: (style, props) => ({
-            ...style,
-            height: "60px",
-            backgroundColor: "#fff",
-            borderTop: "solid 1px rgb(43 43 43 / 15%)",
-            position: "fixed",
-            width: "100%"
-        })
-    },
-    //#endregion
-
-    //#region 司機名Icon
-    driverNameIcon: {
-        top: "13px",
-        position: "relative",
-        left: "6px"
-    },
-    //#endregion
-
-    //#region 司機名
-    driverNameText: {
+    //#region 日期
+    nowDateText: {
         basic: (style, props) => ({
             ...style,
             display: "inline-block",
-            fontSize: "18px",
-            color: "#3B3B3B",
-            top: "5px",
-            left: "10px"
+            width: "100%",
+            textAlign: "center",
+            fontWeight: 700,
+            fontSize: "36px",
+            lineHeight: "42px",
+            color: "#fff",
+            backgroundColor: "transparent",
+            margin: "0 0 8px"
         })
     },
     //#endregion
 
-    //#region 打卡按鈕
-    TickBtn: {
-        container: {
-            basic: (style, props) => ({
-                ...style,
-                width: "100px",
-                position: "absolute",
-                right: "9px",
-                top: "9px",
-                background: "rgba(248,169,30,1)",
-                boxShadow: "0px 2px 0px rgba(0, 0, 0, 0.043)",
-                borderRadius: "28px",
-                height: "40px"
-            }),
-            hover: (style, props) => ({
-                ...style,
-                backgroundColor: "rgba(248,169,30, 0.8)"
-            })
-        },
-        text: {
-            basic: (style, props) => ({
-                ...style,
-                fontSize: "24px",
-                lineHeight: "32px",
-                top: "3px"
-            }),
-        }
+    //#region 打卡紀錄 容器
+    hitCardList: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            width: "100%",
+            backgroundColor: "#fff",
+            padding: "12px 16px"
+        })
     },
     //#endregion
 
+    //#region 列表標題 容器
+    listTitleContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            width: "100%",
+            backgroundColor: "#fff",
+            padding: "12px 16px"
+        })
+    },
+    //#endregion
+
+    //#region 打卡 標題
+    hitCardTitle: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            width: "100%",
+            textAlign: "center",
+            fontWeight: 700,
+            fontSize: "36px",
+            lineHeight: "42px",
+            color: "#fff",
+            backgroundColor: "##6B6B6B",
+            margin: "0 0 8px"
+        })
+    },
+    //#endregion
 }

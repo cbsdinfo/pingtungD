@@ -6,6 +6,7 @@ import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, BasicBu
 import { ReactComponent as User } from '../../../Assets/img/TodayTaskPage/User.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import { fmt } from '../../../Handlers/DateHandler';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { isEqual, isNil, isUndefined } from 'lodash';
@@ -13,7 +14,7 @@ import { isEqual, isNil, isUndefined } from 'lodash';
 const MobileMBase = (props) => {
 
     const { APIUrl, Theme, Switch, History, Location } = useContext(Context);
-    const { pages: { todayTask: { rwd: { mobileM } } } } = Theme;
+    const { pages: { hitCard: { rwd: { mobileM } } } } = Theme;
     let history = useHistory()
     const [ForceUpdate, setForceUpdate] = useState(false); // 供強制刷新組件
     const [Width, Height] = useWindowSize();
@@ -25,7 +26,10 @@ const MobileMBase = (props) => {
 
     return (
         <>
-            <TitleBar />
+            <TitleBar
+                returnIcon
+                customTitleText={<Text theme={mobileM.titleBar}>打卡列表</Text>}
+            />
 
             <MainPageContainer
                 height={Height}
@@ -35,70 +39,43 @@ const MobileMBase = (props) => {
                     </>
                 }
             >
-                {/* 司機名、打卡按鈕列 */}
-                <BasicContainer
-                    theme={mobileM.driverNameAndTickContainer}
+                {/* 日期 */}
+                <Text
+                    theme={mobileM.nowDateText}
                 >
-                    <User style={mobileM.driverNameIcon} />
+                    {fmt(moment(), "YYYY / MM / DD")}
+                </Text>
 
-                    {/* 司機名 */}
-                    <Text theme={mobileM.driverNameText}  >
-                        楊銘輝
-                    </Text>
-
-                    {/* 打卡按鈕 */}
-                    <BasicButton
-                        baseDefaultTheme={"PrimaryTheme"}
-                        text={"打卡"}
-                        theme={mobileM.TickBtn}
-                        onClick={() => {
-
-                        }}
-                    />
-                </BasicContainer>
-
+                {/* 打卡紀錄 容器*/}
                 <BasicContainer
-                    theme={{
-                        basic: (style, props) => ({
-                            ...style,
-                            padding: "60px 0 0 0",
-                            width: "100%"
-                        })
-                    }}
+                    theme={mobileM.hitCardList}
                 >
-                    {props?.TodayTask?.map((item, index) => {
-                        return (
-                            <TaskCard
-                                data={item?.despatchOfCaseOrderDayViews}
-                                // nameType // timeNameType、nameType 顯示名字、或顯示時間與名字
-                                timeNameType // timeNameType、nameType 顯示名字、或顯示時間與名字
-                                needAction // 是否需要點即後，文字變成執行中
-                                nameKeyName={"name"} // nameKeyName 對應資料 名字 的 key 名
-                                TimeKeyName={"reserveDate"} // TimeKeyName 對應資料 時間 的 key 名
-                                // callBackKeyName 有需要回調 則在資料中補上回調，並指定 key名
-                                primaryKey={"orderId"}// primaryKey 對應資料 唯一鍵 的 key 名
+                    {/* 列表標題 容器 */}
+                    <SubContainer
+                        theme={mobileM.listTitleContainer}
+                    >
+                        {/* 打卡 標題 */}
+                        <Text
+                            theme={mobileM.hitCardTitle}
+                        >
+                            打卡
+                        </Text>
 
-                                topContent={(data) => {
-                                    console.log(data)
-                                    return (
-                                        <>
-                                            {`${data.name}`}
-                                        </>
-                                    )
-                                }}
-                                bottomContent={(data) => {
-                                    console.log(data)
-                                    return (
-                                        <>
-                                            {/* <div style={{ height: "300px" }}>asdfsdf</div> */}
-                                            {`${data.fromAddr}`}
-                                        </>
-                                    )
-                                }}
-                            />
-                        )
-                    })}
+                        {/* 時間 標題 */}
+                        <Text
+                            theme={mobileM.timeTitle}
+                        >
+                            時間
+                        </Text>
 
+                    </SubContainer>
+
+                    {/* 列表 容器 */}
+                    <SubContainer
+                        theme={mobileM.listContainer}
+                    >
+
+                    </SubContainer>
 
                 </BasicContainer>
 
