@@ -4,6 +4,10 @@ import { Context } from '../../../Store/Store'
 import { MainPageContainer, MainPageTitleBar, TaskCard, TitleBar } from '../../../ProjectComponent';
 import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, BasicButton, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService } from '../../../Components';
 import { ReactComponent as User } from '../../../Assets/img/TodayTaskPage/User.svg'
+import { ReactComponent as Clock } from '../../../Assets/img/TodayTaskPage/Clock.svg'
+import { ReactComponent as Arrow } from '../../../Assets/img/TodayTaskPage/Arrow.svg'
+import { ReactComponent as Start } from '../../../Assets/img/TodayTaskPage/Start.svg'
+import { ReactComponent as End } from '../../../Assets/img/TodayTaskPage/End.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
@@ -56,8 +60,9 @@ const MobileMBase = (props) => {
                     theme={{
                         basic: (style, props) => ({
                             ...style,
-                            padding: "60px 0 0 0",
-                            width: "100%"
+                            padding: "60px 0 12px 0",
+                            width: "100%",
+                            backgroundColor: "#3c4856"
                         })
                     }}
                 >
@@ -79,16 +84,111 @@ const MobileMBase = (props) => {
                                     console.log(data)
                                     return (
                                         <>
-                                            {`${data.name}`}
+                                            {/* 乘車時間 */}
+                                            <Text
+                                                theme={mobileM.reserveDateText}
+                                            >
+                                                <Clock style={mobileM.clockSvg} />
+
+                                                {`${data.reserveDate.split(' ')[1].substring(0, 5)}`}
+                                            </Text>
                                         </>
                                     )
                                 }}
                                 bottomContent={(data) => {
-                                    console.log(data)
+                                    // console.log(data)
                                     return (
                                         <>
-                                            {/* <div style={{ height: "300px" }}>asdfsdf</div> */}
-                                            {`${data.fromAddr}`}
+                                            {/* 上方容器 */}
+                                            <Container>
+
+                                                {/* 乘客名稱 容器 */}
+                                                <SubContainer
+                                                    theme={mobileM.nameContainer}
+                                                >
+                                                    {/* 乘客名稱 */}
+                                                    <Text
+                                                        theme={mobileM.nameText}
+                                                        onClick={() => {
+                                                            history.push(`/PerDespatch?despatch=${data.despatchNo}`)
+                                                        }}
+                                                    >
+                                                        {data.name}
+
+                                                        <Arrow style={mobileM.arrowSvg} />
+
+                                                        {/* 輪椅 */}
+                                                        <Text
+                                                            theme={mobileM.wheelchairTypeText}
+                                                        >
+                                                            {data.wheelchairType}
+                                                        </Text>
+                                                    </Text>
+
+                                                </SubContainer>
+
+                                                {/* 陪同人數 容器 */}
+                                                <SubContainer
+                                                    theme={mobileM.withContainer}
+                                                >
+                                                    {/* 陪同人數 */}
+                                                    <Text
+                                                        theme={mobileM.withCount}
+                                                    >
+                                                        {data.familyWith}
+
+                                                        {/* 預估陪同 */}
+                                                        <Text
+                                                            theme={mobileM.withText}
+                                                        >
+                                                            {"預估陪同"}
+                                                        </Text>
+                                                    </Text>
+
+                                                </SubContainer>
+
+                                            </Container>
+
+                                            {/* 下方容器 */}
+                                            <SubContainer
+                                                theme={mobileM.addrContainer}
+                                            >
+                                                {/* 起點 */}
+                                                <Text
+                                                    theme={mobileM.fromAddrText}
+                                                >
+                                                    {/* 起點圖標 */}
+                                                    <Start style={mobileM.startSvg} />
+
+                                                    {data.fromAddr}
+
+                                                    {/* 起點備註 */}
+                                                    <Text
+                                                        theme={mobileM.fromAddrRemarkText}
+                                                    >
+                                                        ({data.fromAddrRemark})
+                                                    </Text>
+                                                </Text>
+
+                                                {/* 迄點 */}
+                                                <Text
+                                                    theme={mobileM.toAddrText}
+                                                >
+
+                                                    {/* 迄點圖標 */}
+                                                    <End style={mobileM.EndSvg} />
+
+                                                    {data.toAddr}
+
+                                                    {/* 迄點備註 */}
+                                                    <Text
+                                                        theme={mobileM.toAddrRemarkText}
+                                                    >
+                                                        ({data.toAddrRemark})
+                                                    </Text>
+                                                </Text>
+
+                                            </SubContainer>
                                         </>
                                     )
                                 }}
