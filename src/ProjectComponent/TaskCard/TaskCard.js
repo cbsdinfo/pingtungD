@@ -72,10 +72,11 @@ export const TaskCardBase = (props) => {
 
                             {props?.data?.map((item, index) => {
                                 return (
-                                    <>
+                                    <React.Fragment key={index}>
                                         {/* 只顯示名字 */}
                                         {props?.nameType &&
                                             <JustName
+                                                key={`name${index}`}
                                                 needAction={props?.needAction}
                                                 name={item?.[`${props?.nameKeyName ?? "name"}`]}
                                                 isAction={NowUsePrimary === item?.[`${props?.primaryKey}`]}
@@ -88,6 +89,7 @@ export const TaskCardBase = (props) => {
                                         {/* 顯示名字與時間 */}
                                         {props?.timeNameType &&
                                             <NameAndTime
+                                                key={`NameAndTime${index}`}
                                                 needAction={props?.needAction}
                                                 name={item?.[`${props?.nameKeyName ?? "name"}`]}
                                                 time={item?.[`${props?.TimeKeyName ?? "time"}`]}
@@ -98,7 +100,7 @@ export const TaskCardBase = (props) => {
                                                 }}
                                             />
                                         }
-                                    </>
+                                    </React.Fragment>
                                 )
                             })}
 

@@ -205,6 +205,34 @@ export const Routers = (props) => {
                     }
                     }>
                 </Route>
+                <Route exact path={"/PerDespatch"}
+                    render={({ location }) => {
+                        return (getParseItemLocalStorage("DAuth") !== null) ? (
+                            urlMapping["/PerDespatch"]
+                        ) : (
+                                <Redirect
+                                    to={{
+                                        pathname: "/Login",
+                                    }}
+                                />
+                            );
+                    }
+                    }>
+                </Route>
+                <Route exact path={"/HitCard"}
+                    render={({ location }) => {
+                        return (getParseItemLocalStorage("DAuth") !== null) ? (
+                            urlMapping["/HitCard"]
+                        ) : (
+                                <Redirect
+                                    to={{
+                                        pathname: "/Login",
+                                    }}
+                                />
+                            );
+                    }
+                    }>
+                </Route>
                 <Route exact path={"/TaskHistory"}
                     render={({ location }) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (

@@ -27,6 +27,8 @@ import order from './Pages/Order/Order'
 import userInfo from './Pages/UserInfo/UserInfo'
 //#region 
 import todayTask from './Pages/TodayTask/TodayTask'
+import perDespatch from './Pages/PerDespatch/PerDespatch'
+import hitCard from './Pages/HitCard/HitCard'
 import taskHistory from './Pages/TaskHistory/TaskHistory'
 import income from './Pages/Income/Income'
 import contact from './Pages/Contact/Contact'
@@ -151,6 +153,8 @@ export default {
 
         //#region 司機端
         todayTask, // 今日任務
+        perDespatch,  // 今日任務單張調度單
+        hitCard, // 打卡
         taskHistory, // 任務歷程
         income, // 收入列表
         contact, // 聯繫行控

@@ -39,8 +39,7 @@ export default {
             backgroundColor: "#fff",
             borderTop: "solid 1px rgb(43 43 43 / 15%)",
             position: "fixed",
-            width: "100%",
-            zIndex: 1
+            width: "100%"
         })
     },
     //#endregion

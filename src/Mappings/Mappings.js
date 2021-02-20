@@ -14,6 +14,8 @@ import { ReactComponent as RouteAndStopSvg } from '../Assets/img/BackstageLeftSi
 import { ReactComponent as ContactSvg } from '../Assets/img/BackstageLeftSideMenuBar/Contact.svg'
 
 import { TodayTask } from '../Pages/TodayTask/TodayTask';
+import { PerDespatch } from '../Pages/PerDespatch/PerDespatch';
+import { HitCard } from '../Pages/HitCard/HitCard';
 import { TaskHistory } from '../Pages/TaskHistory/TaskHistory';
 import { Income } from '../Pages/Income/Income';
 import { Contact } from '../Pages/Contact/Contact';
@@ -35,6 +37,8 @@ export const urlMapping = {
 
    // 忘記密碼 ForgetPass
    "/TodayTask": <TodayTask />, // 今日任務
+   "/PerDespatch": <PerDespatch />, // 今日任務單張調度單
+   "/HitCard": <HitCard />, // 打卡
    "/TaskHistory": <TaskHistory />, // 任務歷程
    "/Income": <Income />, // 收入列表
    "/Contact": <Contact />, // 聯繫行控

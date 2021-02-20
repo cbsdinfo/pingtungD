@@ -17,6 +17,11 @@ const MobileMBase = (props) => {
     let history = useHistory()
     const [ForceUpdate, setForceUpdate] = useState(false); // 供強制刷新組件
     const [Width, Height] = useWindowSize();
+    //#region 分頁映射
+    const tabMap = (key) => {
+        return props.NewsType.map(item => { return item.label })
+    }
+    //#endregion
 
     return (
         <>
@@ -47,7 +52,7 @@ const MobileMBase = (props) => {
                         text={"打卡"}
                         theme={mobileM.TickBtn}
                         onClick={() => {
-                            history.push("/HitCard")
+
                         }}
                     />
                 </BasicContainer>
@@ -64,9 +69,7 @@ const MobileMBase = (props) => {
                     {props?.TodayTask?.map((item, index) => {
                         return (
                             <TaskCard
-                                key={index}
-
-                                data={item?.despatchOfCaseOrderDayViews} // 調度單資料
+                                data={item?.despatchOfCaseOrderDayViews}
                                 // nameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                                 timeNameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                                 needAction // 是否需要點即後，文字變成執行中
