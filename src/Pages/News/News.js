@@ -52,7 +52,7 @@ export const News = (props) => {
                 await fetch(`${APIUrl}categorys/load?page=1&limit=99999&TypeId=SYS_NEWS`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                     {
                         headers: {
-                            "X-Token": getParseItemLocalStorage("Auth"),
+                            "X-Token": getParseItemLocalStorage("DAuth"),
                             "content-type": "application/json; charset=utf-8",
                         },
                         method: "GET"
@@ -125,7 +125,7 @@ export const News = (props) => {
             await fetch(`${APIUrl}Newss/Load?page=1&limit=99999&IsClient=true&NewsCategoryId=${defaultLoad ?? newsCategoryId}&ReleaseDate=${releaseDate}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE  
                 {
                     headers: {
-                        "X-Token": getParseItemLocalStorage("Auth"),
+                        "X-Token": getParseItemLocalStorage("DAuth"),
                         "content-type": "application/json; charset=utf-8",
                     },
                     method: "GET"

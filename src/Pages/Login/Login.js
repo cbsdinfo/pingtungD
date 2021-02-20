@@ -169,7 +169,7 @@ export const Login = (props) => {
         //#endregion
 
         //#region 取得使用者名稱 與 ID
-        await fetch(`${APIUrl}check/GetUserProfile`, //Check/GetUserProfile
+        await fetch(`${APIUrl}DriverInfos/GetByToken`, //Check/GetUserProfile
             {
                 headers: {
                     "X-Token": token,
@@ -185,8 +185,8 @@ export const Login = (props) => {
                     //成功取得使用者名稱 與 ID
                     setItemLocalStorage("UserName", JSON.stringify(PreResult.result?.name));
                     setItemLocalStorage("DAuth", JSON.stringify(token));
-                    setItemLocalStorage("UserID", JSON.stringify(PreResult.result?.id));
-                    setItemLocalStorage("UserAccount", JSON.stringify(PreResult.result?.account));
+                    setItemLocalStorage("DriverID", JSON.stringify(PreResult.result?.id));
+                    setItemLocalStorage("DriverAccount", JSON.stringify(PreResult.result?.account));
                     controllGCS("Login");
                 } else {
                     throw PreResult.message;
@@ -379,7 +379,7 @@ export const Login = (props) => {
                     //成功取得使用者名稱 與 ID
                     setItemLocalStorage("UserName", JSON.stringify(PreResult.result?.name));
                     setItemLocalStorage("DAuth", JSON.stringify(token));
-                    setItemLocalStorage("UserID", JSON.stringify(PreResult.result?.id));
+                    setItemLocalStorage("DriverID", JSON.stringify(PreResult.result?.id));
                 } else {
                     throw PreResult.message;
                 }

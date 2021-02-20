@@ -713,7 +713,7 @@ export const MapGoogleInputBase = (props) => {
                                             fetch(`${props.placeDetailUrl ?? "http://openauth.react.dev.1966.org.tw:20025/api/Maps/PlaceDetail"}`,
                                                 {
                                                     headers: {
-                                                        "X-Token": getParseItemLocalStorage("Auth"),
+                                                        "X-Token": getParseItemLocalStorage("DAuth"),
                                                         "content-type": "application/json; charset=utf-8",
                                                     },
                                                     method: "POST",

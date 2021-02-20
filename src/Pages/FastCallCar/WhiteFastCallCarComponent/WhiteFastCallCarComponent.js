@@ -106,7 +106,7 @@ export const WhiteFastCallCarComponent = (props) => {
         fetch(`${APIUrl}Maps/Route`,
             {
                 headers: {
-                    "X-Token": getParseItemLocalStorage("Auth"),
+                    "X-Token": getParseItemLocalStorage("DAuth"),
                     "content-type": "application/json; charset=utf-8",
                 },
                 method: "POST",
