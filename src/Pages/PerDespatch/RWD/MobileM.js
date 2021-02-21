@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
-import { MainPageContainer, MainPageTitleBar, TaskCard, TitleBar } from '../../../ProjectComponent';
+import { MainPageContainer, MainPageTitleBar, Silder, TaskCard, TitleBar } from '../../../ProjectComponent';
 import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, BasicButton, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService } from '../../../Components';
 import { ReactComponent as User } from '../../../Assets/img/TodayTaskPage/User.svg'
 import { useHistory } from 'react-router-dom';
@@ -98,6 +98,9 @@ const MobileMBase = (props) => {
                             />
                         )
                     })}
+                    <BasicContainer>
+                        <Silder text={"asd"} onToRight={() => { console.log("right") }} />
+                    </BasicContainer>
 
 
                 </BasicContainer>
