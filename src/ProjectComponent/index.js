@@ -26,3 +26,4 @@ export { WhiteOrderEditTitleModal } from './WhiteOrderEditTitleModal/WhiteOrderE
 export { TimeCounterButton } from './TimeCounterButton/TimeCounterButton'
 export { CardTable } from './CardTable/CardTable'
 export { QA } from './QA/QA'
+export { Silder } from './Silder/Silder'
