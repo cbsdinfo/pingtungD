@@ -33,6 +33,7 @@ export const TodayTask = (props) => {
         });
 
         return () => {
+            globalContextService.remove("TodayTaskPage");
             historyUnlisten();
         }
     }, [])

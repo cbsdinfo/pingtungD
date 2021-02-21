@@ -457,6 +457,29 @@ const getPolylineRoutes = (mapId) => {
 }
 //#endregion
 
+//#region 開啟導航
+const openNavigation = async (to, from) => {
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            // console.log(latitude, longitude)
+            if (from) {
+                window.open(`https://www.google.com/maps/dir/${from}/${to}`);
+            } else {
+                window.open(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`);
+            }
+        },
+        function (error) {
+
+        }
+        ,
+        { enableHighAccuracy: true, maximumAge: 3000, timeout: 10000 }
+    );
+
+}
+//#endregion
+
 //#region 方法承載物件 (不能在地圖渲染完成前使用)
 const mapGoogleControll = {
     getBasicMap, // 取得基礎地圖物件
@@ -474,6 +497,7 @@ const mapGoogleControll = {
     addPolylineRoute, // 透過 Polyline 新增一條路線 (移除原有所有標記，by decodePath)
     deletePolylineRoute, // 刪除一條透過 Polyline 新增的一條路線(移除原有所有標記，by decodePath)
     getPolylineRoutes, // 取得目前所有透過 Polyline 新增的路線 (by decodePath)
+    openNavigation, // 開啟導航
 }
 //#endregion
 

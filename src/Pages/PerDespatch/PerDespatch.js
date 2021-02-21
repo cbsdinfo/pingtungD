@@ -7,7 +7,7 @@ import { MobileM } from './RWD/MobileM';
 // import { Tablet } from './RWD/Tablet';
 import { useWindowSize } from '../../SelfHooks/useWindowSize';
 import { clearLocalStorage, clearSession, getParseItemLocalStorage, valid } from '../../Handlers';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useAsync } from '../../SelfHooks/useAsync';
 import { isUndefined } from 'lodash';
 import { fmt } from '../../Handlers/DateHandler';
@@ -24,15 +24,17 @@ export const PerDespatch = (props) => {
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
+    let urlParams = new URLSearchParams(useLocation().search);//取得參數
 
     //#region 路由監聽，清除API紀錄 (渲染即觸發的每一個API都要有)
     useEffect(() => {
         const historyUnlisten = history.listen((location, action) => {
             //console.log(location, action)
-            globalContextService.remove("TodayTaskPage", "firstUseAPIgetTodayTask");
+            globalContextService.remove("PerDespatchPage", "firstUseAPIgetTodayTask");
         });
 
         return () => {
+            globalContextService.remove("PerDespatchPage")
             historyUnlisten();
         }
     }, [])
@@ -43,7 +45,7 @@ export const PerDespatch = (props) => {
 
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
-        if (isUndefined(globalContextService.get("TodayTaskPage", "firstUseAPIgetTodayTask")) || useAPI) {
+        if (isUndefined(globalContextService.get("PerDespatchPage", "firstUseAPIgetTodayTask")) || useAPI) {
             //#endregion
 
             //#region 取得所有最新消息類別 API
@@ -68,7 +70,7 @@ export const PerDespatch = (props) => {
                         //     return a.sortNo - b.sortNo;
                         // }).map(d => ({ data: { ...d }, value: d?.id, label: d?.name })))
 
-                        setTodayTask(PreResult.result);
+                        setTodayTask(PreResult.result.filter(item => (item?.despatchNo === urlParams.get("despatch"))));
                     }
                     else {
                         throw PreResult;
@@ -109,7 +111,7 @@ export const PerDespatch = (props) => {
                 })
                 .finally(() => {
                     //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
-                    globalContextService.set("TodayTaskPage", "firstUseAPIgetTodayTask", false);
+                    globalContextService.set("PerDespatchPage", "firstUseAPIgetTodayTask", false);
                     //#endregion
                 });
             //#endregion
@@ -151,6 +153,7 @@ export const PerDespatch = (props) => {
             {
                 // Width < 768 &&
                 <MobileM
+                    defaultPrimary={urlParams.get("defaultPrimary")}
                     NowTab={NowTab} // 目前公告頁面
                     setNowTab={setNowTab} // 設定目前公告頁面
                     TodayTask={TodayTask} // 所有最新消息類別

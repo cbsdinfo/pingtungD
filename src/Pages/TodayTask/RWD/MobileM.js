@@ -79,6 +79,7 @@ const MobileMBase = (props) => {
                                 TimeKeyName={"reserveDate"} // TimeKeyName 對應資料 時間 的 key 名
                                 // callBackKeyName 有需要回調 則在資料中補上回調，並指定 key名
                                 primaryKey={"orderId"}// primaryKey 對應資料 唯一鍵 的 key 名
+                                // defaultUsePrimaryKey={props?.defaultPrimary} // 初始要使用的分頁 (值要對應到 primaryKey)
 
                                 topContent={(data) => {
                                     console.log(data)
@@ -110,7 +111,7 @@ const MobileMBase = (props) => {
                                                     <Text
                                                         theme={mobileM.nameText}
                                                         onClick={() => {
-                                                            history.push(`/PerDespatch?despatch=${data.despatchNo}`)
+                                                            history.push(`/PerDespatch?despatch=${data.despatchNo}&defaultPrimary=${data.orderId}`)
                                                         }}
                                                     >
                                                         {data.name}

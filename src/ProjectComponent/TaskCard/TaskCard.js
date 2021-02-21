@@ -35,7 +35,7 @@ const switchDefaultTheme = (themeName) => {
 //#region 基礎按鈕
 export const TaskCardBase = (props) => {
 
-    const [NowUsePrimary, setNowUsePrimary] = useState(props?.data?.[0]?.[`${props?.primaryKey}`]);
+    const [NowUsePrimary, setNowUsePrimary] = useState(props?.defaultUsePrimaryKey ?? props?.data?.[0]?.[`${props?.primaryKey}`]);
     const [NowUsePrimaryData, setNowUsePrimaryData] = useState(props?.data?.[0]);
 
     return (
@@ -137,7 +137,7 @@ export const TaskCardBase = (props) => {
                             height: "30px",
                             width: "15px",
                             borderRadius: "0px 30px 30px 0px",
-                            top: props?.nameType ? "72px" : "104px",
+                            top: props?.nameType ? "82px" : "104px",
                             zIndex: 1,
                         })
                     }} />
@@ -152,7 +152,7 @@ export const TaskCardBase = (props) => {
                             height: "30px",
                             width: "15px",
                             borderRadius: "30px 0px 0px 30px",
-                            top: props?.nameType ? "72px" : "104px",
+                            top: props?.nameType ? "82px" : "104px",
                             zIndex: 1,
                             right: "5px"
                         })
@@ -222,19 +222,37 @@ const JustName = (props) => {
                 </Text>
                 :
                 <Text
-                    theme={{
-                        basic: (style) => ({
-                            ...style,
-                            display: "inline-block",
-                            width: "90px",
-                            height: "100%",
-                            color: "#D8D8D8",
-                            background: "#6B6B6B",
-                            textAlign: "center",
-                            padding: "2px 0 0 0",
-                            verticalAlign: "top"
-                        })
-                    }}
+                    theme={
+                        props?.isAction
+                            ?
+                            {
+                                basic: (style) => ({
+                                    ...style,
+                                    display: "inline-block",
+                                    width: "90px",
+                                    height: "100%",
+                                    color: "rgba(61,61,61,1)",
+                                    background: "#fff",
+                                    textAlign: "center",
+                                    padding: "2px 0 0 0",
+                                    verticalAlign: "top"
+                                })
+                            }
+                            :
+                            {
+                                basic: (style) => ({
+                                    ...style,
+                                    display: "inline-block",
+                                    width: "90px",
+                                    height: "100%",
+                                    color: "#D8D8D8",
+                                    background: "#6B6B6B",
+                                    textAlign: "center",
+                                    padding: "2px 0 0 0",
+                                    verticalAlign: "top"
+                                })
+                            }
+                    }
                     onClick={() => { props?.onClick && props.onClick() }}
                 >
                     {props?.name}
@@ -298,19 +316,36 @@ const NameAndTime = (props) => {
                 :
                 <Text
                     theme={
-                        {
-                            basic: (style) => ({
-                                ...style,
-                                display: "inline-block",
-                                width: "90px",
-                                height: "100%",
-                                color: "#D8D8D8",
-                                background: "#6B6B6B",
-                                textAlign: "center",
-                                padding: "2px 0 0 0",
-                                verticalAlign: "top"
-                            })
-                        }
+                        props?.isAction
+                            ?
+                            {
+                                basic: (style) => ({
+                                    ...style,
+                                    display: "inline-block",
+                                    width: "90px",
+                                    height: "100%",
+                                    color: "rgba(61,61,61,1)",
+                                    background: "#fff",
+                                    textAlign: "center",
+                                    padding: "2px 0 0 0",
+                                    verticalAlign: "top"
+                                })
+                            }
+                            :
+                            {
+
+                                basic: (style) => ({
+                                    ...style,
+                                    display: "inline-block",
+                                    width: "90px",
+                                    height: "100%",
+                                    color: "#D8D8D8",
+                                    background: "#6B6B6B",
+                                    textAlign: "center",
+                                    padding: "2px 0 0 0",
+                                    verticalAlign: "top"
+                                })
+                            }
                     }
                     onClick={() => { props?.onClick && props.onClick() }}
                 >

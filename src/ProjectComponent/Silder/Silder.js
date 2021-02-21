@@ -8,6 +8,9 @@ const SilderExtendStyle = styled(SilderExtend).attrs((props) => ({}))`
 
     & {
         margin: 0;
+        height: 75px;
+        padding: 0;
+        background-color: transparent;
     }
 
     &.ant-slider:hover .ant-slider-rail {
@@ -18,7 +21,9 @@ const SilderExtendStyle = styled(SilderExtend).attrs((props) => ({}))`
         content: ${props => `"${props.text}"`};
         position: absolute;
         z-index: 100;
-        font-size: 50px;
+        font-size: 36px;
+        height: 75px;
+        top: 10px;
         color: #fff;
         text-align: center;
         width: 100%;
@@ -52,10 +57,7 @@ const SilderExtendStyle = styled(SilderExtend).attrs((props) => ({}))`
         background-color: rgba(248,169,30,1);
         border: unset;
         z-index: 101;
-        margin: ${props => {
-        console.log(props?.value)
-        return props?.value > 0 ? "-5px 0px 0px -24px" : "-5px 0 0px 42px"
-    }};
+        margin: ${props => props?.value > 0 ? "-5px 0px 0px -24px" : "-5px 0 0px 42px"};
     }
 
     & .ant-slider-handle:before {
