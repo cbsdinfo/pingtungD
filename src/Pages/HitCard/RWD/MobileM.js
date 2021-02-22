@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
 import { MainPageContainer, MainPageTitleBar, TaskCard, TitleBar } from '../../../ProjectComponent';
 import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, BasicButton, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService } from '../../../Components';
-import { ReactComponent as User } from '../../../Assets/img/TodayTaskPage/User.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { fmt } from '../../../Handlers/DateHandler';
@@ -28,6 +27,11 @@ const MobileMBase = (props) => {
         <>
             <TitleBar
                 returnIcon
+                returnIconOnClick={(e) => {
+                    e.preventDefault();
+                    props.controllGCS("return")
+                    history.goBack()
+                }}
                 customTitleText={<Text theme={mobileM.titleBar}>打卡列表</Text>}
             />
 
@@ -48,6 +52,7 @@ const MobileMBase = (props) => {
 
                 {/* 打卡紀錄 容器*/}
                 <BasicContainer
+                    height={Height}
                     theme={mobileM.hitCardList}
                 >
                     {/* 列表標題 容器 */}
@@ -70,10 +75,38 @@ const MobileMBase = (props) => {
 
                     </SubContainer>
 
-                    {/* 列表 容器 */}
+                    {/* 列表內文外側 容器 */}
                     <SubContainer
-                        theme={mobileM.listContainer}
+                        theme={mobileM.listOutContainer}
                     >
+
+                        {
+                            (props?.DriverPunch ?? []).map((item, index) => {
+                                return (
+                                    <>
+                                        {/* 列表內文 容器 */}
+                                        <SubContainer
+                                            theme={mobileM.listContainer}
+                                        >
+                                            {/* 打卡 內文 */}
+                                            <Text
+                                                theme={mobileM.hitCardText}
+                                            >
+                                                {(index + 1).toString().length < 2 ? "0" + (index + 1) : (index + 1)}
+                                            </Text>
+
+                                            {/* 時間 內文 */}
+                                            <Text
+                                                theme={mobileM.timeText}
+                                            >
+                                                {item.punchTime.split(' ')[1].substring(0, 5)}
+                                            </Text>
+                                        </SubContainer>
+                                    </>
+                                )
+                            })
+                        }
+
 
                     </SubContainer>
 

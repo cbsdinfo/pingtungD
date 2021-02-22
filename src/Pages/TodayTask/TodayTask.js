@@ -17,10 +17,7 @@ export const TodayTask = (props) => {
 
     const { APIUrl, Theme, Switch } = useContext(Context);
     //const { pages: { login } } = Theme;
-    const [NowTab, setNowTab] = useState("系統公告"); // 目前公告頁面
     const [TodayTask, setTodayTask] = useState([]); //所有今日任務
-    const [AllNews, setAllNews] = useState([]); // 類別下所有最新消息
-    const [CheckDetail, setCheckDetail] = useState({}); // 詳細資料
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
@@ -39,7 +36,7 @@ export const TodayTask = (props) => {
     }, [])
     //#endregion
 
-    //#region 取得所有最新消息類別 選項 API
+    //#region 取得所有今日任務 選項 API
     const getTodayTask = useCallback(async (useAPI = false, newsCategoryId = "", releaseDate = fmt(moment(), "YYYY-MM")) => {
 
         let defaultLoad;
@@ -47,7 +44,7 @@ export const TodayTask = (props) => {
         if (isUndefined(globalContextService.get("TodayTaskPage", "firstUseAPIgetTodayTask")) || useAPI) {
             //#endregion
 
-            //#region 取得所有最新消息類別 API
+            //#region 取得所有今日任務 API
             await fetch(`${APIUrl}OrderOfCaseUsers/GetCaseOrderByDriver?driverid=${getParseItemLocalStorage("DriverID")}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
@@ -63,7 +60,7 @@ export const TodayTask = (props) => {
                 .then((PreResult) => {
 
                     if (PreResult.code === 200) {
-                        // 成功取得司機 證照 API
+                        // 成功取得所有今日任務 API
                         // console.log(PreResult)
                         // console.log(PreResult?.data.sort((a, b) => {
                         //     return a.sortNo - b.sortNo;
@@ -121,6 +118,77 @@ export const TodayTask = (props) => {
     const [GetTodayTaskExecute, GetTodayTaskPending] = useAsync(getTodayTask, true);
     //#endregion
 
+    //#region 打卡 選項 API
+    const addDriverPunch = useCallback(async (addDriverPunchData) => {
+
+
+        //#region 打卡 API
+        fetch(`${APIUrl}DriverPunch/Add`,
+            {
+                headers: {
+                    "X-Token": getParseItemLocalStorage("DAuth"),
+                    "content-type": "application/json; charset=utf-8",
+                },
+                method: "POST",
+                body: JSON.stringify({ ...addDriverPunchData })
+            })
+            .then(Result => {
+                const ResultJson = Result.clone().json();//Respone.clone()
+                return ResultJson;
+            })
+            .then((PreResult) => {
+
+                if (PreResult.code === 200) {
+                    // 成功 打卡
+                    // console.log(PreResult.data)
+                }
+                else {
+                    throw PreResult;
+                }
+            })
+            .catch((Error) => {
+                modalsService.infoModal.warn({
+                    iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                    yes: true,
+                    yesText: "確認",
+                    // no: true,
+                    // autoClose: true,
+                    backgroundClose: false,
+                    yesOnClick: (e, close) => {
+                        if (Error.code === 401) {
+                            clearSession();
+                            clearLocalStorage();
+                            globalContextService.clear();
+                            Switch();
+                        }
+                        close();
+                    }
+                    // theme: {
+                    //     yesButton: {
+                    //         text: {
+                    //             basic: (style, props) => {
+                    //                 console.log(style)
+                    //                 return {
+                    //                     ...style,
+                    //                     color: "red"
+                    //                 }
+                    //             },
+                    //         }
+                    //     }
+                    // }
+                })
+                throw Error.message;
+            })
+            .finally(() => {
+                history.push("/HitCard")
+            });
+        //#endregion
+
+    }, [APIUrl, Switch])
+
+    const [AddDriverPunchExecute, AddDriverPunchPending] = useAsync(addDriverPunch, false);
+    //#endregion
+
     return (
         <>
             {/* {
@@ -152,13 +220,9 @@ export const TodayTask = (props) => {
             {
                 // Width < 768 &&
                 <MobileM
-                    NowTab={NowTab} // 目前公告頁面
-                    setNowTab={setNowTab} // 設定目前公告頁面
                     TodayTask={TodayTask} // 所有最新消息類別
-                    AllNews={AllNews} // 類別下所有最新消息
-                    CheckDetail={CheckDetail} // 詳細資料
-                    setCheckDetail={setCheckDetail} // 設定詳細資料
                     GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
+                    AddDriverPunchExecute={AddDriverPunchExecute} // 打卡
                 />
             }
         </>

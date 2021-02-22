@@ -17,19 +17,30 @@ export const HitCard = (props) => {
 
     const { APIUrl, Theme, Switch } = useContext(Context);
     //const { pages: { login } } = Theme;
-    const [NowTab, setNowTab] = useState("系統公告"); // 目前公告頁面
-    const [TodayTask, setTodayTask] = useState([]); //所有今日任務
-    const [AllNews, setAllNews] = useState([]); // 類別下所有最新消息
-    const [CheckDetail, setCheckDetail] = useState({}); // 詳細資料
+    const [DriverPunch, setDriverPunch] = useState([]); //所有今日打卡紀錄
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
 
+    //#region 當頁 GlobalContextService (GCS) 值 控制
+    const controllGCS = (type, payload) => {
+        switch (type) {
+            case "return":
+                //#region 當 回上一頁時，要清除的資料
+                globalContextService.remove("HitCardPage");
+                //#endregion
+                break;
+            default:
+                break;
+        }
+    }
+    //#endregion
+
     //#region 路由監聽，清除API紀錄 (渲染即觸發的每一個API都要有)
     useEffect(() => {
         const historyUnlisten = history.listen((location, action) => {
-            //console.log(location, action)
-            globalContextService.remove("TodayTaskPage", "firstUseAPIgetTodayTask");
+            // console.log(location, action)
+            globalContextService.remove("HitCardPage", "firstUseAPIgetDriverPunch");
         });
 
         return () => {
@@ -38,16 +49,16 @@ export const HitCard = (props) => {
     }, [])
     //#endregion
 
-    //#region 取得所有最新消息類別 選項 API
-    const getTodayTask = useCallback(async (useAPI = false, newsCategoryId = "", releaseDate = fmt(moment(), "YYYY-MM")) => {
+    //#region 取得打卡紀錄 選項 API
+    const getDriverPunch = useCallback(async (useAPI = false, start = fmt(moment().startOf("day")), end = fmt(moment().endOf("day"))) => {
 
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
-        if (isUndefined(globalContextService.get("TodayTaskPage", "firstUseAPIgetTodayTask")) || useAPI) {
+        if (isUndefined(globalContextService.get("HitCardPage", "firstUseAPIgetDriverPunch")) || useAPI) {
             //#endregion
 
-            //#region 取得所有最新消息類別 API
-            await fetch(`${APIUrl}OrderOfCaseUsers/GetCaseOrderByDriver?driverid=${getParseItemLocalStorage("DriverID")}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
+            //#region 取得打卡紀錄 API
+            await fetch(`${APIUrl}DriverPunch/Load?page=1&limit=99999&driverid=${getParseItemLocalStorage("DriverID")}&StartDate=${start}&EndDate=${end}`, //DriverPunch/Load
                 {
                     headers: {
                         "X-Token": getParseItemLocalStorage("DAuth"),
@@ -62,13 +73,13 @@ export const HitCard = (props) => {
                 .then((PreResult) => {
 
                     if (PreResult.code === 200) {
-                        // 成功取得司機 證照 API
+                        // 成功取得打卡紀錄 API
                         // console.log(PreResult)
                         // console.log(PreResult?.data.sort((a, b) => {
                         //     return a.sortNo - b.sortNo;
                         // }).map(d => ({ data: { ...d }, value: d?.id, label: d?.name })))
 
-                        setTodayTask(PreResult.result);
+                        setDriverPunch(PreResult.data);
                     }
                     else {
                         throw PreResult;
@@ -109,7 +120,7 @@ export const HitCard = (props) => {
                 })
                 .finally(() => {
                     //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
-                    globalContextService.set("TodayTaskPage", "firstUseAPIgetTodayTask", false);
+                    globalContextService.set("HitCardPage", "firstUseAPIgetDriverPunch", false);
                     //#endregion
                 });
             //#endregion
@@ -117,7 +128,7 @@ export const HitCard = (props) => {
         }
     }, [APIUrl, Switch])
 
-    const [GetTodayTaskExecute, GetTodayTaskPending] = useAsync(getTodayTask, true);
+    const [GetDriverPunchExecute, GetDriverPunchPending] = useAsync(getDriverPunch, true);
     //#endregion
 
     return (
@@ -151,13 +162,9 @@ export const HitCard = (props) => {
             {
                 // Width < 768 &&
                 <MobileM
-                    NowTab={NowTab} // 目前公告頁面
-                    setNowTab={setNowTab} // 設定目前公告頁面
-                    TodayTask={TodayTask} // 所有最新消息類別
-                    AllNews={AllNews} // 類別下所有最新消息
-                    CheckDetail={CheckDetail} // 詳細資料
-                    setCheckDetail={setCheckDetail} // 設定詳細資料
-                    GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
+                    DriverPunch={DriverPunch} // 所有最新消息類別
+                    controllGCS={controllGCS}
+                // GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
                 />
             }
         </>

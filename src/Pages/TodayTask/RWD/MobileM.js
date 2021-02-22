@@ -13,6 +13,7 @@ import moment from 'moment';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { isEqual, isNil, isUndefined } from 'lodash';
+import { getParseItemLocalStorage } from '../../../Handlers';
 
 const MobileMBase = (props) => {
 
@@ -51,7 +52,10 @@ const MobileMBase = (props) => {
                         text={"打卡"}
                         theme={mobileM.TickBtn}
                         onClick={() => {
-                            history.push("/HitCard")
+                            props.AddDriverPunchExecute({
+                                driverId: getParseItemLocalStorage("DriverID"),
+                                punchType: 3
+                            })
                         }}
                     />
                 </BasicContainer>
