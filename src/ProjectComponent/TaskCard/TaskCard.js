@@ -38,6 +38,11 @@ export const TaskCardBase = (props) => {
     const [NowUsePrimary, setNowUsePrimary] = useState(props?.defaultUsePrimaryKey ?? props?.data?.[0]?.[`${props?.primaryKey}`]);
     const [NowUsePrimaryData, setNowUsePrimaryData] = useState(props?.data?.[0]);
 
+    useEffect(() => {
+        setNowUsePrimary(props?.defaultUsePrimaryKey ?? props?.data?.[0]?.[`${props?.primaryKey}`])
+        setNowUsePrimaryData(props?.data?.[0])
+    }, [props.data, props.defaultUsePrimaryKey, props.primaryKey])
+
     return (
         <>
             {/* 最外層容器 */}
