@@ -177,7 +177,8 @@ export default {
             padding: "16px 28px 10px 0",
             fontWeight: 600,
             fontSize: "13px",
-            display: "inline-block"
+            display: "inline-block",
+            top: "4px"
         })
     },
     //#endregion
