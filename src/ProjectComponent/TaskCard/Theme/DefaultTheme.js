@@ -147,7 +147,9 @@ export default {
             padding: "0",
             // padding: "0 1.5rem"
             //#endregion
-            height: "55px",
+            // height: "55px",
+            height: "auto",
+            minHeight: "55px",
             borderBottom: "1px solid #D8D8D8",
         }
     },

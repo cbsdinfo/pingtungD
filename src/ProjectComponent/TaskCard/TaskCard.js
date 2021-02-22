@@ -36,12 +36,24 @@ const switchDefaultTheme = (themeName) => {
 export const TaskCardBase = (props) => {
 
     const [NowUsePrimary, setNowUsePrimary] = useState(props?.defaultUsePrimaryKey ?? props?.data?.[0]?.[`${props?.primaryKey}`]);
-    const [NowUsePrimaryData, setNowUsePrimaryData] = useState(props?.data?.[0]);
+    const [NowUsePrimaryData, setNowUsePrimaryData] = useState(
+        props?.defaultUsePrimaryKey
+            ?
+            props?.data?.filter((it) => (it?.[`${props?.primaryKey}`] === props?.defaultUsePrimaryKey))?.[0]
+            :
+            props?.data?.[0]
+    );
 
     useEffect(() => {
         setNowUsePrimary(props?.defaultUsePrimaryKey ?? props?.data?.[0]?.[`${props?.primaryKey}`])
-        setNowUsePrimaryData(props?.data?.[0])
-    }, [props.data, props.defaultUsePrimaryKey, props.primaryKey])
+        setNowUsePrimaryData(
+            props?.defaultUsePrimaryKey
+                ?
+                props?.data?.filter((it) => (it?.[`${props?.primaryKey}`] === props?.defaultUsePrimaryKey))?.[0]
+                :
+                props?.data?.[0]
+        )
+    }, [props.data])
 
     return (
         <>
@@ -130,38 +142,42 @@ export const TaskCardBase = (props) => {
                     theme={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.baseDefaultTheme), "topContainer") }} //吃theme
                 >
                     {props?.topContent && props.topContent(NowUsePrimaryData)}
+
+                    {/* 左黑點 */}
+                    <BasicContainer
+                        theme={{
+                            basic: (style, prop) => ({
+                                ...style,
+                                position: "absolute",
+                                backgroundColor: "#3c4856",
+                                height: "30px",
+                                width: "15px",
+                                borderRadius: "0px 30px 30px 0px",
+                                // top: props?.nameType ? "82px" : "104px",
+                                bottom: "-14px",
+                                left: "0px",
+                                zIndex: 1,
+                            })
+                        }} />
+
+                    {/* 右黑點 */}
+                    <BasicContainer
+                        theme={{
+                            basic: (style, prop) => ({
+                                ...style,
+                                position: "absolute",
+                                backgroundColor: "#3c4856",
+                                height: "30px",
+                                width: "15px",
+                                borderRadius: "30px 0px 0px 30px",
+                                // top: props?.nameType ? "82px" : "104px",
+                                bottom: "-14px",
+                                zIndex: 1,
+                                right: "0px"
+                            })
+                        }} />
+
                 </BasicContainer>
-
-                {/* 左黑點 */}
-                <BasicContainer
-                    theme={{
-                        basic: (style, prop) => ({
-                            ...style,
-                            position: "absolute",
-                            backgroundColor: "#3c4856",
-                            height: "30px",
-                            width: "15px",
-                            borderRadius: "0px 30px 30px 0px",
-                            top: props?.nameType ? "82px" : "104px",
-                            zIndex: 1,
-                        })
-                    }} />
-
-                {/* 右黑點 */}
-                <BasicContainer
-                    theme={{
-                        basic: (style, prop) => ({
-                            ...style,
-                            position: "absolute",
-                            backgroundColor: "#3c4856",
-                            height: "30px",
-                            width: "15px",
-                            borderRadius: "30px 0px 0px 30px",
-                            top: props?.nameType ? "82px" : "104px",
-                            zIndex: 1,
-                            right: "5px"
-                        })
-                    }} />
 
                 <BasicContainer
                     {...props.bottomContainerEvent}
