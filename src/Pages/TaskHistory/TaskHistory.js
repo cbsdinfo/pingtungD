@@ -29,7 +29,7 @@ export const TaskHistory = (props) => {
     useEffect(() => {
         const historyUnlisten = history.listen((location, action) => {
             //console.log(location, action)
-            globalContextService.remove("TaskHistoryPage", "firstUseAPIgetNewsType");
+            globalContextService.remove("TaskHistoryPage", "firstUseAPIgetTodayTask");
         });
 
         return () => {
@@ -39,7 +39,7 @@ export const TaskHistory = (props) => {
     //#endregion
 
     //#region 取得所有今日任務 選項 API
-    const getTodayTask = useCallback(async (useAPI = false, newsCategoryId = "", releaseDate = fmt(moment(), "YYYY-MM")) => {
+    const getTodayTask = useCallback(async (useAPI = false, startDate = fmt(moment(), "YYYY-MM"), endDate = fmt(moment(), "YYYY-MM")) => {
 
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
