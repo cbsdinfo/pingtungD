@@ -86,6 +86,17 @@ export default {
     //#endregion
 
     //#region 卡片下層
+    //#region 卡片下層 容器
+    bottomContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            width: "100%",
+            height: `calc( ${props.height}px - 56px - 112px )`,
+        })
+    },
+    //#endregion
+
     //#region 搭車時間
     timeText: {
         basic: (style, props) => ({
@@ -348,7 +359,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "100%",
-            height: props.open ? `calc( ${props.height}px - 56px - 12px - 32px - 55px - 45px - 73px - 180px - 13px )` : `calc( ${props.height}px - 56px - 12px - 32px - 55px - 45px - 98px - 13px )`
+            height: props.open ? `calc( ${props.height}px - 56px - 12px - 32px - 55px - 45px - 73px - 180px - 17px )` : `calc( ${props.height}px - 56px - 12px - 32px - 55px - 45px - 98px - 17px )`
         })
     },
     //#endregion
@@ -439,7 +450,7 @@ export default {
     },
     //#endregion
 
-    //#region 個案名稱 容器
+    //#region 核對身分 個案名稱 容器
     checkCaseNameContainer: {
         basic: (style, props) => ({
             ...style,
@@ -450,7 +461,7 @@ export default {
     },
     //#endregion
 
-    //#region 個案名稱
+    //#region 核對身分 個案名稱
     checkCaseName: {
         basic: (style, props) => ({
             ...style,
@@ -460,12 +471,139 @@ export default {
             lineHeight: "32px",
             color: "#fff",
             backgroundColor: "#F38C00",
-            width: "80px",
+            // width: "80px",
             textAlign: "center",
             padding: "5px 10px"
         })
     },
     //#endregion
 
+    //#region 核對身分 下車地點 容器
+    checkEndContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-flex",
+            padding: "16px",
+            borderBottom: "1px dashed #D8D8D8"
+        })
+    },
     //#endregion
+
+    //#region 核對身分 下車地點 標題
+    checkEndTitle: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            fontWeight: 700,
+            fontSize: "16px",
+            lineHeight: "20px",
+            color: "#E87600",
+            width: "35px",
+            height: "42px",
+            backgroundColor: "#fff",
+            margin: "0 22px 0 0"
+        })
+    },
+    //#endregion
+
+    //#region 核對身分 下車地點 內文
+    checkEndText: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            fontWeight: 600,
+            fontSize: "20px",
+            lineHeight: "26px",
+            color: "#3D3D3D",
+            backgroundColor: "#fff",
+            width: "calc( 100% - 57px )",
+        })
+    },
+    //#endregion
+
+    //#region 核對身分 下車地點 備註
+    checkEndRemark: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            fontWeight: 500,
+            fontSize: "16px",
+            lineHeight: "16px",
+            color: "#F46C00",
+            width: "100%",
+            backgroundColor: "#F5F5F5",
+            padding: "5px",
+            margin: "2px 0 0",
+        })
+    },
+    //#endregion
+
+    //#region 核對身分 提醒紅字
+    redTip: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            fontWeight: 700,
+            fontSize: "16px",
+            lineHeight: "20px",
+            color: "#CF3A3A",
+            width: "100%",
+            margin: "13px 0 0"
+        })
+    },
+    //#endregion
+
+    //#region silder
+    //#region silder 容器
+    silderContainer: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "12px",
+            position: "fixed",
+            bottom: "5%",
+            width: "100%"
+        })
+    },
+    //#endregion
+
+    //#endregion
+
+    //#region 確認按鈕
+    //#region 確認按鈕 容器
+    buttonContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            textAlign: "center",
+            width: "100%",
+            position: "absolute",
+            bottom: "16px",
+            zIndex: 101
+        })
+    },
+    //#endregion
+
+    //#region 確認按鈕
+    comfirmButton: {
+        basic: (style) => ({
+            ...style,
+            width: "250px",
+            color: "#fff",
+            background: "#3D3D3D",
+            borderRadius: "38px",
+            height: "65px",
+            fontWeight: 700,
+            fontSize: "24px",
+            lineHeight: "32px",
+        }),
+        hover: (style, props) => ({
+        }),
+        focus: (style, props) => ({})
+    },
+    //#endregion
+    //#endregion
+
+    //#endregion
+
+
 }
