@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
 import { MainPageContainer, MainPageTitleBar, MapGoogle, mapGoogleControll, Silder, TaskCard, TitleBar } from '../../../ProjectComponent';
@@ -9,6 +9,7 @@ import { ReactComponent as Clock } from '../../../Assets/img/PerDespatchPage/Clo
 import { ReactComponent as Wheelchair } from '../../../Assets/img/PerDespatchPage/Wheelchair.svg'
 import { ReactComponent as Up } from '../../../Assets/img/PerDespatchPage/Up.svg'
 import { ReactComponent as Down } from '../../../Assets/img/PerDespatchPage/Down.svg'
+import { ReactComponent as Cross } from '../../../Assets/img/PerDespatchPage/Cross.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
@@ -22,12 +23,16 @@ const MobileMBase = (props) => {
     let history = useHistory()
     const [ForceUpdate, setForceUpdate] = useState(false); // 供強制刷新組件
     const [Width, Height] = useWindowSize();
-    //#region 分頁映射
-    const tabMap = (key) => {
-        return props.NewsType.map(item => { return item.label })
-    }
-    //#endregion
 
+    const driverStatusMapping = {
+        3: "抵達上車地點",
+        // "check": "確認身分",
+        4: "客上",
+        5: "已完成"
+    }
+
+    console.log(props.CheckDetail)
+    console.log(props?.TodayTask[0]?.despatchOfCaseOrderDayViews[0]?.status)
     return (
         <>
             <TitleBar
@@ -277,12 +282,81 @@ const MobileMBase = (props) => {
 
                                             </BasicContainer>
 
+
+                                            {/* 檢核身分 */}
+                                            {
+                                                props.CheckDetail
+                                                &&
+                                                <>
+                                                    {/* 檢核身分 容器 */}
+                                                    <BasicContainer
+                                                        theme={mobileM.checkIdContainer}
+                                                    >
+                                                        {/* 提醒 */}
+                                                        <Text
+                                                            theme={mobileM.checkTip}
+                                                        >
+                                                            小提醒!核對身份
+                                                        </Text>
+
+                                                        {/* 檢核資料 容器 */}
+                                                        <BasicContainer
+                                                            height={Height}
+                                                            theme={mobileM.checkDetailContainer}
+                                                        >
+                                                            <Cross
+                                                                onClick={() => {
+                                                                    props.setCheckDetail(false)
+                                                                }}
+                                                            />
+
+                                                            {/* 個案名稱 容器 */}
+                                                            <SubContainer
+                                                                theme={mobileM.checkCaseNameContainer}
+                                                            >
+                                                                {/* 個案名稱 */}
+                                                                <Text
+                                                                    theme={mobileM.checkCaseName}
+                                                                >
+                                                                    {data.name}
+                                                                </Text>
+                                                            </SubContainer>
+
+                                                            {/* 下車地點 標題 */}
+                                                            <Text
+                                                                open={props.Open}
+                                                                theme={mobileM.endTitle}
+                                                            >
+                                                                {`下車地點`}
+                                                            </Text>
+
+                                                            {/* 下車地點 內文 */}
+                                                            <Text
+                                                                open={props.Open}
+                                                                theme={mobileM.endText}
+                                                            >
+                                                                {data.toAddr}
+                                                            </Text>
+
+                                                            {/* 下車地點 備註 */}
+                                                            <Text
+                                                                open={props.Open}
+                                                                theme={mobileM.endRemark}
+                                                            >
+                                                                {`(${data.toAddrRemark})`}
+                                                            </Text>
+
+                                                        </BasicContainer>
+                                                    </BasicContainer>
+                                                </>
+                                            }
                                         </>
                                     )
                                 }}
                             />
                         )
                     })}
+
                     <BasicContainer
                         theme={{
                             basic: (style, props) => ({
@@ -294,11 +368,19 @@ const MobileMBase = (props) => {
                             })
                         }}
                     >
-                        <Silder text={"抵達上車地點"} onToRight={() => { console.log("right") }} />
+                        <Silder
+                            text={driverStatusMapping[3]}
+                            onToRight={() => {
+                                props.setCheckDetail(true)
+                            }}
+                        />
+
                     </BasicContainer>
 
 
                 </BasicContainer>
+
+
 
             </MainPageContainer>
         </>

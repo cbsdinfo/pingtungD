@@ -24,6 +24,7 @@ export default {
                 return {
                     ...style,
                     padding: "0", //188 是授權圖高度
+                    backgroundColor: "#3c4856",
                     // height:""
                 }
             }
@@ -31,6 +32,7 @@ export default {
     },
     //#endregion
 
+    //#region 出始畫面
     //#region 卡片外側容器
     cardOutContainer: {
         basic: (style, props) => ({
@@ -389,5 +391,81 @@ export default {
         }
     },
     //#endregion
+    //#endregion
+
+    //#endregion
+
+    //#region 核對身分畫面
+    //#region 搭車時間
+    checkTip: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            fontWeight: 700,
+            fontSize: "40px",
+            lineHeight: "100px",
+            color: "#fff",
+            width: "100%",
+            textAlign: "center"
+        })
+    },
+    //#endregion
+
+    //#region 檢核身分 容器
+    checkIdContainer: {
+        basic: (style, props) => ({
+            ...style,
+            position: "fixed",
+            top: "56px",
+            left: "0px",
+            width: "100%",
+            zIndex: 100,
+            backgroundColor: "#F8A91E"
+        })
+    },
+    //#endregion
+
+    //#region 檢核資料 容器
+    checkDetailContainer: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "12px 20px",
+            width: "100%",
+            height: `calc( ${props.height}px - 56px - 100px )`,
+            backgroundColor: "#fff",
+            borderRadius: "10px 10px 0 0",
+            textAlign: "right"
+        })
+    },
+    //#endregion
+
+    //#region 個案名稱 容器
+    checkCaseNameContainer: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "16px",
+            width: "100%",
+            backgroundColor: "#3C4856",
+        })
+    },
+    //#endregion
+
+    //#region 個案名稱
+    checkCaseName: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            fontWeight: 700,
+            fontSize: "18px",
+            lineHeight: "32px",
+            color: "#fff",
+            backgroundColor: "#F38C00",
+            width: "80px",
+            textAlign: "center",
+            padding: "5px 10px"
+        })
+    },
+    //#endregion
+
     //#endregion
 }

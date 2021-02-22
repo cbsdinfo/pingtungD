@@ -18,7 +18,9 @@ export const PerDespatch = (props) => {
     const { APIUrl, Theme, Switch } = useContext(Context);
     //const { pages: { login } } = Theme;
     const [TodayTask, setTodayTask] = useState([]); //所有今日任務
-    const [Open, setOpen] = useState(true); // 展開
+    const [Open, setOpen] = useState(false); // 展開
+    const [DriverStatus, setDriverStatus] = useState(""); // 司機狀態
+    const [CheckDetail, setCheckDetail] = useState(false); // 確認身分
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
@@ -155,6 +157,10 @@ export const PerDespatch = (props) => {
                     TodayTask={TodayTask} // 所有最新消息類別
                     Open={Open} // 展開
                     setOpen={setOpen} // 設定展開
+                    DriverStatus={DriverStatus} // 司機狀態
+                    setDriverStatus={setDriverStatus} // 設定司機狀態
+                    CheckDetail={CheckDetail} // 確認身分
+                    setCheckDetail={setCheckDetail} // 設定確認身分
                     GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
                 />
             }
