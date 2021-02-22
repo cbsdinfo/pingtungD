@@ -61,14 +61,7 @@ const MobileMBase = (props) => {
                 </BasicContainer>
 
                 <BasicContainer
-                    theme={{
-                        basic: (style, props) => ({
-                            ...style,
-                            padding: "60px 0 12px 0",
-                            width: "100%",
-                            backgroundColor: "#3c4856"
-                        })
-                    }}
+                    theme={mobileM.cardOutContainer}
                 >
                     {props?.TodayTask?.map((item, index) => {
                         return (
@@ -86,7 +79,7 @@ const MobileMBase = (props) => {
                                 // defaultUsePrimaryKey={props?.defaultPrimary} // 初始要使用的分頁 (值要對應到 primaryKey)
 
                                 topContent={(data) => {
-                                    console.log(data)
+                                    // console.log(data)
                                     return (
                                         <>
                                             {/* 乘車時間 */}
@@ -171,7 +164,7 @@ const MobileMBase = (props) => {
                                                     <Text
                                                         theme={mobileM.fromAddrRemarkText}
                                                     >
-                                                        ({data.fromAddrRemark})
+                                                        {`(${data.fromAddrRemark})`}
                                                     </Text>
                                                 </Text>
 
@@ -189,7 +182,7 @@ const MobileMBase = (props) => {
                                                     <Text
                                                         theme={mobileM.toAddrRemarkText}
                                                     >
-                                                        ({data.toAddrRemark})
+                                                        {`(${data.toAddrRemark})`}
                                                     </Text>
                                                 </Text>
 

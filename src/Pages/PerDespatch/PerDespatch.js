@@ -17,10 +17,8 @@ export const PerDespatch = (props) => {
 
     const { APIUrl, Theme, Switch } = useContext(Context);
     //const { pages: { login } } = Theme;
-    const [NowTab, setNowTab] = useState("系統公告"); // 目前公告頁面
     const [TodayTask, setTodayTask] = useState([]); //所有今日任務
-    const [AllNews, setAllNews] = useState([]); // 類別下所有最新消息
-    const [CheckDetail, setCheckDetail] = useState({}); // 詳細資料
+    const [Open, setOpen] = useState(true); // 展開
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
@@ -154,12 +152,9 @@ export const PerDespatch = (props) => {
                 // Width < 768 &&
                 <MobileM
                     defaultPrimary={urlParams.get("defaultPrimary")}
-                    NowTab={NowTab} // 目前公告頁面
-                    setNowTab={setNowTab} // 設定目前公告頁面
                     TodayTask={TodayTask} // 所有最新消息類別
-                    AllNews={AllNews} // 類別下所有最新消息
-                    CheckDetail={CheckDetail} // 詳細資料
-                    setCheckDetail={setCheckDetail} // 設定詳細資料
+                    Open={Open} // 展開
+                    setOpen={setOpen} // 設定展開
                     GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
                 />
             }

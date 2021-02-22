@@ -40,7 +40,7 @@ export default {
             borderTop: "solid 1px rgb(43 43 43 / 15%)",
             position: "fixed",
             width: "100%",
-            zIndex: 1
+            zIndex: 5
         })
     },
     //#endregion
@@ -93,6 +93,17 @@ export default {
                 top: "3px"
             }),
         }
+    },
+    //#endregion
+
+    //#region 卡片外側容器
+    cardOutContainer: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "60px 0 12px 0",
+            width: "100%",
+            backgroundColor: "#3c4856"
+        })
     },
     //#endregion
 
