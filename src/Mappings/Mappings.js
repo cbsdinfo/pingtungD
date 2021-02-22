@@ -13,6 +13,13 @@ import { ReactComponent as OrderSvg } from '../Assets/img/BackstageLeftSideMenuB
 import { ReactComponent as RouteAndStopSvg } from '../Assets/img/BackstageLeftSideMenuBar/RouteAndStop.svg'
 import { ReactComponent as ContactSvg } from '../Assets/img/BackstageLeftSideMenuBar/Contact.svg'
 
+import { ReactComponent as TodayTaskSvg } from '../Assets/img/BackstageLeftSideMenuBar/TodayTask.svg'
+import { ReactComponent as TaskHistorySvg } from '../Assets/img/BackstageLeftSideMenuBar/TaskHistory.svg'
+import { ReactComponent as IncomeSvg } from '../Assets/img/BackstageLeftSideMenuBar/Income.svg'
+import { ReactComponent as ContactsSvg } from '../Assets/img/BackstageLeftSideMenuBar/Contacts.svg'
+import { ReactComponent as SchoolSvg } from '../Assets/img/BackstageLeftSideMenuBar/School.svg'
+import { ReactComponent as DayCheckSvg } from '../Assets/img/BackstageLeftSideMenuBar/DayCheck.svg'
+
 import { TodayTask } from '../Pages/TodayTask/TodayTask';
 import { PerDespatch } from '../Pages/PerDespatch/PerDespatch';
 import { HitCard } from '../Pages/HitCard/HitCard';
@@ -325,6 +332,14 @@ export const iconMap = {
    "預約訂單": (style, props) => <OrderSvg style={style} {...props} />,
    "路線及站牌管理": (style, props) => <RouteAndStopSvg style={style} {...props} />,
    "聯繫客服": (style, props) => <ContactSvg style={style} {...props} />,
+
+   "今日任務": (style, props) => <TodayTaskSvg style={{ ...style, left: "10px" }} {...props} />,
+   "任務歷程": (style, props) => <TaskHistorySvg style={{ ...style, left: "12px" }} {...props} />,
+   "收入列表": (style, props) => <IncomeSvg style={{ ...style, left: "12px" }} {...props} />,
+   "聯繫行控": (style, props) => <ContactsSvg style={{ ...style, left: "18px" }} {...props} />,
+   "司機學院": (style, props) => <SchoolSvg style={{ ...style, left: "13px" }} {...props} />,
+   "每日檢查": (style, props) => <DayCheckSvg style={{ ...style, left: "14px" }} {...props} />,
+
 }
 //#endregion
 

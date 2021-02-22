@@ -658,8 +658,8 @@ export default {
         basic: {
             width: "100%",
             maxWidth: "15rem",
-            height: "calc( 100% - 4rem )",
-            maxHeight: "calc( 100% - 4rem )",
+            height: "calc( 100% - 279px )",
+            maxHeight: "calc( 100% - 279px )",
             borderRight: "1px solid #f0f0f0",
             boxSizing: "border-box",
         }
@@ -681,7 +681,7 @@ export default {
             left: 0,
             top: 0,
             backgroundColor: "#ffffff",
-            padding: "24px 0 0 0"
+            padding: "6px 0 0 0"
             //#endregion
         }
     },
@@ -1057,7 +1057,7 @@ export default {
             left: 0,
             top: 0,
             backgroundColor: "#ffffff",
-            padding: "24px 0 0 0"
+            padding: "6px 0 0 0"
             //#endregion
         }
     },

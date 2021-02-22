@@ -221,7 +221,9 @@ export const Layout = (props) => {
                             // bottom: "10px",
                             textAlign: "center",
                             width: "100%",
-                            paddingTop: "8px"
+                            paddingTop: "8px",
+                            height: "279px",
+                            background: "#3C4856",
                         })
                     }}
                 >
@@ -307,7 +309,43 @@ export const Layout = (props) => {
                                 children: [],
                                 item: {
                                     id: "79124b7c-12ca-4ce6-802e-15ee192aac5b",
-                                    name: "聯繫客服",
+                                    name: "今日任務",
+                                    parentId: null,
+                                    parentName: "根節點",
+                                    sortNo: 3,
+                                    status: 0,
+                                    url: "/TodayTask",
+                                }
+                            },
+                            {
+                                children: [],
+                                item: {
+                                    id: "77777777-33ca-6cc6-802e-16ee172aaaaa",
+                                    name: "任務歷程",
+                                    parentId: null,
+                                    parentName: "根節點",
+                                    sortNo: 3,
+                                    status: 0,
+                                    url: "/TaskHistory",
+                                }
+                            },
+                            {
+                                children: [],
+                                item: {
+                                    id: "77777777-33ca-6cc6-802e-16ee172aazzz",
+                                    name: "收入列表",
+                                    parentId: null,
+                                    parentName: "根節點",
+                                    sortNo: 3,
+                                    status: 0,
+                                    url: "/Income",
+                                }
+                            },
+                            {
+                                children: [],
+                                item: {
+                                    id: "77777777-33ca-6cc6-802e-16ee172aaabbb",
+                                    name: "聯繫行控",
                                     parentId: null,
                                     parentName: "根節點",
                                     sortNo: 3,
@@ -318,365 +356,28 @@ export const Layout = (props) => {
                             {
                                 children: [],
                                 item: {
-                                    id: "77777777-33ca-6cc6-802e-16ee172aaaaa",
-                                    name: "常見問題",
+                                    id: "77777777-33ca-6cc6-802e-16ee172aaaccc",
+                                    name: "司機學院",
                                     parentId: null,
                                     parentName: "根節點",
                                     sortNo: 3,
                                     status: 0,
-                                    url: "/QAndA",
+                                    url: "/School",
+                                }
+                            },
+                            {
+                                children: [],
+                                item: {
+                                    id: "77777777-33ca-6cc6-802e-16ee172aaaddd",
+                                    name: "每日檢查",
+                                    parentId: null,
+                                    parentName: "根節點",
+                                    sortNo: 3,
+                                    status: 0,
+                                    url: "/DayCheck",
                                 }
                             },
                         ], history, location, ExpandMenuName, setExpandMenuName, setDrawerCollapse, true)}
-
-                        {/* 手機板政府單位聯絡資訊區 */}
-                        <BasicContainer>
-                            {/* 屏東縣政府資訊 */}
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        textAlign: "center",
-                                        color: "#4DB8BE",
-                                        paddingTop: "36px"
-                                    })
-                                }}
-                            >
-                                <Line style={{
-                                    position: "relative",
-                                    top: "-6px",
-                                    left: "-18px"
-                                }} />
-                                <Castle style={{
-                                    position: "relative",
-                                    left: "-12px",
-                                    top: "2px"
-                                }} />
-                                        屏東縣政府資訊
-                                        <Line style={{
-                                    position: "relative",
-                                    top: "-6px",
-                                    left: "18px"
-                                }} />
-                                {/* 
-CallWorkTime }
-DotOfmap } fro */}
-
-                            </Text>
-
-                            {/* 地址 */}
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        padding: "0 0 0 14px",
-                                        fontWeight: 500,
-                                        fontSize: "12px",
-                                        lineHeight: "18px",
-                                        color: "rgba(0, 0, 0, 0.85)"
-                                    })
-                                }}
-                            >
-                                地址:
-                                    </Text>
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        padding: "0 0 0 28px",
-                                        fontSize: "14px",
-                                        lineHeight: "22px",
-                                        color: "rgba(0, 0, 0, 0.65)",
-                                    })
-                                }}
-                            >
-                                <DotOfmap style={{
-                                    position: "absolute",
-                                    left: "12px",
-                                    top: "4px",
-                                }} />
-                                        屏東縣屏東市自由路527號
-                                    </Text>
-
-                            {/* 辦公時間 */}
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        padding: "0 0 0 14px",
-                                        fontWeight: 500,
-                                        fontSize: "12px",
-                                        lineHeight: "18px",
-                                        color: "rgba(0, 0, 0, 0.85)"
-                                    })
-                                }}
-                            >
-                                辦公時間:
-                                    </Text>
-
-                            <Container>
-                                <SubContainer
-                                    theme={{
-                                        basic: (style, props) => ({
-                                            ...style,
-                                            ...style.occupy(6)
-                                        })
-                                    }}
-                                >
-                                    <Text
-                                        theme={{
-                                            basic: (style, props) => ({
-                                                ...style,
-                                                padding: "0 0 0 14px",
-                                                fontSize: "14px",
-                                                lineHeight: "22px",
-                                                color: "rgba(0, 0, 0, 0.65)",
-                                            })
-                                        }}
-                                    >
-                                        週一至週五
-                                            </Text>
-                                </SubContainer>
-
-                                <SubContainer
-                                    theme={{
-                                        basic: (style, props) => ({
-                                            ...style,
-                                            ...style.occupy(6)
-                                        })
-                                    }}
-                                >
-                                    <Text
-                                        theme={{
-                                            basic: (style, props) => ({
-                                                ...style,
-                                                fontWeight: "bold",
-                                                fontSize: "14px",
-                                                lineHeight: "22px",
-                                                color: "#1890FF",
-                                            })
-                                        }}
-                                    >
-                                        <Clock style={{
-                                            position: "relative",
-                                            top: "2px",
-                                            left: "-2px"
-                                        }} />
-                                                08:00~12:00
-                                            </Text>
-                                    <Text
-                                        theme={{
-                                            basic: (style, props) => ({
-                                                ...style,
-                                                fontWeight: "bold",
-                                                fontSize: "14px",
-                                                lineHeight: "22px",
-                                                color: "#1890FF",
-                                            })
-                                        }}
-                                    >
-                                        <Clock style={{
-                                            position: "relative",
-                                            top: "2px",
-                                            left: "-2px"
-                                        }} />
-                                                13:30~17:30
-                                            </Text>
-                                </SubContainer>
-                            </Container>
-
-                            {/* 總機電話 */}
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        padding: "0 0 0 14px",
-                                        fontWeight: 500,
-                                        fontSize: "12px",
-                                        lineHeight: "18px",
-                                        color: "rgba(0, 0, 0, 0.85)"
-                                    })
-                                }}
-                            >
-                                總機電話:
-                                        <a
-                                    href="tel:+886-8-7320415"
-                                    style={{
-                                        position: "relative",
-                                        left: "52px",
-                                        fontSize: "14px"
-                                    }}
-                                >
-                                    <CallWorkTime style={{ position: "relative", top: "2px" }} />(08)732-0415
-                                        </a>
-                            </Text>
-
-                            {/* 分隔線 */}
-                            <BasicContainer
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        border: "1px dashed #D9D9D9",
-                                        margin: "18px 0",
-                                        width: "100%"
-                                    })
-                                }}
-                            />
-
-                            {/* 1999便民服務專線(付費專線) */}
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        fontWeight: "bold",
-                                        fontSize: "14px",
-                                        lineHeight: "22px",
-                                        color: "#fa541c",
-                                        textAlign: "center"
-                                    })
-                                }}
-                            >
-                                1999便民服務專線
-                                        <Text
-                                    theme={{
-                                        basic: (style, props) => ({
-                                            ...style,
-                                            fontWeight: "bold",
-                                            fontSize: "14px",
-                                            lineHeight: "22px",
-                                            color: "#f5222d",
-                                            display: "inline-block"
-                                        })
-                                    }}
-                                >
-                                    (付費專線)
-                                        </Text>
-                            </Text>
-
-
-                            {/* 服務時間 */}
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        padding: "0 0 0 14px",
-                                        fontWeight: 500,
-                                        fontSize: "12px",
-                                        lineHeight: "18px",
-                                        color: "rgba(0, 0, 0, 0.85)"
-                                    })
-                                }}
-                            >
-                                服務時間:
-                                    </Text>
-
-                            <Container>
-                                <SubContainer
-                                    theme={{
-                                        basic: (style, props) => ({
-                                            ...style,
-                                            ...style.occupy(6)
-                                        })
-                                    }}
-                                >
-                                    <Text
-                                        theme={{
-                                            basic: (style, props) => ({
-                                                ...style,
-                                                padding: "0 0 0 14px",
-                                                fontSize: "14px",
-                                                lineHeight: "22px",
-                                                color: "rgba(0, 0, 0, 0.65)",
-                                            })
-                                        }}
-                                    >
-                                        每日
-                                            </Text>
-                                </SubContainer>
-
-                                <SubContainer
-                                    theme={{
-                                        basic: (style, props) => ({
-                                            ...style,
-                                            ...style.occupy(6)
-                                        })
-                                    }}
-                                >
-                                    <Text
-                                        theme={{
-                                            basic: (style, props) => ({
-                                                ...style,
-                                                fontWeight: "bold",
-                                                fontSize: "14px",
-                                                lineHeight: "22px",
-                                                color: "#1890FF",
-                                            })
-                                        }}
-                                    >
-                                        <Clock style={{
-                                            position: "relative",
-                                            top: "2px",
-                                            left: "-2px"
-                                        }} />
-                                                08:00~22:00
-                                            </Text>
-                                </SubContainer>
-                            </Container>
-
-                            {/* 縣境內直撥 */}
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        padding: "0 0 0 14px",
-                                        fontWeight: 500,
-                                        fontSize: "12px",
-                                        lineHeight: "18px",
-                                        color: "rgba(0, 0, 0, 0.85)"
-                                    })
-                                }}
-                            >
-                                縣境內直撥
-                                        <a
-                                    href="tel:+886-1999"
-                                    style={{
-                                        position: "relative",
-                                        left: "44px",
-                                        fontSize: "14px"
-                                    }}
-                                >
-                                    <CallWorkTime style={{ position: "relative", top: "2px" }} />1999
-                                        </a>
-                            </Text>
-
-                            {/* 縣境內直撥 */}
-                            <Text
-                                theme={{
-                                    basic: (style, props) => ({
-                                        ...style,
-                                        padding: "0 0 0 14px",
-                                        fontWeight: 500,
-                                        fontSize: "12px",
-                                        lineHeight: "18px",
-                                        color: "rgba(0, 0, 0, 0.85)"
-                                    })
-                                }}
-                            >
-                                外縣市請撥
-                                        <a
-                                    href="tel:+886-8-732-0415"
-                                    style={{
-                                        position: "relative",
-                                        left: "44px",
-                                        fontSize: "14px"
-                                    }}
-                                >
-                                    <CallWorkTime style={{ position: "relative", top: "2px" }} />(08)732-0415
-                                        </a>
-                            </Text>
-
-                        </BasicContainer>
-
 
                     </BasicContainer>
                 </ScrollBar>
@@ -738,6 +439,7 @@ const generateMenu = (menuData, history, location, ExpandMenuName, setExpandMenu
                                 lineHeight: "40px",
                                 cursor: "pointer",
                                 userSelect: "none",
+                                borderBottom: "1px solid #d8d8d8",
                                 //#region 被選中的左側欄項目樣式
                                 ...(
                                     // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
