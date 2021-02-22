@@ -3,6 +3,7 @@ import { Context, Tooltip, BackstageLeftSideMenuBar, BackstagePageTabBar, Backst
 import { useWindowSize } from '../../SelfHooks/useWindowSize'
 import { ReactComponent as ArrowUp } from '../../Assets/img/BackstageLeftSideMenuBar/ArrowUp.svg'
 import { ReactComponent as WhiteBlock } from '../../Assets/img/BackstageLeftSideMenuBar/WhiteBlock.svg'
+import { ReactComponent as Close } from '../../Assets/img/BackstageLeftSideMenuBar/Close.svg'
 
 import { ReactComponent as LaptopLLogo } from '../../Assets/img/LaptopLLogo.svg'
 import { ReactComponent as LaptopLogo } from '../../Assets/img/LaptopLogo.svg'
@@ -36,7 +37,7 @@ export const Layout = (props) => {
     const [NeedHover, setNeedHover] = useState(false); // DropDown 開啟時需要hover
     const [width] = useWindowSize();
 
-    const { Collapse, setCollapse, DrawerCollapse, setDrawerCollapse, Theme, Switch } = useContext(Context);
+    const { Collapse, APIFileUrl, setCollapse, DrawerCollapse, setDrawerCollapse, Theme, Switch } = useContext(Context);
     const { layout } = Theme;
     let history = useHistory();
     let location = useLocation();
@@ -227,66 +228,91 @@ export const Layout = (props) => {
                         })
                     }}
                 >
+                    <Close
+                        style={{
+                            position: "absolute",
+                            right: "9px"
+                        }}
+                        onClick={() => {
+                            setDrawerCollapse(true)
+                        }}
+                    />
+
+                    <img
+                        src={`${APIFileUrl}${getParseItemLocalStorage("DriverPic")}`}
+                        alt=""
+                        height="100px"
+                        width="100px"
+                        style={{ borderRadius: "99em", border: "6px solid #fff", top: "36px", left: "-14px", position: "relative" }}
+                    />
+
                     <Text
                         theme={{
                             basic: (style, props) => ({
                                 ...style,
-                                fontSize: "16px",
+                                fontSize: "18px",
                                 lineHeight: "24px",
                                 textAlign: "center",
-                                color: "#4DB8BE",
+                                color: "#fff",
                                 display: "inline-block",
                                 marginRight: "16px",
+                                top: "33px",
+                                left: "16px",
+                                fontWeight: 300
                             })
                         }}
                     >
-                        Hi!  {getParseItemLocalStorage("DAuth") ? getParseItemLocalStorage("UserName") : "訪客"}
+                        {getParseItemLocalStorage("UserName")}
                     </Text>
 
-                    {getParseItemLocalStorage("DAuth")
-                        ?
-                        <>
-                            {/* 登出 */}
-                            <Text
-                                theme={layout.titleBarLogoutMobileM}
-                                onClick={() => {
-                                    setDrawerCollapse(true);
+                    <Text
+                        theme={{
+                            basic: (style, props) => ({
+                                ...style,
+                                fontSize: "18px",
+                                lineHeight: "24px",
+                                textAlign: "center",
+                                color: "#fff",
+                                display: "inline-block",
+                                marginRight: "16px",
+                                position: "absolute",
+                                fontWeight: 300,
+                                width: "100%",
+                                bottom: "93px",
+                                left: "-34px"
+                            })
+                        }}
+                    >
+                        {getParseItemLocalStorage("DriverOrg")?.orgName}
+                    </Text>
 
-                                    modalsService.infoModal.warn({
-                                        iconRightText: "是否要登出?",
-                                        yes: true,
-                                        yesText: "確認",
-                                        no: true,
-                                        noText: "取消",
-                                        // autoClose: true,
-                                        backgroundClose: false,
-                                        yesOnClick: (e, close) => {
-                                            clearLocalStorage();
-                                            clearSession();
-                                            globalContextService.clear();
-                                            Switch();
-                                            setDrawerCollapse(true);
-                                            close();
-                                        }
-                                    })
-                                }}
-                            >
-                                <LogoutLaptop style={layout.titleBarLogoutIconMobileM} />
-                                            登出
-                                        </Text>
-                        </>
-                        :
-                        <>
-                            {/* 登入 */}
-                            <Text
-                                theme={layout.titleBarLogoutMobileM}
-                                onClick={() => { history.push("/Login") }}
-                            >
-                                <LoginLaptop style={layout.titleBarLogoutIconMobileM} />
-                                            登入
-                                        </Text>
-                        </>
-                    }
+
+                    <Text
+                        theme={layout.titleBarLogoutMobileM}
+                        onClick={() => {
+                            setDrawerCollapse(true);
+
+                            modalsService.infoModal.warn({
+                                iconRightText: "是否要登出?",
+                                yes: true,
+                                yesText: "確認",
+                                no: true,
+                                noText: "取消",
+                                // autoClose: true,
+                                backgroundClose: false,
+                                yesOnClick: (e, close) => {
+                                    clearLocalStorage();
+                                    clearSession();
+                                    globalContextService.clear();
+                                    Switch();
+                                    setDrawerCollapse(true);
+                                    close();
+                                }
+                            })
+                        }}
+                    >
+                        登出
+                    </Text>
 
                 </BasicContainer>
 
@@ -439,7 +465,7 @@ const generateMenu = (menuData, history, location, ExpandMenuName, setExpandMenu
                                 lineHeight: "40px",
                                 cursor: "pointer",
                                 userSelect: "none",
-                                borderBottom: "1px solid #d8d8d8",
+                                borderBottom: "1px solid rgba(216,216,216,1)",
                                 //#region 被選中的左側欄項目樣式
                                 ...(
                                     // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions

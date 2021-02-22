@@ -630,17 +630,24 @@ export default {
     titleBarLogoutMobileM: {
         basic: (style, props) => ({
             ...style,
+            position: "absolute",
             textAlign: "center",
             fontSize: "14px",
-            color: "rgba(0, 0, 0, 0.65)",
-            padding: "4px 0",
             cursor: "pointer",
             userSelect: "none",
             display: "inline-block",
+            bottom: "30px",
+            left: "11px",
+            width: "100px",
+            border: "1px solid #fff",
+            borderRadius: "31px",
+            color: "#fff",
+            height: "40px",
+            padding: "9px 0"
 
         }),
         hover: (style, props) => ({
-            color: "#FFE977",
+            // color: "#FFE977",
         })
     },
     //#endregion

@@ -187,6 +187,8 @@ export const Login = (props) => {
                     setItemLocalStorage("DAuth", JSON.stringify(token));
                     setItemLocalStorage("DriverID", JSON.stringify(PreResult.result?.id));
                     setItemLocalStorage("DriverAccount", JSON.stringify(PreResult.result?.account));
+                    setItemLocalStorage("DriverPic", JSON.stringify(PreResult.result?.pic));
+                    setItemLocalStorage("DriverOrg", JSON.stringify({ orgId: PreResult.result?.orgId, orgName: PreResult.result?.orgName }));
                     controllGCS("Login");
                 } else {
                     throw PreResult.message;
