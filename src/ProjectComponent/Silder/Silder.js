@@ -89,7 +89,7 @@ export const Silder = (props) => {
                 }
                 else {
                     setValue(96)
-                    props?.onToRight && props.onToRight()
+                    props?.onToRight && props.onToRight(setValue)
                 }
             }}
         />
