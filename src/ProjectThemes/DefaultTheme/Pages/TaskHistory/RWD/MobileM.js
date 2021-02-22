@@ -65,19 +65,19 @@ export default {
         viewTypeContainer: {
             basic: (style, props) => ({
                 ...style,
-                padding: "8px 16px",
+                padding: "8px 8px",
                 display: "inline-block",
-                width: "100%"
-                // ...style.occupy(12),
+                // width: "100%"
+                ...style.occupy(6),
             })
         },
         container: {
             basic: (style, props) => ({
                 ...style,
                 display: "inline-block",
-                padding: "8px 16px",
-                width: "100%"
-                // ...style.occupy(12),
+                padding: "8px 8px",
+                // width: "100%"
+                ...style.occupy(6),
             })
         },
         topLabel: {
@@ -110,103 +110,6 @@ export default {
                 height: "0px"
             })
         }
-    },
-    //#endregion
-
-    //#region 詳細資料外側容器
-    detailOutContainer: {
-        basic: (style, props) => ({
-            ...style,
-            width: "100%",
-            minHeight: `calc( ${props.height}px - 230px )`,
-            margin: "16px 0 0",
-            textAlign: "right",
-            padding: "0 16px"
-        }),
-    },
-    //#endregion
-
-    //#region 詳細資料容器
-    detailContainer: {
-        basic: (style, props) => ({
-            ...style,
-            width: "100%",
-            padding: "24px",
-            backgroundColor: "#fff",
-            borderRadius: "8px",
-        }),
-    },
-    //#endregion
-
-    //#region 詳細資料 標題
-    detailHeader: {
-        basic: (style, props) => ({
-            ...style,
-            fontWeight: 600,
-            fontSize: "20px",
-            lineHeight: "28px",
-            boxShadow: "inset 0px -1px #D9D9D9",
-            color: "#00628F",
-            padding: "0 0 16px",
-            wordBreak: "break-all"
-        }),
-    },
-    //#endregion
-
-    //#region 詳細資料 內文
-    newsEditor: {
-        viewTypeTextEditor: {
-            basic: (style, props) => ({
-                ...style,
-                wordBreak: "break-all"
-            })
-        },
-        viewTypeContainer: {
-            basic: (style, props) => ({
-                ...style,
-                padding: "0 0 0 0",
-                display: "inline-block",
-                ...style.occupy(12),
-            })
-        },
-        container: {
-            basic: (style, props) => ({
-                ...style,
-                padding: "0 0 24px 0",
-                display: "inline-block",
-                ...style.occupy(12),
-            })
-        },
-        textEditor: {
-            basic: (style, props) => ({
-                ...style,
-                height: "500px",
-            })
-        },
-    },
-    //#endregion
-
-    //#region 回列表按鈕
-    returnButton: {
-        basic: (style) => ({
-            ...style,
-            width: "74px",
-            height: "28px",
-            fontSize: "14px",
-            lineHeight: "22px",
-            top: "2px",
-            padding: 0,
-            color: "#1890ff",
-            backgroundColor: "#fff",
-            borderColor: "#1890ff",
-            borderRadius: "2px",
-            margin: "16px 0 0"
-        }),
-        hover: (style, props) => ({
-            ...style,
-            backgroundColor: "rgba(24,144,255,0.05)"
-        }),
-        focus: (style, props) => ({})
     },
     //#endregion
 

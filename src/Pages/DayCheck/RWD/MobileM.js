@@ -45,11 +45,13 @@ const MobileMBase = (props) => {
                         basic: (style, props) => ({
                             ...style,
                             width: "100%",
+                            backgroundColor: "#383838",
+                            padding: "5px",
                             height: `${Height - 56}px`
                         })
                     }}
                 >
-                    <Sign height={Height - 56} primaryKey={"orderId"} sendOnClick={() => { }} />
+                    <Sign height={Height - 56 - 10} primaryKey={"orderId"} sendOnClick={(base64, isNoSign, clearSign) => { console.log(base64, isNoSign) }} />
                 </BasicContainer>
 
             </MainPageContainer>
