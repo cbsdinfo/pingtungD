@@ -91,6 +91,7 @@ const DatePickerExtendStyle = styled(DatePickerExtend).attrs((props) => ({}))`
 
 //#region dateTimePickerSubContainer 日期選擇框 次容器
 &.ant-picker {
+    padding: 4px 11px 4px 27px;
     ${props => (cssifyObject(iterateTheme({ ...props, focus: props.focus, hover: props.hover, disable: props.disable }, props.theme, switchDefaultTheme(props.disable ? "DisableTheme" : props.baseDefaultTheme), "dateTimePickerSubContainer")['basic']))}  
 }
 //#endregion
@@ -107,10 +108,19 @@ const DatePickerExtendStyle = styled(DatePickerExtend).attrs((props) => ({}))`
     //#endregion
 }
 
+& .ant-picker-input:before {
+    content: ${props => `"${props.rightText}"`};
+    position: absolute;
+    right: 0;
+    color: black;
+}
+
 && .ant-picker-suffix {
     color: inherit;
     transition: none;
+    display: none; //close icon
 }
+
 //#endregion
 
 //#region 是否開啟清除功能
@@ -128,6 +138,7 @@ const TimePickerExtendStyle = styled(TimePickerExtend).attrs((props) => ({}))`
 
 //#region dateTimePickerSubContainer 日期選擇框 次容器
 &.ant-picker {
+    padding: 4px 11px 4px 27px;
     ${props => (cssifyObject(iterateTheme({ ...props, focus: props.focus, hover: props.hover }, props.theme, switchDefaultTheme(props.disable ? "DisableTheme" : props.baseDefaultTheme), "dateTimePickerSubContainer")['basic']))}  
 }
 //#endregion
@@ -143,11 +154,20 @@ const TimePickerExtendStyle = styled(TimePickerExtend).attrs((props) => ({}))`
     }
     //#endregion
 }
+& .ant-picker-input:before {
+    content: ${props => `"${props.rightText}"`};
+    position: absolute;
+    right: 0;
+    color: black;
+}
 
 && .ant-picker-suffix {
     color: inherit;
     transition: none;
+    display: none; //close icon
 }
+
+
 //#endregion
 
 //#region 是否開啟清除功能
@@ -326,6 +346,7 @@ export const DateTimePickerBase = (props) => {
                                 <>
                                     {/* DatePicker */}
                                     < DatePickerExtendStyle
+                                        rightText={props?.rightText ?? ""}
                                         ref={TimeRef}
                                         //onChange={(e) => { setChecked(c => !c); props.onChange && props.onChange(e, e.target.checked, OnInitial); }}
                                         disabled={props.disable ?? false}
@@ -375,7 +396,7 @@ export const DateTimePickerBase = (props) => {
                                 <>
                                     {/* TimePicker */}
                                     <TimePickerExtendStyle
-
+                                        rightText={props?.rightText ?? ""}
                                         //onChange={(e) => { setChecked(c => !c); props.onChange && props.onChange(e, e.target.checked, OnInitial); }}
                                         disabled={props.disable ?? false}
                                         disable={props.disable ?? false} //供判斷
