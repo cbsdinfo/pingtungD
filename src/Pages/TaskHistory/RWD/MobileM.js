@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
-import { MainPageContainer, MainPageTitleBar, TitleBar } from '../../../ProjectComponent';
+import { MainPageContainer, MainPageTitleBar, TaskCard, TitleBar } from '../../../ProjectComponent';
 import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService } from '../../../Components';
 import { ReactComponent as Plus } from '../../../Assets/img/QAndA/Plus.svg'
 import { ReactComponent as Edit } from '../../../Assets/img/QAndA/Edit.svg'
@@ -36,7 +36,14 @@ const MobileMBase = (props) => {
                     </>
                 }
             >
-                <Container>
+                <Container
+                    theme={{
+                        basic: (style, props) => ({
+                            ...style,
+                            background: "#3c4856"
+                        })
+                    }}
+                >
                     {/* 日期區間 DateTimeRange  */}
                     <DateTimePicker
                         rightText={"(起)"}
@@ -101,6 +108,48 @@ const MobileMBase = (props) => {
                         theme={mobileM.dateTimeRange}
                     />
                 </Container>
+
+                <BasicContainer
+                    theme={mobileM.cardOutContainer}
+                >
+                    {props?.TodayTask?.map((item, index) => {
+                        return (
+                            <TaskCard
+                                key={index}
+
+                                data={item?.despatchOfCaseOrderDayViews} // 調度單資料
+                                nameType // timeNameType、nameType 顯示名字、或顯示時間與名字
+                                // timeNameType // timeNameType、nameType 顯示名字、或顯示時間與名字
+                                // needAction // 是否需要點即後，文字變成執行中
+                                nameKeyName={"name"} // nameKeyName 對應資料 名字 的 key 名
+                                TimeKeyName={"reserveDate"} // TimeKeyName 對應資料 時間 的 key 名
+                                // callBackKeyName 有需要回調 則在資料中補上回調，並指定 key名
+                                primaryKey={"orderId"}// primaryKey 對應資料 唯一鍵 的 key 名
+                                // defaultUsePrimaryKey={props?.defaultPrimary} // 初始要使用的分頁 (值要對應到 primaryKey)
+
+                                topContent={(data) => {
+                                    console.log(data)
+                                    return (
+                                        <>
+                                            dsfsdf
+                                        </>
+                                    )
+                                }}
+                                bottomContent={(data) => {
+                                    console.log(data)
+                                    return (
+                                        <>
+                                            sdf
+                                        </>
+                                    )
+                                }}
+                            />
+                        )
+                    })}
+
+
+                </BasicContainer>
+
             </MainPageContainer>
         </>
     )

@@ -10,6 +10,8 @@ import 'moment/locale/zh-tw'; //日期名包
 import { useLocation } from 'react-router-dom';
 import { ReactComponent as Eye } from './Assets/img/Eye.svg'
 import { ReactComponent as EyeInvisible } from './Assets/img/EyeInvisible.svg'
+
+import Date from './Assets/img/Date.png';
 //#region 擴充基本樣式區
 import DefaultTheme from './Theme/DefaultTheme'
 // import PrimaryTheme from './Theme/PrimaryTheme'
@@ -92,6 +94,8 @@ const DatePickerExtendStyle = styled(DatePickerExtend).attrs((props) => ({}))`
 //#region dateTimePickerSubContainer 日期選擇框 次容器
 &.ant-picker {
     padding: 4px 11px 4px 27px;
+    border: 1px solid #fff;
+    border-radius: 4px;
     ${props => (cssifyObject(iterateTheme({ ...props, focus: props.focus, hover: props.hover, disable: props.disable }, props.theme, switchDefaultTheme(props.disable ? "DisableTheme" : props.baseDefaultTheme), "dateTimePickerSubContainer")['basic']))}  
 }
 //#endregion
@@ -113,6 +117,14 @@ const DatePickerExtendStyle = styled(DatePickerExtend).attrs((props) => ({}))`
     position: absolute;
     right: 0;
     color: black;
+}
+
+& .ant-picker-input:after {
+    content: ${props => ` url(${Date})`};
+    position: absolute;
+    color: black;
+    left: -24px;
+    top: 0px;
 }
 
 && .ant-picker-suffix {
@@ -139,6 +151,8 @@ const TimePickerExtendStyle = styled(TimePickerExtend).attrs((props) => ({}))`
 //#region dateTimePickerSubContainer 日期選擇框 次容器
 &.ant-picker {
     padding: 4px 11px 4px 27px;
+    border: 1px solid #fff;
+    border-radius: 4px;
     ${props => (cssifyObject(iterateTheme({ ...props, focus: props.focus, hover: props.hover }, props.theme, switchDefaultTheme(props.disable ? "DisableTheme" : props.baseDefaultTheme), "dateTimePickerSubContainer")['basic']))}  
 }
 //#endregion
@@ -159,6 +173,14 @@ const TimePickerExtendStyle = styled(TimePickerExtend).attrs((props) => ({}))`
     position: absolute;
     right: 0;
     color: black;
+}
+
+& .ant-picker-input:after {
+    content: ${props => ` url(${Date})`};
+    position: absolute;
+    color: black;
+    left: -24px;
+    top: 0px;
 }
 
 && .ant-picker-suffix {
