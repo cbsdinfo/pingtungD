@@ -247,6 +247,20 @@ export const Routers = (props) => {
                     }
                     }>
                 </Route>
+                <Route exact path={"/PerTaskHistory"}
+                    render={({ location }) => {
+                        return (getParseItemLocalStorage("DAuth") !== null) ? (
+                            urlMapping["/PerTaskHistory"]
+                        ) : (
+                                <Redirect
+                                    to={{
+                                        pathname: "/Login",
+                                    }}
+                                />
+                            );
+                    }
+                    }>
+                </Route>
                 <Route exact path={"/Income"}
                     render={({ location }) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
