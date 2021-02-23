@@ -100,6 +100,7 @@ export const TaskCardBase = (props) => {
                                                 onClick={(e) => {
                                                     setNowUsePrimary(item?.[`${props?.primaryKey}`])
                                                     setNowUsePrimaryData(item)
+                                                    props?.onTabClick && props.onTabClick(item)
                                                 }}
                                             />
                                         }
@@ -114,6 +115,7 @@ export const TaskCardBase = (props) => {
                                                 onClick={(e) => {
                                                     setNowUsePrimary(item?.[`${props?.primaryKey}`])
                                                     setNowUsePrimaryData(item)
+                                                    props?.onTabClick && props.onTabClick(item)
                                                 }}
                                             />
                                         }
