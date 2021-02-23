@@ -23,6 +23,7 @@ import { ReactComponent as DayCheckSvg } from '../Assets/img/BackstageLeftSideMe
 import { TodayTask } from '../Pages/TodayTask/TodayTask';
 import { PerDespatch } from '../Pages/PerDespatch/PerDespatch';
 import { HitCard } from '../Pages/HitCard/HitCard';
+import { PerTaskHistory } from '../Pages/PerTaskHistory/PerTaskHistory';
 import { TaskHistory } from '../Pages/TaskHistory/TaskHistory';
 import { Income } from '../Pages/Income/Income';
 import { Contact } from '../Pages/Contact/Contact';
@@ -46,7 +47,8 @@ export const urlMapping = {
    "/TodayTask": <TodayTask />, // 今日任務
    "/PerDespatch": <PerDespatch />, // 今日任務單張調度單
    "/HitCard": <HitCard />, // 打卡
-   "/TaskHistory": <TaskHistory />, // 任務歷程
+   "/PerTaskHistory": <PerTaskHistory />, // 任務歷程
+   "/TaskHistory": <TaskHistory />, // 任務歷程單筆訂單
    "/Income": <Income />, // 收入列表
    "/Contact": <Contact />, // 聯繫行控
    "/School": <School />, // 司機學院

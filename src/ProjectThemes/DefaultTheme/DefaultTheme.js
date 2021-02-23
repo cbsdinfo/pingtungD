@@ -30,6 +30,7 @@ import todayTask from './Pages/TodayTask/TodayTask'
 import perDespatch from './Pages/PerDespatch/PerDespatch'
 import hitCard from './Pages/HitCard/HitCard'
 import taskHistory from './Pages/TaskHistory/TaskHistory'
+import perTaskHistory from './Pages/PerTaskHistory/PerTaskHistory'
 import income from './Pages/Income/Income'
 import contact from './Pages/Contact/Contact'
 import school from './Pages/School/School'
@@ -156,6 +157,7 @@ export default {
         perDespatch,  // 今日任務單張調度單
         hitCard, // 打卡
         taskHistory, // 任務歷程
+        perTaskHistory,// 任務歷程單筆訂單
         income, // 收入列表
         contact, // 聯繫行控
         school, // 司機學院

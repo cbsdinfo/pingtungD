@@ -7,6 +7,7 @@ import { ReactComponent as WheelChair } from '../../../Assets/img/TaskHistoryPag
 import { ReactComponent as Arrow } from '../../../Assets/img/TaskHistoryPage/Arrow.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import { fmt } from '../../../Handlers/DateHandler';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { isEqual, isNil, isUndefined } from 'lodash';
@@ -32,13 +33,13 @@ const MobileMBase = (props) => {
             case "2":
                 return "已排班";
             case "3":
-                return "抵達搭車地點";
+                return "已抵達";
             case "4":
                 return "客上";
             case "5":
-                return "已完成";
+                return "完成";
             case "9":
-                return "已取消";
+                return "取消-空趟";
             default:
                 return "無此狀態";
         }
@@ -79,34 +80,57 @@ const MobileMBase = (props) => {
                         rightText={"(起)"}
                         topLabel={<>日期區間</>}
                         // type={"time"} time、date、week、month、quarter、year
-                        type={"month"}
-                        format={"YYYY-MM"}
+                        type={"day"}
+                        format={"YYYY-MM-DD"}
                         bascDefaultTheme={"DefaultTheme"}
                         // viewType
                         isSearchableTaskHistoryPage
                         placeholder={""}
                         value={
                             (globalContextService.get("TaskHistoryPage", "DateBegin")) ?
-                                moment(globalContextService.get("TaskHistoryPage", "DateBegin"), "YYYY-MM")
+                                moment(globalContextService.get("TaskHistoryPage", "DateBegin"), "YYYY-MM-DD")
                                 :
-                                moment()
+                                moment().startOf("day").add(1, "day")
                         }
                         onChange={(value, momentObj, OnInitial) => {
+                            let preSet = globalContextService.get("TaskHistoryPage", "DateBegin");
                             if (!isEqual(value, globalContextService.get("TaskHistoryPage", "DateBegin"))) {
-                                // console.log("undefined", isUndefined(globalContextService.get("NewsPage", "firstUseAPIgetNewsType")))
-                                // 阻擋第一次渲染即觸發
-                                console.log(value)
                                 if (!isUndefined(globalContextService.get("TaskHistoryPage", "firstUseAPIgetTodayTask"))) {
-                                    // props.GetNewsTypeExecute(true, props.NewsType.filter((it) => (it.label === props.NowTab))?.[0]?.value, value)
-                                    props.GetTodayTaskExecute(
-                                        true,
-                                        moment(globalContextService.get("TaskHistoryPage", "DateBegin"), "YYYY-MM"),
-                                        moment(globalContextService.get("TaskHistoryPage", "DateEnd"), "YYYY-MM")
-                                    )
+                                    if (moment(value).startOf("day").isAfter(moment(globalContextService.get("TaskHistoryPage", "DateEnd")))) {
+                                        modalsService.infoModal.warn({
+                                            iconRightText: "起日不可大於迄日",
+                                            yes: true,
+                                            yesText: "確認",
+                                            // no: true,
+                                            // autoClose: true,
+                                            backgroundClose: false,
+                                            yesOnClick: (e, close) => {
+                                                close();
+                                            }
+                                        })
+                                    } else {
+                                        props.GetTodayTaskExecute(
+                                            true,
+                                            fmt(moment(value, "YYYY-MM-DD").startOf("day")),
+                                            fmt(moment(globalContextService.get("TaskHistoryPage", "DateEnd"), "YYYY-MM-DD").endOf("day"))
+                                        )
+                                    }
                                 }
-                                globalContextService.set("TaskHistoryPage", "DateBegin", value);
+
+                                if (moment(value).startOf("day").isAfter(moment(globalContextService.get("TaskHistoryPage", "DateEnd")))) {
+                                    globalContextService.set("TaskHistoryPage", "DateBegin", preSet);
+                                } else {
+                                    globalContextService.set("TaskHistoryPage", "DateBegin", value);
+
+                                }
                                 setForceUpdate(f => !f)
                             }
+
+                        }
+                        }
+                        disabledDate={(perMoment) => {
+                            // 去除掉前後一個月外的日期
+                            return perMoment && ((perMoment > moment().startOf('day').add(1, "day").add(1, "months")) || (perMoment < moment().startOf('day').add(1, "day").subtract(1, "months")));
                         }}
                         theme={mobileM.dateTimeRange}
                     />
@@ -116,34 +140,54 @@ const MobileMBase = (props) => {
                         rightText={"(迄)"}
                         topLabel={<>日期區間</>}
                         // type={"time"} time、date、week、month、quarter、year
-                        type={"month"}
-                        format={"YYYY-MM"}
+                        type={"day"}
+                        format={"YYYY-MM-DD"}
                         bascDefaultTheme={"DefaultTheme"}
                         // viewType
                         isSearchableTaskHistoryPage
                         placeholder={""}
                         value={
                             (globalContextService.get("TaskHistoryPage", "DateEnd")) ?
-                                moment(globalContextService.get("TaskHistoryPage", "DateEnd"), "YYYY-MM")
+                                moment(globalContextService.get("TaskHistoryPage", "DateEnd"), "YYYY-MM-DD")
                                 :
-                                moment()
+                                moment().endOf("day").add(1, "day")
                         }
                         onChange={(value, momentObj, OnInitial) => {
+                            let preSet = globalContextService.get("TaskHistoryPage", "DateEnd");
                             if (!isEqual(value, globalContextService.get("TaskHistoryPage", "DateEnd"))) {
-                                // console.log("undefined", isUndefined(globalContextService.get("NewsPage", "firstUseAPIgetNewsType")))
-                                // 阻擋第一次渲染即觸發
-                                if (!isUndefined(globalContextService.get("NewsPage", "firstUseAPIgetTodayTask"))) {
-                                    // console.log(props.NowTab)
-                                    // props.GetNewsTypeExecute(true, props.NewsType.filter((it) => (it.label === props.NowTab))?.[0]?.value, value)
-                                    props.GetTodayTaskExecute(
-                                        true,
-                                        moment(globalContextService.get("TaskHistoryPage", "DateBegin"), "YYYY-MM"),
-                                        moment(globalContextService.get("TaskHistoryPage", "DateEnd"), "YYYY-MM")
-                                    )
+                                if (!isUndefined(globalContextService.get("TaskHistoryPage", "firstUseAPIgetTodayTask"))) {
+                                    if (moment(value).isBefore(moment(globalContextService.get("TaskHistoryPage", "DateBegin")))) {
+                                        modalsService.infoModal.warn({
+                                            iconRightText: "迄日不可小於起日",
+                                            yes: true,
+                                            yesText: "確認",
+                                            // no: true,
+                                            // autoClose: true,
+                                            backgroundClose: false,
+                                            yesOnClick: (e, close) => {
+                                                close();
+                                            }
+                                        })
+                                    } else {
+                                        props.GetTodayTaskExecute(
+                                            true,
+                                            fmt(moment(globalContextService.get("TaskHistoryPage", "DateBegin"), "YYYY-MM-DD").startOf("day")),
+                                            fmt(moment(value, "YYYY-MM-DD").endOf("day"))
+                                        )
+                                    }
                                 }
-                                globalContextService.set("TaskHistoryPage", "DateEnd", value);
+
+                                if (moment(value).isBefore(moment(globalContextService.get("TaskHistoryPage", "DateBegin")))) {
+                                    globalContextService.set("TaskHistoryPage", "DateEnd", preSet);
+                                } else {
+                                    globalContextService.set("TaskHistoryPage", "DateEnd", value);
+                                }
                                 setForceUpdate(f => !f)
                             }
+                        }}
+                        disabledDate={(perMoment) => {
+                            // 去除掉前後一個月外的日期
+                            return perMoment && ((perMoment > moment().startOf('day').add(1, "day").add(1, "months")) || (perMoment < moment().startOf('day').add(1, "day").subtract(1, "months")));
                         }}
                         theme={mobileM.dateTimeRange}
                     />
@@ -157,7 +201,7 @@ const MobileMBase = (props) => {
                             <TaskCard
                                 key={index}
 
-                                data={item?.despatchOfCaseOrderDayViews} // 調度單資料
+                                data={item?.despatchOfCaseOrderCourseViews} // 調度單資料
                                 nameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                                 // timeNameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                                 // needAction // 是否需要點即後，文字變成執行中
@@ -227,7 +271,12 @@ const MobileMBase = (props) => {
                                             <SubContainer
                                                 theme={mobileM.statusContainer}
                                             >
-                                                <SubContainer theme={mobileM.statusInsideContainer}>
+                                                <SubContainer
+                                                    theme={mobileM.statusInsideContainer}
+                                                    onClick={() => {
+                                                        history.push(`/PerTaskHistory?despatch=${data.despatchNo}&defaultPrimary=${data.orderId}`)
+                                                    }}
+                                                >
 
                                                     {/* 訂單狀態 */}
                                                     <Text
