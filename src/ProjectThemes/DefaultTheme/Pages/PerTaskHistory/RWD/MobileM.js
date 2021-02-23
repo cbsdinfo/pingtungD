@@ -24,7 +24,6 @@ export default {
                 return {
                     ...style,
                     padding: "0", //188 是授權圖高度
-                    backgroundColor: "#3c4856",
                     // height:""
                 }
             }
@@ -32,325 +31,229 @@ export default {
     },
     //#endregion
 
-    //#region 出始畫面
-    //#region 卡片外側容器
-    cardOutContainer: {
+    //#region 標題列
+    titleBar: {
         basic: (style, props) => ({
             ...style,
-            padding: "0 0 12px 0",
-            width: "100%",
-            backgroundColor: "#3c4856"
+            textAlign: "center",
+            boxShadow: "inset 0px -1px 0px #DBE4E8",
         })
     },
     //#endregion
 
-    //#region 卡片上層
-    //#region 預估陪同 圖標
-    withSvg: {
-        position: "relative",
-        top: "8px",
-        left: "-16px"
+    //#region 標題列 預約訂車分頁
+    titleBarCallCarTab: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-grid",
+            // margin: "0 16px",
+            lineHeight: "32px",
+            height: "46px",
+            fontSize: "14px",
+            cursor: "pointer",
+            width: "25%",
+            color: (props.isActive ? "#1890FF" : "rgba(0, 0, 0, 0.65)"),
+            borderBottom: (props.isActive ? "solid 2px #1890FF" : "unset"),
+            textAlign: "center",
+            alignItems: "center"
+        }),
     },
     //#endregion
 
-    //#region 預估陪同
-    familyWidhText: {
+    //#region 選擇日期區間 DateTimeRange 
+    dateTimeRange: {
+        viewTypeContainer: {
+            basic: (style, props) => ({
+                ...style,
+                padding: "8px 8px",
+                display: "inline-block",
+                // width: "100%"
+                ...style.occupy(6),
+            })
+        },
+        container: {
+            basic: (style, props) => ({
+                ...style,
+                display: "inline-block",
+                padding: "8px 8px",
+                // width: "100%"
+                ...style.occupy(6),
+            })
+        },
+        topLabel: {
+            basic: (style, props) => ({
+                ...style,
+                height: "0px"
+            })
+        },
+        dateTimePickerContainer: {
+            basic: (style, props) => {
+                return {
+                    ...style,
+                    // width: "100%",
+                    color: props.disable ? null : ((props.focus || props.hover) ? "#1890ff" : "rgba(0, 0, 0, 0.25)")
+                }
+            }
+        },
+        dateTimePickerSubContainer: {
+            basic: (style, props) => ({
+                ...style,
+                height: "28px",
+            })
+        },
+        bottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                // height: "24px"
+                // minHeight: "24px",
+                // height: "auto"
+                height: "0px"
+            })
+        }
+    },
+    //#endregion
+
+    //#region 上下車地點標題
+    toAddrTitleText: {
         basic: (style, props) => ({
             ...style,
-            display: "inline-block",
-            fontWeight: 400,
+            fontWeight: 600,
+            fontSize: "16px",
+            top: "8px",
+            left: "4px"
+        })
+    },
+    //#region 下車地點註記
+    toAddrRemarkText: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "4px 0 0",
+            fontWeight: 600,
+            fontSize: "16px"
+        })
+    },
+    //#endregion
+
+    //#region 下車地點
+    toAddrText: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "4px 0 0",
+            fontWeight: 500,
+            fontSize: "14px"
+        })
+    },
+    //#endregion
+
+    //#region 乘車時間(月+日)
+    reserveDateFirstText: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "16px 4px 0 28px",
+            color: "rgba(246,126,1,1)",
+            fontWeight: 600,
             fontSize: "18px",
-            lineHeight: "55px",
-            color: "#3B3B3B",
-            width: "100%",
-            textAlign: "center"
+            display: "inline-block"
         })
     },
     //#endregion
 
-    //#region 預估陪同資料
-    familyWidhData: {
+    //#region 乘車時間(時+分)
+    reserveDateSecondText: {
         basic: (style, props) => ({
             ...style,
-            display: "inline-block",
-            position: "relative",
-            top: "2px",
-            fontWeight: 400,
-            fontSize: "24px",
-            lineHeight: "24px",
-            color: "#3B3B3B",
-            margin: "0 0 0 16px"
-        })
-    },
-    //#endregion
-    //#endregion
-
-    //#region 卡片下層
-    //#region 卡片下層 容器
-    bottomContainer: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            width: "100%",
-            height: `calc( ${props.height}px - 56px - 112px )`,
+            padding: "16px 28px 0 4px",
+            fontWeight: 500,
+            fontSize: "18px",
+            display: "inline-block"
         })
     },
     //#endregion
 
-    //#region 搭車時間
-    timeText: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 700,
-            fontSize: "24px",
-            lineHeight: "44px",
-            color: "#F67E01",
-            width: "50%",
-            textAlign: "center"
-        })
-    },
-    //#endregion
-
-    //#region 搭車時間 圖標
-    clockSvg: {
-        position: "relative",
-        top: "5px",
-        left: "-16px"
+    //#region 輪椅icon
+    wheelChairSvg: {
+        top: "10px",
+        position: "absolute",
+        right: "135px",
     },
     //#endregion
 
     //#region 輪椅
-    wheelchairTypeText: {
+    wheelChairText: {
         basic: (style, props) => ({
             ...style,
-            display: "inline-block",
+            width: "calc(100% - 180px)",
+            textAlign: "right",
+            padding: "16px 28px 10px 0",
             fontWeight: 600,
             fontSize: "13px",
-            lineHeight: "44px",
-            color: "#3D3D3D",
-            width: "50%",
-            textAlign: "center"
+            display: "inline-block",
+            top: "4px"
         })
     },
     //#endregion
 
-    //#region 輪椅 圖標
-    wheelchairSvg: {
-        position: "relative",
-        top: "8px",
-        left: "-6px"
+    //#region 上下車地址容器
+    addrContainer: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "14px 28px"
+        })
     },
     //#endregion
 
-    //#region 預估
     //#region 預估容器
-    estimateContainer: {
+    expectedContainer: {
         basic: (style, props) => ({
             ...style,
-            display: props.open ? "inline-block" : "none",
-            width: "100%",
-            backgroundColor: "#F5F5F5"
+            ...style.occupy(6),
+            height: "74px",
+            borderRight: "0.5px solid #C7C7C7"
         })
     },
     //#endregion
 
-    //#region 預估里程
-    estimateMileageText: {
+    //#region 預估標題
+    expectedTitleText: {
         basic: (style, props) => ({
             ...style,
-            display: "inline-block",
-            fontWeight: 400,
-            fontSize: "36px",
-            lineHeight: "73px",
-            color: "#3D3D3D",
-            width: "50%",
-            textAlign: "center"
-        })
-    },
-    //#endregion
-
-    //#region 預估里程 標題
-    estimateMileageTitle: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 600,
-            width: "24px",
-            height: "26px",
             fontSize: "12px",
-            lineHeight: "13px",
-            marginRight: "16px"
-        })
-    },
-    //#endregion
-
-    //#region 公里
-    mileageText: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
+            width: "26px",
             fontWeight: 600,
-            fontSize: "18px",
-            lineHeight: "18px",
-            marginLeft: "4px"
+            top: "8px",
+            left: "15px",
+            display: "inline-block"
         })
     },
     //#endregion
 
-    //#region 預估時間
-    estimateTimeText: {
+    //#region 預估內容值
+    expectedValueText: {
         basic: (style, props) => ({
             ...style,
-            display: "inline-block",
-            fontWeight: 400,
             fontSize: "36px",
-            lineHeight: "73px",
-            color: "#3D3D3D",
-            width: "50%",
-            textAlign: "center"
+            width: "auto",
+            fontWeight: 400,
+            top: "8px",
+            // left: "15px",
+            display: "inline-block",
+            padding: "0 0 0 24px"
         })
     },
     //#endregion
 
-    //#region 預估時間 標題
-    estimateTimeTitle: {
+    //#region 預估內容值
+    expectedRightText: {
         basic: (style, props) => ({
             ...style,
-            display: "inline-block",
-            fontWeight: 600,
-            width: "24px",
-            height: "26px",
-            fontSize: "12px",
-            lineHeight: "13px",
-            marginRight: "16px"
-        })
-    },
-    //#endregion
-
-    //#region 分鐘
-    minuteText: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 600,
             fontSize: "18px",
-            lineHeight: "18px",
-            marginLeft: "4px"
-        })
-    },
-    //#endregion
-    //#endregion
-
-    //#region 起迄點
-    //#region 起迄點容器
-    startToEndContainer: {
-        basic: (style, props) => ({
-            ...style,
-            width: "100%",
-            padding: "8px 16px",
-            backgroundColor: props.open ? "#fff" : "#F5F5F5",
-        })
-    },
-    //#endregion
-
-    //#region 上車地點 標題
-    startTitle: {
-        basic: (style, props) => ({
-            ...style,
+            width: "auto",
+            fontWeight: 600,
+            top: "8px",
+            right: "-2px",
             display: "inline-block",
-            fontWeight: 600,
-            fontSize: "16px",
-            lineHeight: "22px",
-            color: "#E87600",
-            backgroundColor: props.open ? "#fff" : "#F5F5F5",
-            width: "100%",
         })
     },
-    //#endregion
-
-    //#region 上車地點 內文
-    startText: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 600,
-            fontSize: "20px",
-            lineHeight: "26px",
-            color: "#3D3D3D",
-            backgroundColor: props.open ? "#fff" : "#F5F5F5",
-            width: "100%",
-            margin: "6px 0 0"
-        })
-    },
-    //#endregion
-
-    //#region 上車地點 備註
-    startRemark: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 500,
-            fontSize: "16px",
-            lineHeight: "16px",
-            color: "#F46C00",
-            width: "100%",
-            backgroundColor: props.open ? "#F5F5F5" : "#fff",
-            padding: "5px",
-            margin: "2px 0 0",
-        })
-    },
-    //#endregion
-
-    //#region 下車地點 標題
-    endTitle: {
-        basic: (style, props) => ({
-            ...style,
-            display: props.open ? "inline-block" : "none",
-            fontWeight: 600,
-            fontSize: "16px",
-            lineHeight: "22px",
-            color: "#E87600",
-            backgroundColor: "#fff",
-            width: "100%",
-        })
-    },
-    //#endregion
-
-    //#region 下車地點 內文
-    endText: {
-        basic: (style, props) => ({
-            ...style,
-            display: props.open ? "inline-block" : "none",
-            fontWeight: 600,
-            fontSize: "20px",
-            lineHeight: "26px",
-            color: "#3D3D3D",
-            backgroundColor: "#fff",
-            width: "100%",
-            margin: "6px 0 0"
-        })
-    },
-    //#endregion
-
-    //#region 下車地點 備註
-    endRemark: {
-        basic: (style, props) => ({
-            ...style,
-            display: props.open ? "inline-block" : "none",
-            fontWeight: 500,
-            fontSize: "16px",
-            lineHeight: "16px",
-            color: "#F46C00",
-            width: "100%",
-            backgroundColor: "#F5F5F5",
-            padding: "5px",
-            margin: "2px 0 0",
-        })
-    },
-    //#endregion
-
-    //#endregion
     //#endregion
 
     //#region 地圖
@@ -359,38 +262,10 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "100%",
-            height: props.open ? `calc( ${props.height}px - 56px - 12px - 32px - 55px - 45px - 73px - 180px - 17px )` : `calc( ${props.height}px - 56px - 12px - 32px - 55px - 45px - 98px - 17px )`
+            height: "175px"
         })
     },
     //#endregion
-
-    //#region 導航 圖標
-    toGoogleMapSvg: {
-        position: "absolute",
-        zIndex: 1,
-        right: "12px",
-        top: "12px"
-    },
-    //#endregion
-
-    //#region 收合 圖標
-    upSvg: {
-        position: "absolute",
-        zIndex: 100,
-        left: 0,
-        top: 0
-    },
-    //#endregion
-
-    //#region 展開 圖標
-    downSvg: {
-        position: "absolute",
-        zIndex: 100,
-        left: 0,
-        top: 0
-    },
-    //#endregion
-
     //#region 地圖
     map: {
         mapContainer: {
@@ -404,206 +279,209 @@ export default {
     //#endregion
     //#endregion
 
-    //#endregion
-
-    //#region 核對身分畫面
-    //#region 搭車時間
-    checkTip: {
+    //#region 地圖下方容器
+    mapBotContainer: {
         basic: (style, props) => ({
             ...style,
-            display: "inline-block",
-            fontWeight: 700,
-            fontSize: "40px",
-            lineHeight: "100px",
-            color: "#fff",
             width: "100%",
-            textAlign: "center"
-        })
-    },
-    //#endregion
-
-    //#region 檢核身分 容器
-    checkIdContainer: {
-        basic: (style, props) => ({
-            ...style,
-            position: "fixed",
-            top: "56px",
-            left: "0px",
-            width: "100%",
-            zIndex: 100,
-            backgroundColor: "#F8A91E"
-        })
-    },
-    //#endregion
-
-    //#region 檢核資料 容器
-    checkDetailContainer: {
-        basic: (style, props) => ({
-            ...style,
-            padding: "12px 20px",
-            width: "100%",
-            height: `calc( ${props.height}px - 56px - 100px )`,
-            backgroundColor: "#fff",
-            borderRadius: "10px 10px 0 0",
-            textAlign: "right"
-        })
-    },
-    //#endregion
-
-    //#region 核對身分 個案名稱 容器
-    checkCaseNameContainer: {
-        basic: (style, props) => ({
-            ...style,
-            padding: "16px",
-            width: "100%",
-            backgroundColor: "#3C4856",
-        })
-    },
-    //#endregion
-
-    //#region 核對身分 個案名稱
-    checkCaseName: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 700,
-            fontSize: "18px",
-            lineHeight: "32px",
-            color: "#fff",
-            backgroundColor: "#F38C00",
-            // width: "80px",
-            textAlign: "center",
-            padding: "5px 10px"
-        })
-    },
-    //#endregion
-
-    //#region 核對身分 下車地點 容器
-    checkEndContainer: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-flex",
-            padding: "16px",
-            borderBottom: "1px dashed #D8D8D8"
-        })
-    },
-    //#endregion
-
-    //#region 核對身分 下車地點 標題
-    checkEndTitle: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 700,
-            fontSize: "16px",
-            lineHeight: "20px",
-            color: "#E87600",
-            width: "35px",
-            height: "42px",
-            backgroundColor: "#fff",
-            margin: "0 22px 0 0"
-        })
-    },
-    //#endregion
-
-    //#region 核對身分 下車地點 內文
-    checkEndText: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 600,
-            fontSize: "20px",
-            lineHeight: "26px",
-            color: "#3D3D3D",
-            backgroundColor: "#fff",
-            width: "calc( 100% - 57px )",
-        })
-    },
-    //#endregion
-
-    //#region 核對身分 下車地點 備註
-    checkEndRemark: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontWeight: 500,
-            fontSize: "16px",
-            lineHeight: "16px",
-            color: "#F46C00",
-            width: "100%",
+            // display: "inline-block",
+            // padding: "12px",
             backgroundColor: "#F5F5F5",
-            padding: "5px",
-            margin: "2px 0 0",
+            height: "50px"
         })
     },
     //#endregion
 
-    //#region 核對身分 提醒紅字
-    redTip: {
+    //#region 預估陪同容器
+    accompanyContainer: {
         basic: (style, props) => ({
             ...style,
+            ...style.occupy(5),
+        })
+    },
+    //#endregion
+
+    //#region 預估陪同icon
+    accompanyIcon: {
+        position: "absolute",
+        top: "12px",
+        left: "30px",
+    },
+    //#endregion
+
+    //#region 預估陪同文字
+    accompanyText: {
+        basic: (style, props) => ({
+            ...style,
+            fontSize: "18px",
+            width: "auto",
+            fontWeight: 400,
+            top: "14px",
+            left: "65px",
             display: "inline-block",
-            fontWeight: 700,
-            fontSize: "16px",
-            lineHeight: "20px",
-            color: "#CF3A3A",
-            width: "100%",
-            margin: "13px 0 0"
         })
     },
     //#endregion
 
-    //#region silder
-    //#region silder 容器
-    silderContainer: {
+    //#region 預估陪同容器
+    familyContainer: {
         basic: (style, props) => ({
             ...style,
-            padding: "12px",
-            position: "fixed",
-            bottom: "5%",
-            width: "100%"
+            ...style.occupy(3.5),
         })
     },
     //#endregion
 
+    //#region 預估陪同文字
+    familyText: {
+        basic: (style, props) => ({
+            ...style,
+            fontSize: "18px",
+            width: "auto",
+            fontWeight: 400,
+            top: "7px",
+            left: "8px",
+            display: "inline-block",
+        })
+    },
     //#endregion
 
-    //#region 確認按鈕
-    //#region 確認按鈕 容器
+    //#region 預估陪同文字
+    familyValueText: {
+        basic: (style, props) => ({
+            ...style,
+            fontSize: "24px",
+            width: "auto",
+            fontWeight: 400,
+            top: "8px",
+            padding: "0 0 0 20px",
+            display: "inline-block",
+        })
+    },
+    //#endregion
+
+    //#region 車資外容器
+    amtOutContainer: {
+        basic: (style, props) => ({
+            ...style,
+            width: "100%",
+            backgroundColor: "#3d3d3d",
+            height: "105px",
+            margin: "20px 0 0 0"
+        })
+    },
+    //#endregion
+
+    //#region 車資容器
+    amtContainer: {
+        basic: (style, props) => ({
+            ...style,
+            ...style.occupy(6),
+            height: "100%",
+        })
+    },
+    //#endregion
+
+    //#region 車資標題
+    amtTitleText: {
+        basic: (style, props) => ({
+            ...style,
+            position: "absolute",
+            fontSize: "18px",
+            width: "36px",
+            fontWeight: 600,
+            top: "25px",
+            left: "28px",
+            display: "inline-block",
+            color: "#FFFFFF"
+        })
+    },
+    //#endregion
+
+    //#region 車資內容值
+    amtValueText: {
+        basic: (style, props) => ({
+            ...style,
+            fontSize: "48px",
+            width: "auto",
+            fontWeight: 700,
+            top: "14px",
+            left: "80px",
+            display: "inline-block",
+            // padding: "0 0 0 24px",
+            color: "#FFFFFF"
+        })
+    },
+    //#endregion
+
+    //#region 上下車地址容器
+    driverRemarkContainer: {
+        basic: (style, props) => ({
+            ...style,
+            padding: "14px 28px 50px"
+        })
+    },
+    //#endregion
+
+    //#region 司機備註標題
+    driverRemarkTitleText: {
+        basic: (style, props) => ({
+            ...style,
+            fontSize: "18px",
+            // width: "36px",
+            fontWeight: 700,
+            padding: "8px 0 40px"
+            // top: "16px",
+            // left: "15px",
+            // display: "inline-block",
+            // color: "#FFFFFF"
+        })
+    },
+    //#endregion
+
+    //#region 司機被住內容
+    driverRemarkText: {
+        basic: (style, props) => ({
+            ...style,
+            fontSize: "18px",
+            width: "auto",
+            fontWeight: 400,
+            // top: "14px",
+            // left: "15px",
+            display: "inline-block",
+            // padding: "0 0 0 24px",
+            // color: "#FFFFFF"
+        })
+    },
+    //#endregion
+
+    //#region 底部按鈕容器
     buttonContainer: {
         basic: (style, props) => ({
             ...style,
-            display: "inline-block",
-            textAlign: "center",
-            width: "100%",
-            position: "absolute",
-            bottom: "16px",
-            zIndex: 101
+            // height: "100%", 
+            padding: "18px 32px"
         })
     },
     //#endregion
 
-    //#region 確認按鈕
-    comfirmButton: {
-        basic: (style) => ({
+    //#region 底部按鈕
+    backButton: {
+        basic: (style, props) => ({
             ...style,
-            width: "250px",
-            color: "#fff",
-            background: "#3D3D3D",
-            borderRadius: "38px",
-            height: "65px",
-            fontWeight: 700,
+            height: "50px",
+            width: "311px",
+            color: "#3D3D3D",
+            background: "#FFBC46",
+            border: "#FFBC46",
+            borderRadius: "50px",
             fontSize: "24px",
-            lineHeight: "32px",
+            fontWeight: 700
         }),
         hover: (style, props) => ({
+            ...style,
+            backgroundColor: "rgba(255 ,188 ,70 ,0.65)"
         }),
-        focus: (style, props) => ({})
     },
     //#endregion
-    //#endregion
-
-    //#endregion
-
-
 }
