@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
 import { MainPageContainer, MainPageTitleBar, MapGoogle, mapGoogleControll, Silder, TaskCard, TitleBar } from '../../../ProjectComponent';
-import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, BasicButton, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService } from '../../../Components';
+import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, BasicButton, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService, NumberInput } from '../../../Components';
 import { ReactComponent as ToGoogleMap } from '../../../Assets/img/PerDespatchPage/ToGoogleMap.svg'
 import { ReactComponent as Family } from '../../../Assets/img/PerDespatchPage/Family.svg'
 import { ReactComponent as Clock } from '../../../Assets/img/PerDespatchPage/Clock.svg'
@@ -10,11 +10,14 @@ import { ReactComponent as Wheelchair } from '../../../Assets/img/PerDespatchPag
 import { ReactComponent as Up } from '../../../Assets/img/PerDespatchPage/Up.svg'
 import { ReactComponent as Down } from '../../../Assets/img/PerDespatchPage/Down.svg'
 import { ReactComponent as Cross } from '../../../Assets/img/PerDespatchPage/Cross.svg'
+import { ReactComponent as Warning } from '../../../Assets/img/PerDespatchPage/Warning.svg'
+import { ReactComponent as GrayCheck } from '../../../Assets/img/PerDespatchPage/GrayCheck.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { isEqual, isNil, isUndefined, toString } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 const MobileMBase = (props) => {
 
@@ -23,6 +26,7 @@ const MobileMBase = (props) => {
     let history = useHistory()
     const [ForceUpdate, setForceUpdate] = useState(false); // 供強制刷新組件
     const [Width, Height] = useWindowSize();
+    const [DefaultPrimary, setDefaultPrimary] = useState(props?.defaultPrimary);
 
     const driverStatusMapping = {
         3: "抵達上車地點",
@@ -37,6 +41,8 @@ const MobileMBase = (props) => {
                 return text ? "抵達上車地點" : 3
             case "3":
                 return text ? "客上" : 4
+            case "4":
+                return text ? "確認收款" : 0
             default:
                 break;
         }
@@ -57,12 +63,12 @@ const MobileMBase = (props) => {
                     </>
                 }
             >
-
                 <BasicContainer
                     theme={mobileM.cardOutContainer}
                 >
                     {props?.TodayTask?.map((item, index) => {
-                        let mapDisplay = [2]
+                        let nullButtonDisplay = [3]
+                        let mapDisplay = [2, 4]
                         let silderDisplay = [2, 3]
 
                         return (
@@ -76,27 +82,48 @@ const MobileMBase = (props) => {
                                 TimeKeyName={"reserveDate"} // TimeKeyName 對應資料 時間 的 key 名
                                 // callBackKeyName 有需要回調 則在資料中補上回調，並指定 key名
                                 primaryKey={"orderId"}// primaryKey 對應資料 唯一鍵 的 key 名
-                                defaultUsePrimaryKey={props?.defaultPrimary} // 初始要使用的分頁 (值要對應到 primaryKey)
-
+                                defaultUsePrimaryKey={DefaultPrimary} // 初始要使用的分頁 (值要對應到 primaryKey)
+                                onTabClick={() => {
+                                    props.setPayDetail([false, false]);
+                                    props.setRealAmt([]);
+                                    props.controllGCS("changeTab");
+                                }}
                                 topContent={(data) => {
                                     // console.log(data)
                                     return (
                                         <>
-                                            {/* 預估陪同 */}
-                                            <Text
-                                                theme={mobileM.familyWidhText}
-                                            >
-                                                <Family style={mobileM.withSvg} />
+                                            {/* 收款頁 檢核 */}
+                                            {
+                                                !props.PayDetail[0]
+                                                    ?
+                                                    <>
+                                                        {/* 預估陪同 */}
+                                                        <Text
+                                                            theme={mobileM.familyWidhText}
+                                                        >
+                                                            <Family style={mobileM.withSvg} />
 
-                                                預估陪同
+                                                            {`預估陪同`}
 
-                                                {/* 預估陪同 資料 */}
-                                                <Text
-                                                    theme={mobileM.familyWidhData}
-                                                >
-                                                    {`${data.familyWith}`}
-                                                </Text>
-                                            </Text>
+                                                            {/* 預估陪同 資料 */}
+                                                            <Text
+                                                                theme={mobileM.familyWidhData}
+                                                            >
+                                                                {`${data.familyWith}`}
+                                                            </Text>
+                                                        </Text>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        {/* 收款按鈕 輪椅 */}
+                                                        <Text
+                                                            theme={mobileM.topPayWheelchairTypeText}
+                                                        >
+                                                            {`${data.wheelchairType}`}
+                                                        </Text>
+                                                    </>
+                                            }
+
 
                                         </>
                                     )
@@ -118,273 +145,616 @@ const MobileMBase = (props) => {
                                                 height={Height}
                                                 theme={mobileM.bottomContainer}
                                             >
-                                                <Container>
-                                                    {/* 搭車時間 */}
-                                                    <Text
-                                                        theme={mobileM.timeText}
-                                                    >
-                                                        <Clock style={mobileM.clockSvg} />
-                                                        {`${data.reserveDate}`.split(' ')[1].substring(0, 5)}
-                                                    </Text>
-
-
-                                                    {/* 輪椅 */}
-                                                    <Text
-                                                        theme={mobileM.wheelchairTypeText}
-                                                    >
-                                                        <Wheelchair style={mobileM.wheelchairSvg} />
-                                                        {`${data.wheelchairType}`}
-                                                    </Text>
-
-                                                </Container>
-
-                                                {/* 預估容器 */}
-                                                <SubContainer
-                                                    open={props.Open}
-                                                    theme={mobileM.estimateContainer}
-                                                >
-                                                    {/* 預估里程 */}
-                                                    <Text
-                                                        theme={mobileM.estimateMileageText}
-                                                    >
-                                                        {/* 預估里程 標題 */}
-                                                        <Text
-                                                            theme={mobileM.estimateMileageTitle}
-                                                        >
-                                                            {`預估里程`}
-                                                        </Text>
-
-                                                        {`${data.totalMileage / 1000}`}
-
-                                                        <Text
-                                                            theme={mobileM.minuteText}
-                                                        >
-                                                            {`公里`}
-                                                        </Text>
-                                                    </Text>
-
-
-                                                    {/* 預估時間 */}
-                                                    <Text
-                                                        theme={mobileM.estimateTimeText}
-                                                    >
-                                                        {/* 預估時間 標題 */}
-                                                        <Text
-                                                            theme={mobileM.estimateTimeTitle}
-                                                        >
-                                                            {`預估時間`}
-                                                        </Text>
-
-                                                        {`${data.expectedMinute}`}
-
-                                                        <Text
-                                                            theme={mobileM.minuteText}
-                                                        >
-                                                            {`分鐘`}
-                                                        </Text>
-                                                    </Text>
-
-                                                </SubContainer>
-
-                                                {/* 起迄點 容器 */}
-                                                <SubContainer
-                                                    open={props.Open}
-                                                    theme={mobileM.startToEndContainer}
-                                                >
-                                                    {/* 上車地點 標題 */}
-                                                    <Text
-                                                        open={props.Open}
-                                                        theme={mobileM.startTitle}
-                                                    >
-                                                        {`上車地點`}
-                                                    </Text>
-
-                                                    {/* 上車地點 內文 */}
-                                                    <Text
-                                                        open={props.Open}
-                                                        theme={mobileM.startText}
-                                                    >
-                                                        {data.fromAddr}
-                                                    </Text>
-
-                                                    {/* 上車地點 備註 */}
-                                                    <Text
-                                                        open={props.Open}
-                                                        theme={mobileM.startRemark}
-                                                    >
-                                                        {`(${data.fromAddrRemark})`}
-                                                    </Text>
-
-                                                    {/* 下車地點 標題 */}
-                                                    <Text
-                                                        open={props.Open}
-                                                        theme={mobileM.endTitle}
-                                                    >
-                                                        {`下車地點`}
-                                                    </Text>
-
-                                                    {/* 下車地點 內文 */}
-                                                    <Text
-                                                        open={props.Open}
-                                                        theme={mobileM.endText}
-                                                    >
-                                                        {data.toAddr}
-                                                    </Text>
-
-                                                    {/* 下車地點 備註 */}
-                                                    <Text
-                                                        open={props.Open}
-                                                        theme={mobileM.endRemark}
-                                                    >
-                                                        {`(${data.toAddrRemark})`}
-                                                    </Text>
-
-                                                </SubContainer>
-
-                                                {/* 地圖 檢核 */}
-                                                {mapDisplay.includes(data.status)
-                                                    &&
-                                                    <>
-                                                        {/* 地圖容器 */}
-                                                        <BasicContainer
-                                                            open={props.Open}
-                                                            height={Height}
-                                                            theme={mobileM.mapContainer}
-                                                        >
-                                                            {/* 導航 */}
-                                                            <ToGoogleMap
-                                                                style={mobileM.toGoogleMapSvg}
-                                                                onClick={() => {
-                                                                    mapGoogleControll.openNavigation(data?.toAddr)
-                                                                }}
-                                                            />
-
-                                                            {
-                                                                props.Open
-                                                                    ?
-                                                                    <>
-                                                                        {/* 收合 */}
-                                                                        <Up
-                                                                            style={mobileM.upSvg}
-                                                                            onClick={() => {
-                                                                                props.setOpen(false)
-                                                                            }}
-                                                                        />
-                                                                    </>
-                                                                    :
-                                                                    <>
-                                                                        {/* 展開 */}
-                                                                        <Down
-                                                                            style={mobileM.downSvg}
-                                                                            onClick={() => {
-                                                                                props.setOpen(true)
-                                                                            }}
-                                                                        />
-                                                                    </>
-                                                            }
-
-                                                            <MapGoogle
-                                                                mapId={"test1"}
-                                                                mapAttr={{
-                                                                    //   maxBounds: [[105, 15], [138.45858, 33.4]], // 台灣地圖區域
-                                                                    center: { lat: 25.012930, lng: 121.474708 }, // 初始中心座標，格式為 [lng, lat]  // 25.012930, 121.474708
-                                                                    zoom: 16, // 初始 ZOOM LEVEL; [0-20, 0 為最小 (遠), 20 ;最大 (近)]
-                                                                    //   minZoom: 6, // 限制地圖可縮放之最小等級, 可省略, [0-19.99]
-                                                                    //   maxZoom: 19.99, // 限制地圖可縮放之最大等級, 可省略 [0-19.99]
-                                                                    //   pitch: 0, // 攝影機仰角, 可省略, [0-60] // default 50
-                                                                    //   bearing: 0, // 地圖角度, 可省略, [-180 ~ 180; 0 為正北朝上, 180 為正南朝上]
-                                                                    //   attributionControl: false,
-                                                                }}
-
-                                                                theme={mobileM.map}
-                                                            />
-
-                                                            {drawLine()}
-
-                                                        </BasicContainer>
-
-                                                    </>
-                                                }
-
-                                                {/* 檢核身分 */}
+                                                {/* 收款頁 檢核 */}
                                                 {
-                                                    props.CheckDetail
-                                                    &&
-                                                    <>
-                                                        {/* 檢核身分 容器 */}
-                                                        <BasicContainer
-                                                            theme={mobileM.checkIdContainer}
-                                                        >
-                                                            {/* 提醒 */}
-                                                            <Text
-                                                                theme={mobileM.checkTip}
-                                                            >
-                                                                小提醒!核對身份
-                                                        </Text>
+                                                    !props.PayDetail[0]
+                                                        ?
+                                                        <>
+                                                            <Container>
 
-                                                            {/* 檢核資料 容器 */}
-                                                            <BasicContainer
-                                                                height={Height}
-                                                                theme={mobileM.checkDetailContainer}
-                                                            >
-                                                                <Cross
-                                                                    onClick={() => {
-                                                                        props.setCheckDetail(false)
-                                                                    }}
-                                                                />
-
-                                                                {/* 個案名稱 容器 */}
+                                                                {/* 搭車時間 容器 */}
                                                                 <SubContainer
-                                                                    theme={mobileM.checkCaseNameContainer}
+                                                                    status={data.status}
+                                                                    theme={mobileM.timeDataContainer}
                                                                 >
-                                                                    {/* 個案名稱 */}
+                                                                    {/* 搭車時間 */}
                                                                     <Text
-                                                                        theme={mobileM.checkCaseName}
+                                                                        status={data.status}
+                                                                        theme={mobileM.timeText}
                                                                     >
-                                                                        {data.name}
+                                                                        <Clock style={mobileM.clockSvg} />
+                                                                        {`${data.reserveDate}`.split(' ')[1].substring(0, 5)}
                                                                     </Text>
+
+                                                                    {/* 輪椅 */}
+                                                                    <Text
+                                                                        status={data.status}
+                                                                        theme={mobileM.wheelchairTypeText}
+                                                                    >
+                                                                        <Wheelchair style={mobileM.wheelchairSvg} />
+                                                                        {`${data.wheelchairType}`}
+                                                                    </Text>
+
                                                                 </SubContainer>
 
-                                                                {/* 核對身分 下車地點 容器 */}
-                                                                <Container
-                                                                    theme={mobileM.checkEndContainer}
+                                                                {/* 空趟按鈕 檢核 */}
+                                                                {
+                                                                    nullButtonDisplay.includes(data.status)
+                                                                    &&
+                                                                    <>
+                                                                        {/* 空趟按鈕 容器 */}
+                                                                        <SubContainer
+                                                                            theme={mobileM.nullButtonContainer}
+                                                                        >
+                                                                            {/* 空趟按鈕 */}
+                                                                            <NativeLineButton
+                                                                                theme={mobileM.nullButton}
+                                                                                onClick={() => {
+                                                                                    modalsService.infoModal.warn({
+                                                                                        id: "top1", //注意 這裡要加上固定id
+                                                                                        iconRightText:
+                                                                                            <>
+                                                                                                {`確定`}
+                                                                                                <Text
+                                                                                                    theme={mobileM.nullButtonText}
+                                                                                                >
+                                                                                                    <Warning style={mobileM.warningSvg2} />
+                                                                                                    {`空趟`}
+                                                                                                </Text>
+                                                                                            </>,
+                                                                                        yes: true,
+                                                                                        yesText: "確認",
+                                                                                        no: true,
+                                                                                        noText: "取消",
+                                                                                        // autoClose: true,
+                                                                                        backgroundClose: false,
+                                                                                        yesOnClick: (e, close) => {
+                                                                                            props.ChangeStatussExecute({
+                                                                                                orderId: data.orderId,
+                                                                                                status: 9,
+                                                                                                cancelRemark: "SYS_ORDERCANCEL_REMARK_DRIVER"
+                                                                                            })
+                                                                                            close();
+                                                                                            props.controllGCS("return");
+                                                                                            history.goBack();
+                                                                                        }
+                                                                                    })
+                                                                                }}
+                                                                            >
+                                                                                <Warning style={mobileM.warningSvg} />
+
+                                                                                {`空趟`}
+                                                                            </NativeLineButton>
+
+                                                                        </SubContainer>
+                                                                    </>
+                                                                }
+
+                                                                {/* 收款按鈕 檢核 */}
+                                                                {
+                                                                    [4].includes(data.status)
+                                                                    &&
+                                                                    <>
+                                                                        {/* 收款按鈕 容器 */}
+                                                                        <SubContainer
+                                                                            status={data.status}
+                                                                            theme={mobileM.payButtonContainer}
+                                                                        >
+                                                                            {/* 收款按鈕 */}
+                                                                            <NativeLineButton
+                                                                                theme={mobileM.payButton}
+                                                                                onClick={() => {
+                                                                                    props.GetRealAmtExecute({
+                                                                                        despatchNo: data.despatchNo,
+                                                                                        orderId: data.orderId,
+                                                                                        familyWith: data.familyWith,
+                                                                                    })
+                                                                                    props.setPayDetail([true, false])
+                                                                                }}
+                                                                            >
+                                                                                {`收款`}
+                                                                            </NativeLineButton>
+
+                                                                            {/* 收款按鈕 文字 */}
+                                                                            <Text
+                                                                                thme={mobileM.payCheckText}
+                                                                            >
+                                                                                <GrayCheck style={mobileM.payCheckSvg} />
+                                                                                {`收款完成`}
+                                                                            </Text>
+
+                                                                            {/* 收款按鈕 文字 */}
+                                                                            <Text
+                                                                                thme={mobileM.payCheckText}
+                                                                            >
+                                                                                <GrayCheck style={mobileM.payCheckSvg} />
+                                                                                {`簽名完成`}
+                                                                            </Text>
+
+                                                                            {/* 收款按鈕 提示 */}
+                                                                            <Text
+                                                                                theme={mobileM.payCheckTip}
+                                                                            >
+                                                                                {`先收款不代表已完成訂單`}
+                                                                            </Text>
+
+                                                                        </SubContainer>
+
+                                                                        {/* 收款按鈕 輪椅 容器 */}
+                                                                        <SubContainer
+                                                                            status={data.status}
+                                                                            theme={mobileM.payWheelchairTypeContainer}
+                                                                        >
+                                                                            <Wheelchair />
+                                                                            <Text
+                                                                                theme={mobileM.payWheelchairTypeText}
+                                                                            >
+                                                                                {`${data.wheelchairType}`}
+                                                                            </Text>
+
+                                                                        </SubContainer>
+                                                                    </>
+                                                                }
+
+
+                                                            </Container>
+
+                                                            {/* 預估容器 */}
+                                                            <SubContainer
+                                                                open={(props.Open && data.status === 2)}
+                                                                theme={mobileM.estimateContainer}
+                                                            >
+                                                                {/* 預估里程 */}
+                                                                <Text
+                                                                    theme={mobileM.estimateMileageText}
                                                                 >
-                                                                    {/* 下車地點 標題 */}
+                                                                    {/* 預估里程 標題 */}
                                                                     <Text
-                                                                        theme={mobileM.checkEndTitle}
+                                                                        theme={mobileM.estimateMileageTitle}
                                                                     >
-                                                                        {`下車地點`}
+                                                                        {`預估里程`}
                                                                     </Text>
 
-                                                                    {/* 下車地點 內文 */}
-                                                                    <Text
-                                                                        theme={mobileM.checkEndText}
-                                                                    >
-                                                                        {data.toAddr}
+                                                                    {`${data.totalMileage / 1000}`}
 
-                                                                        {/* 下車地點 備註 */}
+                                                                    <Text
+                                                                        theme={mobileM.minuteText}
+                                                                    >
+                                                                        {`公里`}
+                                                                    </Text>
+                                                                </Text>
+
+
+                                                                {/* 預估時間 */}
+                                                                <Text
+                                                                    theme={mobileM.estimateTimeText}
+                                                                >
+                                                                    {/* 預估時間 標題 */}
+                                                                    <Text
+                                                                        theme={mobileM.estimateTimeTitle}
+                                                                    >
+                                                                        {`預估時間`}
+                                                                    </Text>
+
+                                                                    {`${data.expectedMinute}`}
+
+                                                                    <Text
+                                                                        theme={mobileM.minuteText}
+                                                                    >
+                                                                        {`分鐘`}
+                                                                    </Text>
+                                                                </Text>
+
+                                                            </SubContainer>
+
+                                                            {/* 起迄點 容器 */}
+                                                            <SubContainer
+                                                                open={(props.Open || data.status === 3)}
+                                                                theme={mobileM.startToEndContainer}
+                                                            >
+                                                                {/* 上車地點 標題 */}
+                                                                <Text
+                                                                    status={data.status}
+                                                                    open={props.Open}
+                                                                    theme={mobileM.startTitle}
+                                                                >
+                                                                    {`上車地點`}
+                                                                </Text>
+
+                                                                {/* 上車地點 內文 */}
+                                                                <Text
+                                                                    status={data.status}
+                                                                    open={props.Open}
+                                                                    theme={mobileM.startText}
+                                                                >
+                                                                    {data.fromAddr}
+                                                                </Text>
+
+                                                                {/* 上車地點 備註 */}
+                                                                <Text
+                                                                    status={data.status}
+                                                                    open={props.Open}
+                                                                    theme={mobileM.startRemark}
+                                                                >
+                                                                    {`(${data.fromAddrRemark})`}
+                                                                </Text>
+
+                                                                {/* 下車地點 標題 */}
+                                                                <Text
+                                                                    status={data.status}
+                                                                    open={props.Open}
+                                                                    theme={mobileM.endTitle}
+                                                                >
+                                                                    {`下車地點`}
+                                                                </Text>
+
+                                                                {/* 下車地點 內文 */}
+                                                                <Text
+                                                                    status={data.status}
+                                                                    open={props.Open}
+                                                                    theme={mobileM.endText}
+                                                                >
+                                                                    {data.toAddr}
+                                                                </Text>
+
+                                                                {/* 下車地點 備註 */}
+                                                                <Text
+                                                                    status={data.status}
+                                                                    open={props.Open}
+                                                                    theme={mobileM.endRemark}
+                                                                >
+                                                                    {`(${data.toAddrRemark})`}
+                                                                </Text>
+
+                                                            </SubContainer>
+
+                                                            {/* 地圖 檢核 */}
+                                                            {mapDisplay.includes(data.status)
+                                                                &&
+                                                                <>
+                                                                    {/* 地圖容器 */}
+                                                                    <BasicContainer
+                                                                        status={data.status}
+                                                                        open={props.Open}
+                                                                        height={Height}
+                                                                        theme={mobileM.mapContainer}
+                                                                    >
+                                                                        {/* 導航 */}
+                                                                        <ToGoogleMap
+                                                                            style={mobileM.toGoogleMapSvg}
+                                                                            onClick={() => {
+                                                                                mapGoogleControll.openNavigation(data?.toAddr)
+                                                                            }}
+                                                                        />
+
+                                                                        {
+                                                                            props.Open
+                                                                                ?
+                                                                                <>
+                                                                                    {/* 收合 */}
+                                                                                    <Up
+                                                                                        style={mobileM.upSvg}
+                                                                                        onClick={() => {
+                                                                                            props.setOpen(false)
+                                                                                        }}
+                                                                                    />
+                                                                                </>
+                                                                                :
+                                                                                <>
+                                                                                    {/* 展開 */}
+                                                                                    <Down
+                                                                                        style={mobileM.downSvg}
+                                                                                        onClick={() => {
+                                                                                            props.setOpen(true)
+                                                                                        }}
+                                                                                    />
+                                                                                </>
+                                                                        }
+
+                                                                        <MapGoogle
+                                                                            mapId={"test1"}
+                                                                            mapAttr={{
+                                                                                //   maxBounds: [[105, 15], [138.45858, 33.4]], // 台灣地圖區域
+                                                                                center: { lat: 25.012930, lng: 121.474708 }, // 初始中心座標，格式為 [lng, lat]  // 25.012930, 121.474708
+                                                                                zoom: 16, // 初始 ZOOM LEVEL; [0-20, 0 為最小 (遠), 20 ;最大 (近)]
+                                                                                //   minZoom: 6, // 限制地圖可縮放之最小等級, 可省略, [0-19.99]
+                                                                                //   maxZoom: 19.99, // 限制地圖可縮放之最大等級, 可省略 [0-19.99]
+                                                                                //   pitch: 0, // 攝影機仰角, 可省略, [0-60] // default 50
+                                                                                //   bearing: 0, // 地圖角度, 可省略, [-180 ~ 180; 0 為正北朝上, 180 為正南朝上]
+                                                                                //   attributionControl: false,
+                                                                            }}
+
+                                                                            theme={mobileM.map}
+                                                                        />
+
+                                                                        {drawLine()}
+
+                                                                    </BasicContainer>
+
+                                                                </>
+                                                            }
+
+                                                            {/* 檢核身分 */}
+                                                            {
+                                                                props.CheckDetail
+                                                                &&
+                                                                <>
+                                                                    {/* 檢核身分 容器 */}
+                                                                    <BasicContainer
+                                                                        theme={mobileM.checkIdContainer}
+                                                                    >
+                                                                        {/* 提醒 */}
                                                                         <Text
-                                                                            theme={mobileM.checkEndRemark}
+                                                                            theme={mobileM.checkTip}
                                                                         >
-                                                                            {`(${data.toAddrRemark})`}
+                                                                            {`小提醒!核對身份`}
                                                                         </Text>
+
+                                                                        {/* 檢核資料 容器 */}
+                                                                        <BasicContainer
+                                                                            height={Height}
+                                                                            theme={mobileM.checkDetailContainer}
+                                                                        >
+                                                                            <Cross
+                                                                                onClick={() => {
+                                                                                    props.setCheckDetail(false)
+                                                                                }}
+                                                                            />
+
+                                                                            {/* 個案名稱 容器 */}
+                                                                            <SubContainer
+                                                                                theme={mobileM.checkCaseNameContainer}
+                                                                            >
+                                                                                {/* 個案名稱 */}
+                                                                                <Text
+                                                                                    theme={mobileM.checkCaseName}
+                                                                                >
+                                                                                    {data.name}
+                                                                                </Text>
+                                                                            </SubContainer>
+
+                                                                            {/* 核對身分 下車地點 容器 */}
+                                                                            <Container
+                                                                                theme={mobileM.checkEndContainer}
+                                                                            >
+                                                                                {/* 下車地點 標題 */}
+                                                                                <Text
+                                                                                    theme={mobileM.checkEndTitle}
+                                                                                >
+                                                                                    {`下車地點`}
+                                                                                </Text>
+
+                                                                                {/* 下車地點 內文 */}
+                                                                                <Text
+                                                                                    theme={mobileM.checkEndText}
+                                                                                >
+                                                                                    {data.toAddr}
+
+                                                                                    {/* 下車地點 備註 */}
+                                                                                    <Text
+                                                                                        theme={mobileM.checkEndRemark}
+                                                                                    >
+                                                                                        {`(${data.toAddrRemark})`}
+                                                                                    </Text>
+                                                                                </Text>
+                                                                            </Container>
+
+                                                                            {/* 提醒紅字 */}
+                                                                            <Text
+                                                                                theme={mobileM.redTip}
+                                                                            >
+                                                                                {`請與個案核對身分及目的地，若有問題請聯繫行控中心。`}
+                                                                            </Text>
+
+                                                                        </BasicContainer>
+                                                                    </BasicContainer>
+                                                                </>
+                                                            }
+                                                        </>
+                                                        :
+                                                        <>
+
+                                                            {/* 收款頁 容器 */}
+                                                            <BasicContainer
+                                                                height={Height}
+                                                                theme={mobileM.payDetailContainer}
+                                                            >
+                                                                {console.log(props.PayDetail)}
+                                                                {/* 收款頁 陪同人數 */}
+                                                                <Text
+                                                                    view={props.PayDetail[1]}
+                                                                    theme={mobileM.payDetailFamilyWithTitle}
+                                                                >
+                                                                    {props.PayDetail[1] ? `陪同人數：${globalContextService.get("PerDespatchPage", "payDetailFamilyWith")}` : `陪同人數`}
+                                                                </Text>
+
+                                                                {/* 收款頁 陪同人數 */}
+                                                                < NumberInput
+                                                                    // viewType
+                                                                    // disable
+                                                                    topLabel={""}
+                                                                    baseDefaultTheme={"DefaultTheme"}
+                                                                    type="text"
+                                                                    placeholder={""}
+                                                                    min={0}
+                                                                    max={7}
+                                                                    view={props.PayDetail[1]}
+                                                                    value={globalContextService.get("PerDespatchPage", "payDetailFamilyWith") ?? data.familyWith}
+                                                                    onChange={(e, value, onInitial) => {
+                                                                        globalContextService.set("PerDespatchPage", "payDetailFamilyWith", value);
+                                                                    }}
+                                                                    theme={mobileM.payDetailFamilyWith}
+                                                                />
+
+                                                                <Container>
+
+                                                                    {/* 收款頁 應收車資 容器 */}
+                                                                    <Text
+                                                                        theme={mobileM.etFareContainer}
+                                                                    >
+                                                                        {`$`}
+
+                                                                        {/* 收款頁 應收車資 內文 */}
+                                                                        <Text
+                                                                            theme={mobileM.etFareText}
+                                                                        >
+                                                                            {props?.RealAmt?.realSelfPay ? props?.RealAmt?.realSelfPay + props?.RealAmt?.realWithAmt : 0}
+                                                                        </Text>
+
+                                                                        {/* 收款頁 應收車資 標題 */}
+                                                                        <Text
+                                                                            theme={mobileM.etFareTitle}
+                                                                        >
+                                                                            {`應收車資`}
+                                                                        </Text>
+                                                                    </Text>
+
+                                                                    {/* 收款頁 實收金額 容器 */}
+                                                                    <Text
+                                                                        view={props.PayDetail[1]}
+                                                                        theme={mobileM.realFareContainer}
+                                                                    >
+                                                                        {
+                                                                            !props.PayDetail[1]
+                                                                                ?
+                                                                                <>
+
+                                                                                    {/* 收款頁 實收金額 */}
+                                                                                    <TextInput
+                                                                                        topLabel={""}
+                                                                                        baseDefaultTheme={"DefaultTheme"}
+                                                                                        type="number"
+                                                                                        placeholder={""}
+                                                                                        value={globalContextService.get("PerDespatchPage", "realFareText") ?? (props?.RealAmt?.realSelfPay + props?.RealAmt?.realWithAmt)}
+                                                                                        onChange={(e, value, onInitial) => {
+                                                                                            if (value / 10000 < 1) {
+                                                                                                globalContextService.set("PerDespatchPage", "realFareText", value);
+                                                                                            } else {
+                                                                                                setForceUpdate(f => !f)
+                                                                                            }
+                                                                                        }}
+                                                                                        theme={mobileM.realFareText}
+                                                                                    />
+                                                                                </>
+                                                                                :
+                                                                                <>
+                                                                                    {`$`}
+                                                                                    {/* 收款頁 實收金額 檢視 內文 */}
+                                                                                    <Text
+                                                                                        theme={mobileM.realFareViewText}
+                                                                                    >
+                                                                                        {globalContextService.get("PerDespatchPage", "realFareText") ? globalContextService.get("PerDespatchPage", "realFareText") : props?.RealAmt?.realSelfPay + props?.RealAmt?.realWithAmt}
+                                                                                    </Text>
+                                                                                </>
+                                                                        }
+
+                                                                        {/* 收款頁 實收金額 標題 */}
+                                                                        <Text
+                                                                            theme={mobileM.realFareTitle}
+                                                                        >
+                                                                            {`實收金額`}
+                                                                        </Text>
+
                                                                     </Text>
                                                                 </Container>
 
-                                                                {/* 提醒紅字 */}
-                                                                <Text
-                                                                    theme={mobileM.redTip}
-                                                                >
-                                                                    {`請與個案核對身分及目的地，若有問題請聯繫行控中心。`}
-                                                                </Text>
+                                                                {
+                                                                    !props.PayDetail[1]
+                                                                        ?
+                                                                        <>
+                                                                            {/* 收款頁 備註 */}
+                                                                            <Text
+                                                                                theme={mobileM.noteTitle}
+                                                                            >
+                                                                                {`備註`}
+
+                                                                                {/* 收款頁 備註 */}
+                                                                                <TextInput
+                                                                                    topLabel={""}
+                                                                                    baseDefaultTheme={"DefaultTheme"}
+                                                                                    type="text"
+                                                                                    placeholder={""}
+                                                                                    value={globalContextService.get("PerDespatchPage", "NoteText") ?? null}
+                                                                                    onChange={(e, value, onInitial) => {
+                                                                                        globalContextService.set("PerDespatchPage", "NoteText", value);
+                                                                                    }}
+                                                                                    theme={mobileM.noteText}
+                                                                                />
+
+                                                                            </Text>
+
+                                                                            {/* 收款頁 客戶付款方式 標題 */}
+                                                                            <Text
+                                                                                theme={mobileM.payDetailWaysTitle}
+                                                                            >
+                                                                                {`客戶付款方式`}
+                                                                            </Text>
+
+                                                                            {
+                                                                                [
+                                                                                    "現金",
+                                                                                    "悠遊卡",
+                                                                                    "信用卡",
+                                                                                    "Apple pay",
+                                                                                    "Line pay",
+                                                                                    "街口支付",
+                                                                                ].map((item) => {
+                                                                                    return (
+                                                                                        <>
+                                                                                            <NativeLineButton
+                                                                                                isSelect={props?.PayWay === item}
+                                                                                                theme={mobileM.payDetailWaysButton}
+                                                                                                onClick={() => {
+                                                                                                    props.setPayWay(item)
+                                                                                                    // setForceUpdate(f => !f)
+                                                                                                }}
+                                                                                            >
+                                                                                                {item}
+                                                                                            </NativeLineButton>
+                                                                                        </>
+                                                                                    )
+                                                                                })
+                                                                            }
+                                                                        </>
+                                                                        :
+                                                                        <>
+                                                                            {/* 收款頁 修改付款方式按鈕 容器 */}
+                                                                            <SubContainer
+                                                                                theme={mobileM.editPayWayButtonContainer}
+                                                                            >
+                                                                                {/* 收款頁 修改實收車資或付款方式 按鈕 */}
+                                                                                <NativeLineButton
+                                                                                    theme={mobileM.editPayWayButton}
+                                                                                    onClick={() => {
+                                                                                        props.setPayDetail([true, false])
+                                                                                    }}
+                                                                                >
+                                                                                    {`修改實收車資或付款方式`}
+                                                                                </NativeLineButton>
+                                                                            </SubContainer>
+
+                                                                            {/* 收款頁 付款方式 檢視 */}
+                                                                            <Text
+                                                                                theme={mobileM.payDetailWaysViewText}
+                                                                            >
+                                                                                {`付款方式：${props.PayWay}`}
+                                                                            </Text>
+                                                                        </>
+                                                                }
+
+
 
                                                             </BasicContainer>
-                                                        </BasicContainer>
-                                                    </>
+                                                        </>
                                                 }
 
                                                 {/* silder 檢核 */}
-                                                {silderDisplay.includes(data.status)
+                                                {
+                                                    (
+                                                        silderDisplay.includes(data.status)
+                                                        ||
+                                                        props.PayDetail[1]
+                                                    )
                                                     &&
                                                     <>
                                                         {/* silder */}
@@ -394,8 +764,33 @@ const MobileMBase = (props) => {
                                                             <Silder
                                                                 text={nextStatus(data.status, true)}
                                                                 onToRight={(resetValue) => {
-                                                                    props.setCheckDetail(true)
+
+                                                                    if (data.status === 2) {
+                                                                        props.setCheckDetail(true)
+                                                                    }
+                                                                    else if (data.status === 3) {
+                                                                        props.ChangeStatussExecute({
+                                                                            orderId: data.orderId,
+                                                                            status: 4,
+                                                                        })
+                                                                    }
+                                                                    else if (data.status === 4) {
+                                                                        props.AddPayExecute({
+                                                                            id: data.orderId,
+                                                                            realFamilyWith: globalContextService.get("PerDespatchPage", "payDetailFamilyWith"),
+                                                                            realMaidWith: props.RealAmt.realMaidWith,
+                                                                            realWithAmt: props.RealAmt.realWithAmt,
+                                                                            realDiscountPercent: props.RealAmt.realDiscountPercent,
+                                                                            realDiscountAmt: props.RealAmt.realDiscountAmt,
+                                                                            totalDiscountAmt: props.RealAmt.totalDiscountAmt,
+                                                                            realSelfPay: props.RealAmt.realSelfPay,
+                                                                            receivePay: globalContextService.get("PerDespatchPage", "realFareText"),
+                                                                            signPic: ""
+                                                                        })
+                                                                    }
+
                                                                     resetValue(0)
+                                                                    setDefaultPrimary(data.orderId)
                                                                 }}
                                                             />
 
@@ -406,21 +801,43 @@ const MobileMBase = (props) => {
 
                                                 {/* 確認按鈕 */}
                                                 {
-                                                    props.CheckDetail
+                                                    (props.CheckDetail || (props.PayDetail[0] && !props.PayDetail[1]))
                                                     &&
                                                     <>
                                                         {/* 確認按鈕 容器 */}
                                                         <SubContainer
-                                                            theme={mobileM.buttonContainer}
+                                                            theme={mobileM.comfirmButtonContainer}
                                                         >
+                                                            {/* 確認按鈕 */}
                                                             <NativeLineButton
                                                                 theme={mobileM.comfirmButton}
                                                                 onClick={() => {
-                                                                    props.ChangeStatussExecute({
-                                                                        orderId: data.orderId,
-                                                                        status: 3
-                                                                    })
-                                                                    props.setCheckDetail(false)
+                                                                    if (props.CheckDetail) {
+                                                                        props.ChangeStatussExecute({
+                                                                            orderId: data.orderId,
+                                                                            status: 3
+                                                                        })
+                                                                        props.setCheckDetail(false)
+                                                                    }
+                                                                    else if (props.PayDetail[0]) {
+                                                                        console.log(props.PayWay)
+                                                                        if (isEmpty(props.PayWay)) {
+                                                                            modalsService.infoModal.error({
+                                                                                id: "top1", //注意 這裡要加上固定id
+                                                                                iconRightText: "請選擇付款方式",
+                                                                                yes: true,
+                                                                                yesText: "確認",
+                                                                                // no: true,
+                                                                                // autoClose: true,
+                                                                                backgroundClose: false,
+                                                                                yesOnClick: (e, close) => {
+                                                                                    close();
+                                                                                }
+                                                                            })
+                                                                        } else {
+                                                                            props.setPayDetail([true, true])
+                                                                        }
+                                                                    }
                                                                 }}
                                                             >
                                                                 {`確認`}
