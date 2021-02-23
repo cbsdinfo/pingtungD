@@ -28,8 +28,9 @@ export const TaskHistory = (props) => {
     //#region 路由監聽，清除API紀錄 (渲染即觸發的每一個API都要有)
     useEffect(() => {
         const historyUnlisten = history.listen((location, action) => {
-            //console.log(location, action)
+            // console.log(location, action)
             globalContextService.remove("TaskHistoryPage", "firstUseAPIgetTodayTask");
+            globalContextService.remove("TaskHistoryPage");
         });
 
         return () => {
@@ -39,7 +40,7 @@ export const TaskHistory = (props) => {
     //#endregion
 
     //#region 取得所有今日任務 選項 API
-    const getTodayTask = useCallback(async (useAPI = false, startDate = fmt(moment().startOf("day").add(1, "day")), endDate = fmt(moment().endOf("day").add(1, "day"))) => {
+    const getTodayTask = useCallback(async (useAPI = false, startDate = globalContextService.get("TaskHistoryPage", "DateBegin") ?? fmt(moment().startOf("day").add(1, "day")), endDate = fmt(moment().endOf("day").add(1, "day"))) => {
 
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)

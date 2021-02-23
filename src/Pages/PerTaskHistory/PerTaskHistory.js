@@ -49,7 +49,7 @@ export const PerTaskHistory = (props) => {
             //#endregion
 
             //#region 取得所有最新消息類別 API
-            await fetch(`${APIUrl}OrderOfCaseUsers/GetCaseOrderByDriver?driverid=${getParseItemLocalStorage("DriverID")}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
+            await fetch(`${APIUrl}OrderOfCaseUsers/GetCaseOrderCourseByDriver?driverid=${getParseItemLocalStorage("DriverID")}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
                         "X-Token": getParseItemLocalStorage("DAuth"),
@@ -122,77 +122,6 @@ export const PerTaskHistory = (props) => {
     const [GetTodayTaskExecute, GetTodayTaskPending] = useAsync(getTodayTask, true);
     //#endregion
 
-    //#region 更改訂單狀態 API
-    const changeStatus = useCallback(async (changeStatusRowdata) => {
-
-        // console.log(updateRowdata)
-        //#region 更改訂單狀態 API
-        fetch(`${APIUrl}OrderOfCaseUsers/ChangeStatus`,
-            {
-                headers: {
-                    "X-Token": getParseItemLocalStorage("DAuth"),
-                    "content-type": "application/json; charset=utf-8",
-                },
-                method: "POST",
-                body: JSON.stringify({ ...changeStatusRowdata })
-            })
-            .then(Result => {
-                const ResultJson = Result.clone().json();//Respone.clone()
-                return ResultJson;
-            })
-            .then((PreResult) => {
-
-                if (PreResult.code === 200) {
-                    // 更改訂單狀態 API
-                    // console.log(PreResult.data)
-                    // 重查訂單
-                    GetTodayTaskExecute(true);
-                }
-                else {
-                    throw PreResult;
-                }
-            })
-            .catch((Error) => {
-                modalsService.infoModal.warn({
-                    iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
-                    yes: true,
-                    yesText: "確認",
-                    // no: true,
-                    // autoClose: true,
-                    backgroundClose: false,
-                    yesOnClick: (e, close) => {
-                        if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
-                            globalContextService.clear();
-                            Switch();
-                        }
-                        close();
-                    }
-                    // theme: {
-                    //     yesButton: {
-                    //         text: {
-                    //             basic: (style, props) => {
-                    //                 console.log(style)
-                    //                 return {
-                    //                     ...style,
-                    //                     color: "red"
-                    //                 }
-                    //             },
-                    //         }
-                    //     }
-                    // }
-                })
-                throw Error.message;
-            })
-            .finally(() => {
-            });
-        //#endregion
-    }, [APIUrl, Switch])
-
-    const [ChangeStatussExecute, ChangeStatusPending] = useAsync(changeStatus, false);
-    //#endregion 
-
     return (
         <>
             {/* {
@@ -232,7 +161,6 @@ export const PerTaskHistory = (props) => {
                     setDriverStatus={setDriverStatus} // 設定司機狀態
                     CheckDetail={CheckDetail} // 確認身分
                     setCheckDetail={setCheckDetail} // 設定確認身分
-                    ChangeStatussExecute={ChangeStatussExecute} // 更改訂單狀態
                     GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
                 />
             }
