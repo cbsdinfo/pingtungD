@@ -59,7 +59,8 @@ export const TitleBar = (props) => {
                 <SubContainer
                     theme={layout.titleBarLeftSIdeBtnContainerMobileM}
                 >
-                    <MobileMMenu onClick={() => { setDrawerCollapse(false) }} />
+                    {!props?.MenuIcondontShow && <MobileMMenu onClick={() => { setDrawerCollapse(false) }} />}
+
                 </SubContainer>
 
             </Container>
