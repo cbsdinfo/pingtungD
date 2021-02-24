@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
-import { MainPageContainer, MainPageTitleBar, MapGoogle, mapGoogleControll, Silder, TaskCard, TitleBar } from '../../../ProjectComponent';
+import { MainPageContainer, MainPageTitleBar, MapGoogle, mapGoogleControll, Sign, Silder, TaskCard, TitleBar } from '../../../ProjectComponent';
 import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, BasicButton, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService, NumberInput } from '../../../Components';
 import { ReactComponent as ToGoogleMap } from '../../../Assets/img/PerDespatchPage/ToGoogleMap.svg'
 import { ReactComponent as Family } from '../../../Assets/img/PerDespatchPage/Family.svg'
@@ -12,6 +12,7 @@ import { ReactComponent as Down } from '../../../Assets/img/PerDespatchPage/Down
 import { ReactComponent as Cross } from '../../../Assets/img/PerDespatchPage/Cross.svg'
 import { ReactComponent as Warning } from '../../../Assets/img/PerDespatchPage/Warning.svg'
 import { ReactComponent as GrayCheck } from '../../../Assets/img/PerDespatchPage/GrayCheck.svg'
+import { ReactComponent as GreenCheck } from '../../../Assets/img/PerDespatchPage/GreenCheck.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
@@ -28,21 +29,14 @@ const MobileMBase = (props) => {
     const [Width, Height] = useWindowSize();
     const [DefaultPrimary, setDefaultPrimary] = useState(props?.defaultPrimary);
 
-    const driverStatusMapping = {
-        3: "抵達上車地點",
-        // "check": "確認身分",
-        4: "客上",
-        5: "已完成"
-    }
-
-    const nextStatus = useCallback((status, text = false) => {
+    const nextStatus = useCallback((status, haveSign = false) => {
         switch (toString(status)) {
             case "2":
-                return text ? "抵達上車地點" : 3
+                return "抵達上車地點"
             case "3":
-                return text ? "客上" : 4
+                return "客上"
             case "4":
-                return text ? "確認收款" : 0
+                return haveSign ? "結束行程" : "確認收款"
             default:
                 break;
         }
@@ -52,8 +46,18 @@ const MobileMBase = (props) => {
         <>
             <TitleBar
                 returnIcon
-                returnIconOnClick={(e) => { history.goBack(); }}
+                returnIconOnClick={(e) => {
+                    if (props.DriverSign) {
+                        props.setDriverSign(false)
+                        props.setPayDetail([false, false])
+                    } else if (props.PayDetail[0]) {
+                        props.setPayDetail([false, false])
+                    } else {
+                        history.goBack();
+                    }
+                }}
             />
+
 
             <MainPageContainer
                 height={Height}
@@ -129,7 +133,7 @@ const MobileMBase = (props) => {
                                     )
                                 }}
                                 bottomContent={(data) => {
-                                    console.log(data.status, data)
+                                    // console.log(data.status, data)
 
                                     const drawLine = () => {
                                         if (data?.polyLine && mapGoogleControll.getBasicMap("test1")) {
@@ -240,26 +244,51 @@ const MobileMBase = (props) => {
                                                                             status={data.status}
                                                                             theme={mobileM.payButtonContainer}
                                                                         >
-                                                                            {/* 收款按鈕 */}
-                                                                            <NativeLineButton
-                                                                                theme={mobileM.payButton}
-                                                                                onClick={() => {
-                                                                                    props.GetRealAmtExecute({
-                                                                                        despatchNo: data.despatchNo,
-                                                                                        orderId: data.orderId,
-                                                                                        familyWith: data.familyWith,
-                                                                                    })
-                                                                                    props.setPayDetail([true, false])
-                                                                                }}
-                                                                            >
-                                                                                {`收款`}
-                                                                            </NativeLineButton>
+                                                                            {/* 檢核有無簽名檔 */}
+                                                                            {
+                                                                                isEmpty(data?.orderPay?.signPic)
+                                                                                &&
+                                                                                <>
+                                                                                    {/* 收款按鈕 */}
+                                                                                    < NativeLineButton
+                                                                                        theme={mobileM.payButton}
+                                                                                        onClick={() => {
+                                                                                            //#region 判斷有無付款
+                                                                                            if (isNil(data?.orderPay)) {
+                                                                                                props.GetRealAmtExecute({
+                                                                                                    despatchNo: data.despatchNo,
+                                                                                                    orderId: data.orderId,
+                                                                                                    familyWith: data.familyWith,
+                                                                                                })
+                                                                                                props.setPayDetail([true, false])
+                                                                                            }
+                                                                                            //#region 有付款則顯示簽名
+                                                                                            else {
+                                                                                                props.setDriverSign(true)
+                                                                                            }
+                                                                                            //#endregion
+                                                                                            //#endregion
+                                                                                        }}
+                                                                                    >
+                                                                                        {`${isNil(data?.orderPay) ? "收款" : "簽名"}`}
+                                                                                    </NativeLineButton>
+                                                                                </>
+                                                                            }
+
 
                                                                             {/* 收款按鈕 文字 */}
                                                                             <Text
                                                                                 thme={mobileM.payCheckText}
                                                                             >
-                                                                                <GrayCheck style={mobileM.payCheckSvg} />
+                                                                                {/* 檢核有無付款 */}
+                                                                                {
+                                                                                    isNil(data.orderPay)
+                                                                                        ?
+                                                                                        <GrayCheck style={mobileM.payCheckSvg} />
+                                                                                        :
+                                                                                        <GreenCheck style={mobileM.payCheckSvg} />
+                                                                                }
+
                                                                                 {`收款完成`}
                                                                             </Text>
 
@@ -267,16 +296,31 @@ const MobileMBase = (props) => {
                                                                             <Text
                                                                                 thme={mobileM.payCheckText}
                                                                             >
-                                                                                <GrayCheck style={mobileM.payCheckSvg} />
+                                                                                {/* 檢核有無簽名檔 */}
+                                                                                {
+                                                                                    isEmpty(data?.orderPay?.signPic)
+                                                                                        ?
+                                                                                        <GrayCheck style={mobileM.payCheckSvg} />
+                                                                                        :
+                                                                                        <GreenCheck style={mobileM.payCheckSvg} />
+                                                                                }
+
                                                                                 {`簽名完成`}
                                                                             </Text>
 
-                                                                            {/* 收款按鈕 提示 */}
-                                                                            <Text
-                                                                                theme={mobileM.payCheckTip}
-                                                                            >
-                                                                                {`先收款不代表已完成訂單`}
-                                                                            </Text>
+                                                                            {/* 檢核有無簽名檔 */}
+                                                                            {
+                                                                                isEmpty(data?.orderPay?.signPic)
+                                                                                &&
+                                                                                <>
+                                                                                    {/* 收款按鈕 提示 */}
+                                                                                    <Text
+                                                                                        theme={mobileM.payCheckTip}
+                                                                                    >
+                                                                                        {`先收款不代表已完成訂單`}
+                                                                                    </Text>
+                                                                                </>
+                                                                            }
 
                                                                         </SubContainer>
 
@@ -559,7 +603,6 @@ const MobileMBase = (props) => {
                                                                 height={Height}
                                                                 theme={mobileM.payDetailContainer}
                                                             >
-                                                                {console.log(props.PayDetail)}
                                                                 {/* 收款頁 陪同人數 */}
                                                                 <Text
                                                                     view={props.PayDetail[1]}
@@ -754,6 +797,8 @@ const MobileMBase = (props) => {
                                                         silderDisplay.includes(data.status)
                                                         ||
                                                         props.PayDetail[1]
+                                                        ||
+                                                        !isEmpty(data?.orderPay?.signPic)
                                                     )
                                                     &&
                                                     <>
@@ -762,7 +807,7 @@ const MobileMBase = (props) => {
                                                             theme={mobileM.silderContainer}
                                                         >
                                                             <Silder
-                                                                text={nextStatus(data.status, true)}
+                                                                text={nextStatus(data.status, !isEmpty(data?.orderPay?.signPic))}
                                                                 onToRight={(resetValue) => {
 
                                                                     if (data.status === 2) {
@@ -774,7 +819,7 @@ const MobileMBase = (props) => {
                                                                             status: 4,
                                                                         })
                                                                     }
-                                                                    else if (data.status === 4) {
+                                                                    else if (data.status === 4 && isEmpty(data?.orderPay?.signPic)) {
                                                                         props.AddPayExecute({
                                                                             id: data.orderId,
                                                                             realFamilyWith: globalContextService.get("PerDespatchPage", "payDetailFamilyWith"),
@@ -786,6 +831,13 @@ const MobileMBase = (props) => {
                                                                             realSelfPay: props.RealAmt.realSelfPay,
                                                                             receivePay: globalContextService.get("PerDespatchPage", "realFareText"),
                                                                             signPic: ""
+                                                                        })
+                                                                        props.setDriverSign(true)
+                                                                    }
+                                                                    else if (data.status === 4 && !isEmpty(data?.orderPay?.signPic)) {
+                                                                        props.ChangeStatussExecute({
+                                                                            orderId: data.orderId,
+                                                                            status: 5,
                                                                         })
                                                                     }
 
@@ -820,7 +872,7 @@ const MobileMBase = (props) => {
                                                                         props.setCheckDetail(false)
                                                                     }
                                                                     else if (props.PayDetail[0]) {
-                                                                        console.log(props.PayWay)
+                                                                        // console.log(props.PayWay)
                                                                         if (isEmpty(props.PayWay)) {
                                                                             modalsService.infoModal.error({
                                                                                 id: "top1", //注意 這裡要加上固定id
@@ -845,6 +897,53 @@ const MobileMBase = (props) => {
                                                         </SubContainer>
                                                     </>
                                                 }
+
+                                                {/* 簽名 */}
+                                                {
+                                                    props.DriverSign
+                                                    &&
+                                                    <>
+                                                        {/* 簽名 */}
+                                                        <BasicContainer
+                                                            height={Height}
+                                                            theme={mobileM.signContainer}
+                                                        >
+                                                            <Sign
+                                                                height={Height - 56 - 10}
+                                                                primaryKey={data.orderId}
+                                                                sendOnClick={(base64, isNoSign, clearSign) => {
+                                                                    if (isNoSign) {
+                                                                        modalsService.infoModal.error({
+                                                                            id: "top1", //注意 這裡要加上固定id
+                                                                            iconRightText: "請簽名!",
+                                                                            yes: true,
+                                                                            yesText: "確認",
+                                                                            // no: true,
+                                                                            // noText: "取消",
+                                                                            // autoClose: true,
+                                                                            backgroundClose: false,
+                                                                            yesOnClick: (e, close) => {
+                                                                                close();
+                                                                            }
+                                                                        })
+                                                                    }
+                                                                    else {
+                                                                        props.UpdatePayExecute({
+                                                                            id: data.orderId,
+                                                                            signPic: base64
+                                                                        })
+                                                                        props.setDriverSign(false)
+                                                                        props.setPayDetail([false, false])
+                                                                        props.controllGCS("return");
+                                                                    }
+                                                                    // console.log(base64, isNoSign)
+                                                                }}
+                                                            />
+
+                                                        </BasicContainer>
+                                                    </>
+                                                }
+
 
                                             </SubContainer>
                                         </>

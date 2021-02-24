@@ -117,7 +117,8 @@ export default {
     timeDataContainer: {
         basic: (style, props) => ({
             ...style,
-            display: props.status === 4 ? "none" : "inline-block",
+            display: props.status === 4 ? "none" : "inline-flex",
+            flexDirection: props.status === 3 ? "column" : "unset",
             width: props.status === 3 ? "50%" : "100%",
             backgroundColor: props.status === 3 ? "#F5F5F5" : "transparent",
             height: props.status === 3 ? "88px" : "auto"
@@ -249,6 +250,9 @@ export default {
     payButtonContainer: {
         basic: (style, props) => ({
             ...style,
+            display: "inline-flex",
+            flexDirection: "column",
+            justifyContent: "center",
             width: "73%",
             backgroundColor: "#F5F5F5",
             height: "88px",
@@ -601,7 +605,7 @@ export default {
     //#region 收合 圖標
     upSvg: {
         position: "absolute",
-        zIndex: 100,
+        zIndex: 10,
         left: 0,
         top: 0
     },
@@ -610,7 +614,7 @@ export default {
     //#region 展開 圖標
     downSvg: {
         position: "absolute",
-        zIndex: 100,
+        zIndex: 10,
         left: 0,
         top: 0
     },
@@ -1190,6 +1194,24 @@ export default {
         focus: (style, props) => ({})
     },
     //#endregion
+    //#endregion
+
+    //#region 簽名
+    //#region 簽名 容器
+    signContainer: {
+        basic: (style, props) => ({
+            ...style,
+            position: "absolute",
+            top: "-100px",
+            width: "100%",
+            backgroundColor: "#383838",
+            padding: "5px",
+            height: `${props.height - 56}px`,
+            zIndex: 11
+        })
+    },
+    //#endregion
+
     //#endregion
 
     //#endregion

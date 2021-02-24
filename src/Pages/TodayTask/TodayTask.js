@@ -25,7 +25,7 @@ export const TodayTask = (props) => {
     //#region 路由監聽，清除API紀錄 (渲染即觸發的每一個API都要有)
     useEffect(() => {
         const historyUnlisten = history.listen((location, action) => {
-            //console.log(location, action)
+            // console.log(location, action)
             globalContextService.remove("TodayTaskPage", "firstUseAPIgetTodayTask");
         });
 

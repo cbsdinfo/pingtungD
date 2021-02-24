@@ -22,6 +22,7 @@ export const PerDespatch = (props) => {
     const [DriverStatus, setDriverStatus] = useState(""); // 司機狀態
     const [CheckDetail, setCheckDetail] = useState(false); // 確認身分
     const [PayDetail, setPayDetail] = useState([false, false]); // 收款(第一頁,第二頁)
+    const [DriverSign, setDriverSign] = useState(false); // 簽名
     const [RealAmt, setRealAmt] = useState([]); // 金額
     const [PayWay, setPayWay] = useState(""); // 付款方式
     const [Width, Height] = useWindowSize();
@@ -31,7 +32,7 @@ export const PerDespatch = (props) => {
 
     //#region 當頁 GlobalContextService (GCS) 值 控制
     const controllGCS = (type, payload) => {
-        console.log(type)
+        // console.log(type)
         switch (type) {
             case "return":
                 //#region 當 回上一頁時，要清除的資料
@@ -168,7 +169,7 @@ export const PerDespatch = (props) => {
                     // 更改訂單狀態 API
                     // console.log(PreResult.data)
                     // 重查訂單
-                    if (changeStatusRowdata?.status !== 9) {
+                    if (![5, 9].includes(changeStatusRowdata?.status)) {
                         GetTodayTaskExecute(true);
                     }
 
@@ -211,6 +212,9 @@ export const PerDespatch = (props) => {
                 throw Error.message;
             })
             .finally(() => {
+                if (changeStatusRowdata?.status === 5) {
+                    history.push("/TodayTask")
+                }
             });
         //#endregion
     }, [APIUrl, Switch])
@@ -311,6 +315,8 @@ export const PerDespatch = (props) => {
                 if (PreResult.code === 200) {
                     // 更改訂單狀態 API
                     // console.log(PreResult)
+                    // 重查任務
+                    GetTodayTaskExecute(true);
                 }
                 else {
                     throw PreResult;
@@ -357,6 +363,76 @@ export const PerDespatch = (props) => {
     const [AddPayExecute, AddPayPending] = useAsync(addPay, false);
     //#endregion 
 
+    //#region 更新付款資料(簽名) API
+    const updatePay = useCallback(async (UpdatePayRowdata) => {
+
+        // console.log(updateRowdata)
+        //#region 更新付款資料(簽名) API
+        fetch(`${APIUrl}OrderPayOfCaseUsers/Update`,
+            {
+                headers: {
+                    "X-Token": getParseItemLocalStorage("DAuth"),
+                    "content-type": "application/json; charset=utf-8",
+                },
+                method: "POST",
+                body: JSON.stringify({ ...UpdatePayRowdata })
+            })
+            .then(Result => {
+                const ResultJson = Result.clone().json();//Respone.clone()
+                return ResultJson;
+            })
+            .then((PreResult) => {
+
+                if (PreResult.code === 200) {
+                    // 更新付款資料(簽名) API
+                    // console.log(PreResult)
+                    // 重查任務
+                    GetTodayTaskExecute(true);
+                }
+                else {
+                    throw PreResult;
+                }
+            })
+            .catch((Error) => {
+                modalsService.infoModal.warn({
+                    iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                    yes: true,
+                    yesText: "確認",
+                    // no: true,
+                    // autoClose: true,
+                    backgroundClose: false,
+                    yesOnClick: (e, close) => {
+                        if (Error.code === 401) {
+                            clearSession();
+                            clearLocalStorage();
+                            globalContextService.clear();
+                            Switch();
+                        }
+                        close();
+                    }
+                    // theme: {
+                    //     yesButton: {
+                    //         text: {
+                    //             basic: (style, props) => {
+                    //                 console.log(style)
+                    //                 return {
+                    //                     ...style,
+                    //                     color: "red"
+                    //                 }
+                    //             },
+                    //         }
+                    //     }
+                    // }
+                })
+                throw Error.message;
+            })
+            .finally(() => {
+            });
+        //#endregion
+    }, [APIUrl, Switch])
+
+    const [UpdatePayExecute, UpdatePayPending] = useAsync(updatePay, false);
+    //#endregion 
 
     return (
         <>
@@ -403,10 +479,13 @@ export const PerDespatch = (props) => {
                     setCheckDetail={setCheckDetail} // 設定確認身分
                     PayDetail={PayDetail} // 收款
                     setPayDetail={setPayDetail} // 收款
+                    DriverSign={DriverSign} // 簽名
+                    setDriverSign={setDriverSign} // 設定簽名
                     ChangeStatussExecute={ChangeStatussExecute} // 更改訂單狀態
                     GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
                     GetRealAmtExecute={GetRealAmtExecute} // 金額查詢
                     AddPayExecute={AddPayExecute} // 付款
+                    UpdatePayExecute={UpdatePayExecute} // 更新付款資料(簽名)
 
                     controllGCS={controllGCS}
                 />
