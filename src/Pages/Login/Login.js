@@ -24,12 +24,14 @@ export const Login = (props) => {
     const [WaitSecToZero, setWaitSecToZero] = useState(false); // 控制驗證碼倒數
     const [NowTab, setNowTab] = useState("車行公告"); // 目前公告頁面
     const [ForgetFlag, setForgetFlag] = useState(1); // 驗忘記密碼驗證步驟
+    const [AuthCodeSuccess, setAuthCodeSuccess] = useState(true); // 驗證成功
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
 
     //#region 當頁 GlobalContextService (GCS) 值 控制
     const controllGCS = (type, payload) => {
+        // console.log(type)
         switch (type) {
             case "Login":
                 //#region 當 按下登入按紐時，要清除的資料
@@ -45,6 +47,11 @@ export const Login = (props) => {
                     globalContextService.remove("LoginPage", "CheckedRowKeys");
                     globalContextService.remove("LoginPage", "CheckedRowsData");
                 }
+                //#endregion
+                break;
+            case "Return":
+                //#region 當 按下返回按紐時，要清除的資料
+                globalContextService.remove("LoginPage");
                 //#endregion
                 break;
             default:
@@ -412,6 +419,184 @@ export const Login = (props) => {
     const [singUpExecute, singUpPending] = useAsync(singUp, false);
     //#endregion 
 
+    //#region 發送驗證碼 API (待調整)
+    const sendAuthCode = useCallback(async (account) => {
+
+        //#region 發送驗證碼
+        fetch(`${APIUrl}Users/AddMobileVerification?UserAcc=${account}`,
+            {
+                headers: {
+                    "content-type": "application/json; charset=utf-8",
+                },
+                method: "GET",
+            })
+            .then(Result => {
+                const ResultJson = Result.clone().json();//Respone.clone()
+                return ResultJson;
+            })
+            .then((PreResult) => {
+
+                if (PreResult.code === 200) {
+                    // 成功取得token
+
+                }
+            })
+            .catch((Error) => {
+                modalsService.infoModal.warn({
+                    iconRightText: Error,
+                    yes: true,
+                    yesText: "確認",
+                    // no: true,
+                    // autoClose: true,
+                    backgroundClose: true,
+                    // theme: {
+                    yesOnClick: (e, close) => {
+                        close();
+                    }
+                    //     yesButton: {
+                    //         text: {
+                    //             basic: (style, props) => {
+                    //                 console.log(style)
+                    //                 return {
+                    //                     ...style,
+                    //                     color: "red"
+                    //                 }
+                    //             },
+                    //         }
+                    //     }
+                    // }
+                })
+                throw Error;
+            })
+            .finally(() => {
+            });
+        //#endregion
+
+    }, [APIUrl, APIAppKey, Switch])
+
+    const [SendAuthCodeExecute, SendAuthCodePending] = useAsync(sendAuthCode, false);
+    //#endregion 
+
+    //#region 驗證 API (待調整)
+    const confirmAuthCode = useCallback(async (account, vCode) => {
+
+        //#region 驗證
+        await fetch(`${APIUrl}Users/CheckMobileVerification?UserAcc=${account}&VerificationCode=${vCode}`,
+            {
+                headers: {
+                    "content-type": "application/json; charset=utf-8",
+                },
+                method: "GET",
+            })
+            .then(Result => {
+                const ResultJson = Result.clone().json();//Respone.clone()
+                return ResultJson;
+            })
+            .then((PreResult) => {
+
+                if (PreResult.code === 200) {
+                    // 驗證成功
+                    setForgetFlag(2);
+                    setWhichForm("ResetPass");
+                } else {
+                    setAuthCodeSuccess(false);
+                }
+            })
+            .catch((Error) => {
+                modalsService.infoModal.warn({
+                    iconRightText: Error,
+                    yes: true,
+                    yesText: "確認",
+                    // no: true,
+                    // autoClose: true,
+                    backgroundClose: true,
+                    // theme: {
+                    yesOnClick: (e, close) => {
+                        close();
+                    }
+                    //     yesButton: {
+                    //         text: {
+                    //             basic: (style, props) => {
+                    //                 console.log(style)
+                    //                 return {
+                    //                     ...style,
+                    //                     color: "red"
+                    //                 }
+                    //             },
+                    //         }
+                    //     }
+                    // }
+                })
+                throw Error;
+            })
+            .finally(() => {
+            });
+        //#endregion
+
+    }, [APIUrl, APIAppKey, Switch])
+
+    const [ConfirmAuthCodeExecute, ConfirmAuthCodePending] = useAsync(confirmAuthCode, false);
+    //#endregion 
+
+    //#region 設置新密碼 API 
+    const setNewPwd = useCallback(async (setNewPwdData) => {
+
+        //#region 設置新密碼
+        await fetch(`${APIUrl}Users/SetNewPassword`,
+            {
+                headers: {
+                    "content-type": "application/json; charset=utf-8",
+                },
+                method: "POST",
+                body: JSON.stringify({ ...setNewPwdData })
+            })
+            .then(Result => {
+                const ResultJson = Result.clone().json();//Respone.clone()
+                return ResultJson;
+            })
+            .then((PreResult) => {
+
+                if (PreResult.code === 200) {
+                    // 成功設置新密碼
+                    setForgetFlag(3);
+                }
+            })
+            .catch((Error) => {
+                modalsService.infoModal.warn({
+                    iconRightText: Error,
+                    yes: true,
+                    yesText: "確認",
+                    // no: true,
+                    // autoClose: true,
+                    backgroundClose: true,
+                    // theme: {
+                    yesOnClick: (e, close) => {
+                        close();
+                    }
+                    //     yesButton: {
+                    //         text: {
+                    //             basic: (style, props) => {
+                    //                 console.log(style)
+                    //                 return {
+                    //                     ...style,
+                    //                     color: "red"
+                    //                 }
+                    //             },
+                    //         }
+                    //     }
+                    // }
+                })
+                throw Error;
+            })
+            .finally(() => {
+            });
+        //#endregion
+
+    }, [APIUrl, APIAppKey, Switch])
+
+    const [SetNewPwdExecute, SetNewPwdPending] = useAsync(setNewPwd, false);
+    //#endregion 
+
     return (
         <>
             {/* {
@@ -474,6 +659,12 @@ export const Login = (props) => {
                     loginPending={LoginPending}
                     ForgetFlag={ForgetFlag} // 驗忘記密碼驗證步驟
                     setForgetFlag={setForgetFlag} // 設定驗忘記密碼驗證步驟
+                    SendAuthCodeExecute={SendAuthCodeExecute} // 發送驗證碼
+                    ConfirmAuthCodeExecute={ConfirmAuthCodeExecute} // 驗證
+                    AuthCodeSuccess={AuthCodeSuccess} // 驗證成功
+                    setAuthCodeSuccess={setAuthCodeSuccess} // 設定驗證成功
+                    SetNewPwdExecute={SetNewPwdExecute} // 設置新密碼
+                    controllGCS={controllGCS}
                 />
             }
         </>

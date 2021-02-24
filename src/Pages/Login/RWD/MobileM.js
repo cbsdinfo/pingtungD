@@ -11,6 +11,7 @@ import { ReactComponent as AuthCode } from '../../../Assets/img/AuthCode.svg'
 import { ReactComponent as LoginLogoNewTaipei } from '../../../Assets/img/LoginLogoNewTaipei.svg'
 import { ReactComponent as LoginSplitLine } from '../../../Assets/img/LoginSplitLine.svg'
 import { ReactComponent as LoginInfoIcon } from '../../../Assets/img/LoginInfoIcon.svg'
+import { ReactComponent as LoginGreenCheck } from '../../../Assets/img/LoginGreenCheck.svg'
 import { BasicContainer, Container, ScrollBar, Radio, SubContainer, Text, FormContainer, FormRow, NewSelector, TextInput, BasicButton, Checkbox, CheckboxItem, modalsService, InfoModal, globalContextService, DateTimePicker, RadioItem } from '../../../Components';
 import { MapGoogleInput, MobileMPlacard, TitleBar } from '../../../ProjectComponent';
 import moment from 'moment';
@@ -18,6 +19,7 @@ import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { cityAndCountiesLite, Counties } from '../../../Mappings/Mappings';
 import { isEqual, isNil, isEmpty } from 'lodash';
 import LoginBg from '../../../Assets/img/LoginBg.png'
+import { valid } from '../../../Handlers';
 
 //#region 倒數10秒
 const TimeCounter = (props) => {
@@ -45,6 +47,14 @@ const TimeCounter = (props) => {
 }
 //#endregion
 
+//#region 驗證手機格式
+const errorPhone = () => {
+    return (
+        !isEmpty(valid(globalContextService.get("LoginPage", "Phone") ?? "", ["^09[0-9]{8}$"], ["請輸入正確的手機號碼"])[1])
+    )
+}
+//#endregion
+
 const MobileMBase = (props) => {
     const { APIUrl, Theme, Switch, History, Location } = useContext(Context);
     const { pages: { login: { rwd: { mobileM } } } } = Theme;
@@ -58,8 +68,6 @@ const MobileMBase = (props) => {
     //console.log(mobileM)
     return (
         <>
-
-
             {/* 最外層容器 */}
             <BasicContainer
                 baseDefaultTheme={"DefaultTheme"}
@@ -88,11 +96,13 @@ const MobileMBase = (props) => {
                                         returnIconOnClick={(e) => {
                                             props.setWhichForm("Login");
                                             props.setWaitSecToZero(false);
+                                            props.controllGCS("Return");
+                                            props.setAuthCodeSuccess(null);
                                         }}
                                         customTitleText={
                                             <Text
                                                 theme={mobileM.titleBar}>
-                                                {props.WhichForm === "ForgetPass" ? `忘記密碼` : ""}
+                                                {["ForgetPass", "ResetPass"].includes(props.WhichForm) ? `忘記密碼` : ""}
                                             </Text>
                                         }
                                     />
@@ -314,61 +324,62 @@ const MobileMBase = (props) => {
                                 </>
                             }
 
+                            {/* 忘記密碼 步驟外側容器 */}
+                            <SubContainer
+                                view={["ForgetPass", "ResetPass"].includes(props.WhichForm)}
+                                theme={mobileM.forgetPassStepOutContainer}
+                            >
+                                {
+                                    ([
+                                        "驗證身份",
+                                        "設置新密碼",
+                                        "完成"
+                                    ]).map((item, index) => {
+                                        return (
+                                            <>
+                                                {/* 忘記密碼 步驟容器 */}
+                                                <Container
+                                                    theme={mobileM.forgetPassStepContainer}
+                                                >
+                                                    {/* 忘記密碼 左側橫線 */}
+                                                    <Text
+                                                        view={index !== 0}
+                                                        theme={mobileM.leftLine}
+                                                    >
+                                                    </Text>
+
+                                                    {/* 忘記密碼 右側橫線 */}
+                                                    <Text
+                                                        view={index !== 2}
+                                                        theme={mobileM.rightLine}
+                                                    >
+                                                    </Text>
+
+                                                    {/* 忘記密碼 步驟 順序 */}
+                                                    <Text
+                                                        theme={index + 1 <= props.ForgetFlag ? mobileM.forgetPassStepNum.onpage : mobileM.forgetPassStepNum}
+                                                    >
+                                                        {`0${index + 1}`}
+                                                    </Text>
+
+                                                    {/* 忘記密碼 步驟 文字 */}
+                                                    <Text
+                                                        theme={mobileM.forgetPassStepText}
+                                                    >
+                                                        {item}
+                                                    </Text>
+
+                                                </Container>
+                                            </>
+                                        )
+                                    })
+                                }
+
+                            </SubContainer>
+
                             {/* 忘記密碼表單 ForgetPass */}
                             {props.WhichForm === "ForgetPass" &&
                                 <>
-                                    {/* 忘記密碼 步驟外側容器 */}
-                                    <SubContainer
-                                        theme={mobileM.forgetPassStepOutContainer}
-                                    >
-                                        {
-                                            ([
-                                                "驗證身份",
-                                                "設置新密碼",
-                                                "完成"
-                                            ]).map((item, index) => {
-                                                return (
-                                                    <>
-                                                        {/* 忘記密碼 步驟容器 */}
-                                                        <Container
-                                                            theme={mobileM.forgetPassStepContainer}
-                                                        >
-                                                            {/* 忘記密碼 左側橫線 */}
-                                                            <Text
-                                                                view={index !== 0}
-                                                                theme={mobileM.leftLine}
-                                                            >
-                                                            </Text>
-
-                                                            {/* 忘記密碼 右側橫線 */}
-                                                            <Text
-                                                                view={index !== 2}
-                                                                theme={mobileM.rightLine}
-                                                            >
-                                                            </Text>
-
-                                                            {/* 忘記密碼 步驟 順序 */}
-                                                            <Text
-                                                                theme={isEqual(index + 1, props.ForgetFlag) ? mobileM.forgetPassStepNum.onpage : mobileM.forgetPassStepNum}
-                                                            >
-                                                                {`0${index + 1}`}
-                                                            </Text>
-
-                                                            {/* 忘記密碼 步驟 文字 */}
-                                                            <Text
-                                                                theme={mobileM.forgetPassStepText}
-                                                            >
-                                                                {item}
-                                                            </Text>
-
-                                                        </Container>
-                                                    </>
-                                                )
-                                            })
-                                        }
-
-                                    </SubContainer>
-
                                     {/* 忘記密碼表單容器  */}
                                     <BasicContainer
                                         height={Height}
@@ -395,8 +406,22 @@ const MobileMBase = (props) => {
                                                 {/* 手機號碼 Phone */}
                                                 <TextInput
                                                     baseDefaultTheme={"DefaultTheme"}
-                                                    type="phone"
+                                                    error={errorPhone() && !isEmpty(globalContextService.get("LoginPage", "Phone"))}
+                                                    type="number"
                                                     placeholder={"請輸入帳號(預設為手機號碼)"}
+                                                    bottomLabel={
+                                                        !isEmpty(globalContextService.get("LoginPage", "Phone"))
+                                                            ?
+                                                            (
+                                                                errorPhone()
+                                                                    ?
+                                                                    <Text theme={mobileM.forgetPassFormRedPhone}>{`帳號格式可能錯誤`}</Text>
+                                                                    :
+                                                                    ""
+                                                            )
+                                                            :
+                                                            ""
+                                                    }
                                                     value={globalContextService.get("LoginPage", "Phone")}
                                                     onChange={(e, value, onInitial) => {
                                                         if (!isEqual(value, globalContextService.get("LoginPage", "Phone"))) {
@@ -414,6 +439,8 @@ const MobileMBase = (props) => {
                                                     baseDefaultTheme={"DefaultTheme"}
                                                     type="text"
                                                     placeholder={"請輸入驗證碼"}
+                                                    error={!props?.AuthCodeSuccess}
+                                                    bottomLabel={!props?.AuthCodeSuccess ? <Text theme={mobileM.forgetPassFormAuthRedCode}>{`驗證碼錯誤`}</Text> : ""}
                                                     value={globalContextService.get("LoginPage", "AuthCode")}
                                                     onChange={(e, value, onInitial) => {
                                                         if (!isEqual(value, globalContextService.get("LoginPage", "AuthCode"))) {
@@ -431,12 +458,14 @@ const MobileMBase = (props) => {
                                                     {!props.WaitSecToZero ?
                                                         <BasicButton
                                                             baseDefaultTheme={"PrimaryTheme"}
-                                                            haveData={!isEmpty(globalContextService.get("LoginPage", "Phone"))}
+                                                            disable={isEmpty(globalContextService.get("LoginPage", "Phone")) || errorPhone()}
+                                                            haveData={!isEmpty(globalContextService.get("LoginPage", "Phone")) && !errorPhone()}
                                                             text={`取得驗證碼`}
                                                             theme={mobileM.forgetPassFormSendAuthCodeButton}
                                                             onClick={() => {
                                                                 console.log("Start")
                                                                 props.setWaitSecToZero(true);
+                                                                props.SendAuthCodeExecute(globalContextService.get("LoginPage", "Phone"))
                                                             }}
                                                         />
                                                         :
@@ -471,9 +500,16 @@ const MobileMBase = (props) => {
                                                     <BasicButton
                                                         baseDefaultTheme={"PrimaryTheme"}
                                                         haveData={!isEmpty(globalContextService.get("LoginPage", "AuthCode"))}
+                                                        disable={isEmpty(globalContextService.get("LoginPage", "AuthCode"))}
                                                         text={"驗證"}
                                                         theme={mobileM.forgetPassFormNextButton}
-                                                        onClick={() => { props.setWhichForm("ResetPass") }}
+                                                        onClick={() => {
+                                                            props.ConfirmAuthCodeExecute(
+                                                                globalContextService.get("LoginPage", "Phone"),
+                                                                globalContextService.get("LoginPage", "AuthCode")
+                                                            )
+                                                            // props.setWhichForm("ResetPass")
+                                                        }}
                                                     />
                                                 </SubContainer>
                                             </FormRow>
@@ -487,6 +523,7 @@ const MobileMBase = (props) => {
                                 <>
                                     {/* 設定登入密碼表單容器  */}
                                     <BasicContainer
+                                        height={Height}
                                         baseDefaultTheme={"DefaultTheme"}
                                         theme={mobileM.resetPassFormContainer}
                                     >
@@ -495,14 +532,14 @@ const MobileMBase = (props) => {
                                             baseDefaultTheme={"DefaultTheme"}
                                             theme={mobileM.resetPassFormTitle}
                                         >
-                                            設定登入密碼
+                                            {`驗證完成，請輸入新密碼`}
                                         </Text>
                                         {/* 設定登入密碼表單次標題 */}
                                         <Text
                                             baseDefaultTheme={"DefaultTheme"}
                                             theme={mobileM.resetPassFormSubTitle}
                                         >
-                                            8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。
+                                            {`8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。`}
                                         </Text>
                                         {/* 設定登入密碼表單組件 */}
                                         <FormContainer
@@ -518,18 +555,25 @@ const MobileMBase = (props) => {
                                                     baseDefaultTheme={"DefaultTheme"}
                                                     type="password"
                                                     openEye
-                                                    placeholder={"請輸入新的密碼"}
-                                                    leftIcon={
-                                                        <Lock
-                                                            style={mobileM.resetPassFormNewPasswordLeftIcon}
-                                                        />
-                                                    }
+                                                    placeholder={"請輸入新密碼"}
+                                                    // leftIcon={
+                                                    //     <Lock
+                                                    //         style={mobileM.resetPassFormNewPasswordLeftIcon}
+                                                    //     />
+                                                    // }
+                                                    value={globalContextService.get("LoginPage", "NewPassword")}
+                                                    onChange={(e, value, onInitial) => {
+                                                        if (!isEqual(value, globalContextService.get("LoginPage", "NewPassword"))) {
+                                                            globalContextService.set("LoginPage", "NewPassword", value);
+                                                            setForceUpdate(u => !u)
+                                                        }
+                                                    }}
                                                     theme={mobileM.resetPassFormNewPassword}
                                                 />
                                             </FormRow>
-                                            <FormRow baseDefaultTheme={"DefaultTheme"}>
-                                                {/* 確認新密碼 ConfirmPassword */}
-                                                <TextInput
+                                            {/* <FormRow baseDefaultTheme={"DefaultTheme"}> */}
+                                            {/* 確認新密碼 ConfirmPassword */}
+                                            {/* <TextInput
                                                     baseDefaultTheme={"DefaultTheme"}
                                                     type="password"
                                                     openEye
@@ -541,7 +585,7 @@ const MobileMBase = (props) => {
                                                     }
                                                     theme={mobileM.resetPassFormConfirmPassword}
                                                 />
-                                            </FormRow>
+                                            </FormRow> */}
                                             <FormRow baseDefaultTheme={"DefaultTheme"}>
                                                 {/* 完成按鈕 */}
                                                 <SubContainer
@@ -549,13 +593,69 @@ const MobileMBase = (props) => {
                                                 >
                                                     <BasicButton
                                                         baseDefaultTheme={"PrimaryTheme"}
-                                                        text={"完成"}
+                                                        haveData={(!isEmpty(globalContextService.get("LoginPage", "NewPassword")) || props.ForgetFlag === 3)}
+                                                        text={"確定"}
                                                         theme={mobileM.resetPassFormDoneButton}
-                                                        onClick={() => { props.setWhichForm("Login") }}
+                                                        onClick={() => {
+                                                            if (props.ForgetFlag !== 3) {
+                                                                //#region 表單驗證
+                                                                let validMsg = "";
+                                                                if (valid(globalContextService.get("LoginPage", "NewPassword") ?? "", ["^.{1,}$", "^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_]+$)(?![a-z0-9]+$)(?![a-z\\W_]+$)(?![0-9\\W_]+$)[a-zA-Z0-9\\W_]{8,}$"], ["請輸入新密碼", "新密碼請輸入：8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。"])[1]) {
+                                                                    validMsg = valid(globalContextService.get("LoginPage", "NewPassword") ?? "", ["^.{1,}$", "^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_]+$)(?![a-z0-9]+$)(?![a-z\\W_]+$)(?![0-9\\W_]+$)[a-zA-Z0-9\\W_]{8,}$"], ["請輸入新密碼", "新密碼請輸入：8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。"])[1]
+                                                                }
+                                                                //#endregion
+
+                                                                //#region 表單驗證後動作
+                                                                if (validMsg !== "") {
+                                                                    // console.log(validMsg, globalContextService.get("OperatingUnitSettingPage"))
+                                                                    modalsService.infoModal.error({
+                                                                        id: "top1", //注意 這裡要加上固定id
+                                                                        iconRightText: validMsg,
+                                                                        yes: true,
+                                                                        yesText: "確認",
+                                                                        // no: true,
+                                                                        // autoClose: true,
+                                                                        backgroundClose: false,
+                                                                        yesOnClick: (e, close) => {
+                                                                            close();
+                                                                        }
+                                                                    })
+                                                                }
+                                                                else {
+                                                                    props.SetNewPwdExecute({
+                                                                        userAcc: globalContextService.get("LoginPage", "Phone"),
+                                                                        userPwd: globalContextService.get("LoginPage", "NewPassword")
+                                                                    })
+                                                                }
+                                                                //#endregion
+                                                            }
+                                                            else {
+                                                                props.setWhichForm("Login")
+                                                                props.controllGCS("Return")
+                                                            }
+
+                                                        }}
                                                     />
                                                 </SubContainer>
                                             </FormRow>
                                         </FormContainer>
+
+                                        {
+                                            props.ForgetFlag === 3 &&
+                                            <SubContainer
+                                                theme={mobileM.completeButtonContainer}
+                                            >
+                                                <LoginGreenCheck />
+
+                                                {/* 修改密碼完成 */}
+                                                <Text
+
+                                                    theme={mobileM.completeButtonText}
+                                                >
+                                                    {`修改密碼完成`}
+                                                </Text>
+                                            </SubContainer>
+                                        }
                                     </BasicContainer>
                                 </>
                             }
