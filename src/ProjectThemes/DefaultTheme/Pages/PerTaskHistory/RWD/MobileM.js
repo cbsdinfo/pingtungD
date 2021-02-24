@@ -378,6 +378,7 @@ export default {
             ...style,
             ...style.occupy(6),
             height: "100%",
+            // textAlign: "right"
         })
     },
     //#endregion
@@ -391,7 +392,7 @@ export default {
             width: "36px",
             fontWeight: 600,
             top: "25px",
-            left: "28px",
+            left: "18px",
             display: "inline-block",
             color: "#FFFFFF"
         })
@@ -406,7 +407,7 @@ export default {
             width: "auto",
             fontWeight: 700,
             top: "14px",
-            left: "80px",
+            left: "65px",
             display: "inline-block",
             // padding: "0 0 0 24px",
             color: "#FFFFFF"
@@ -439,7 +440,7 @@ export default {
     },
     //#endregion
 
-    //#region 司機被住內容
+    //#region 司機備註內容
     driverRemarkText: {
         basic: (style, props) => ({
             ...style,

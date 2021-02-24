@@ -340,7 +340,7 @@ const MobileMBase = (props) => {
                                                         實收車資
                                                     </Text>
                                                     <Text theme={mobileM.amtValueText}>
-                                                        {data?.ReceivePay}
+                                                        {data?.receivePay}
                                                     </Text>
                                                 </SubContainer>
                                             </Container>
@@ -353,11 +353,11 @@ const MobileMBase = (props) => {
                                                 >
                                                     司機備註
                                                 </Text>
-                                                {/* 司機被住內容 */}
+                                                {/* 司機備註內容 */}
                                                 <Text
                                                     theme={mobileM.driverRemarkText}
                                                 >
-                                                    {data?.Remark}
+                                                    {data?.remark}
                                                 </Text>
                                             </SubContainer>
 

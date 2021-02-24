@@ -240,7 +240,7 @@ export default {
     arrowSvg: {
         position: "absolute",
         top: "14px",
-        right: "-5px"
+        right: "0px"
     },
     //#endregion
 }
