@@ -19,139 +19,53 @@ export const Income = (props) => {
     //const { pages: { login } } = Theme;
     const [NowTab, setNowTab] = useState("系統公告"); // 目前公告頁面
     const [TodayTask, setTodayTask] = useState([
+
         {
-            "despatchOfCaseOrderCourseViews": [
-                {
-                    "date": "2021-02-24",
-                    "cashCount": "2",
-                    "cashAmt": "120",
-                    "onePassCardCount": "1",
-                    "onePassCardAmt": "310",
-                    "creditCardCount": "0",
-                    "creditCardAmt": null,
-                    "linePayCount": "0",
-                    "linePayAmt": null,
-                    "applePayCount": "0",
-                    "applePayAmt": null,
-
-
-                    "despatchNo": "DP6762859921754599424",
-                    "orderId": "6761019507594534912",
-                    "driverId": "6756231610261610497",
-                    "reserveDate": "2021-02-23 19:10:00",
-                    "name": "王曉明",
-                    "wheelchairType": "無",
-                    "familyWith": 0,
-                    "fromAddr": "新北市新莊區g",
-                    "fromAddrRemark": "住家",
-                    "toAddr": "台北市中山區南京西路Waku Waku Burger 中山店",
-                    "toAddrRemark": "醫院診所",
-                    "status": 9,                    
-                },
-                {
-                    "date": "2021-02-26",
-                    "cashCount": "2",
-                    "cashAmt": "120",
-                    "onePassCardCount": "1",
-                    "onePassCardAmt": "310",
-                    "creditCardCount": "0",
-                    "creditCardAmt": null,
-                    "linePayCount": "0",
-                    "linePayAmt": null,
-                    "applePayCount": "0",
-                    "applePayAmt": null,
-
-                    "despatchNo": "DP6762859921754599424",
-                    "orderId": "6762856821367021568",
-                    "driverId": "6756231610261610497",
-                    "reserveDate": "2021-02-23 21:00:00",
-                    "name": "草莓測試",
-                    "wheelchairType": "電動高背輪椅",
-                    "familyWith": 1,
-                    "fromAddr": "EEC TAIWAN, 台2甲線中山區台北市",
-                    "fromAddrRemark": "復健診所",
-                    "toAddr": "新北市板橋區板新路27號",
-                    "toAddrRemark": "住家",
-                    "status": 9,                    
-                },
-                {
-                    "date": "2021-02-2",
-                    "cashCount": "2",
-                    "cashAmt": "120",
-                    "onePassCardCount": "1",
-                    "onePassCardAmt": "310",
-                    "creditCardCount": "0",
-                    "creditCardAmt": null,
-                    "linePayCount": "0",
-                    "linePayAmt": null,
-                    "applePayCount": "0",
-                    "applePayAmt": null,
-
-                    "despatchNo": "DP6763451332459802624",
-                    "orderId": "6763451080335990784",
-                    "driverId": "6756231610261610497",
-                    "reserveDate": "2021-02-24 10:00:00",
-                    "name": "王曉明",
-                    "wheelchairType": "普通輪椅(可收折)",
-                    "familyWith": 0,
-                    "fromAddr": "新北市新莊區樹新路222號",
-                    "fromAddrRemark": "洗腎中心",
-                    "toAddr": "新北市新莊區g",
-                    "toAddrRemark": "住家",
-                    "status": 9,
-                }
+            "date": "2021-02-24",
+            "detail": [
+                { type: "onePassCard", typeName: "一卡通", count: 1, receivePay: 120 },
+                { type: "creditCard", typeName: "信用卡", count: 3, receivePay: 160 },
+                { type: "linePay", typeName: "line pay", count: 0, receivePay: null },
+                { type: "applePay", typeName: "apple pay", count: 2, receivePay: 1320 },
             ]
         },
         {
-            "despatchOfCaseOrderCourseViews": [
-                {
-                    "despatchNo": "DP6763451332459802624",
-                    "orderId": "6763451080335990784",
-                    "driverId": "6756231610261610497",
-                    "reserveDate": "2021-02-24 10:00:00",
-                    "name": "王曉明",
-                    "wheelchairType": "普通輪椅(可收折)",
-                    "familyWith": 0,
-                    "fromAddr": "新北市新莊區樹新路222號",
-                    "fromAddrRemark": "洗腎中心",
-                    "toAddr": "新北市新莊區g",
-                    "toAddrRemark": "住家",
-                    "status": 9,
-                }
+            "date": "2021-02-26",
+            "detail": [
+                { type: "onePassCard", typeName: "一卡通", count: 1, receivePay: 120 },
+                { type: "creditCard", typeName: "信用卡", count: 0, receivePay: null },
+                { type: "linePay", typeName: "line pay", count: 5, receivePay: 250 },
+                { type: "applePay", typeName: "apple pay", count: 0, receivePay: null },
             ]
         },
         {
-            "despatchOfCaseOrderCourseViews": [
-                {
-                    "despatchNo": "DP6763451313426051072",
-                    "orderId": "6763451080335990785",
-                    "driverId": "6756231610261610497",
-                    "reserveDate": "2021-02-24 09:50:00",
-                    "name": "王曉明",
-                    "wheelchairType": "普通輪椅(可收折)",
-                    "familyWith": 0,
-                    "fromAddr": "新北市新莊區g",
-                    "fromAddrRemark": "住家",
-                    "toAddr": "新北市新莊區樹新路222號",
-                    "toAddrRemark": "洗腎中心",
-                    "status": 4,
-                },
-                {
-                    "despatchNo": "DP6763451313426051072",
-                    "orderId": "6763451139546980352",
-                    "driverId": "6756231610261610497",
-                    "reserveDate": "2021-02-24 09:40:00",
-                    "name": "草莓測試",
-                    "wheelchairType": "無",
-                    "familyWith": 2,
-                    "fromAddr": "新北市板橋區板新路27號",
-                    "fromAddrRemark": "住家",
-                    "toAddr": "新北市板橋區南雅南路二段醫療財團法人徐元智先生醫藥基金會附設亞東紀念醫院",
-                    "toAddrRemark": "醫院診所",
-                    "status": 5,
-                }
+            "date": "2021-02-27",
+            "detail": [
+                { type: "onePassCard", typeName: "一卡通", count: 1, receivePay: 8120 },
+                { type: "creditCard", typeName: "信用卡", count: 2, receivePay: 1720 },
+                { type: "linePay", typeName: "line pay", count: 6, receivePay: 1220 },
+                { type: "applePay", typeName: "apple pay", count: 1, receivePay: 1290 },
             ]
         },
+        {
+            "date": "2021-02-29",
+            "detail": [
+                { type: "onePassCard", typeName: "一卡通", count: 1, receivePay: 55 },
+                { type: "creditCard", typeName: "信用卡", count: 0, receivePay: 1720 },
+                { type: "linePay", typeName: "line pay", count: 0, receivePay: 1220 },
+                { type: "applePay", typeName: "apple pay", count: 0, receivePay: 1290 },
+            ]
+        },
+        {
+            "date": "2021-02-30",
+            "detail": [
+                { type: "onePassCard", typeName: "一卡通", count: 1, receivePay: 55 },
+                { type: "creditCard", typeName: "信用卡", count: 0, receivePay: 1720 },
+                { type: "linePay", typeName: "line pay", count: 0, receivePay: 1220 },
+                { type: "applePay", typeName: "apple pay", count: 0, receivePay: 1290 },
+            ]
+        },
+
     ]); //所有今日任務
     const [AllNews, setAllNews] = useState([]); // 類別下所有最新消息
     const [CheckDetail, setCheckDetail] = useState({}); // 詳細資料

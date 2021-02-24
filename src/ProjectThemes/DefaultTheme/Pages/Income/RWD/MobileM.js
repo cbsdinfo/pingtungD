@@ -147,7 +147,7 @@ export default {
     },
     //#endregion
 
-    ////#endregion 總額文字
+    //#region 總額文字
     totalTitleText: {
         basic: (style, props) => ({
             ...style,
@@ -159,8 +159,9 @@ export default {
             top: "-2px"
         })
     },
+    //#endregion
 
-    ////#endregion 總額文字2
+    //#region 總額文字2
     totalTitleText2: {
         basic: (style, props) => ({
             ...style,
@@ -173,8 +174,9 @@ export default {
             textAlign: "center"
         })
     },
+    //#endregion
 
-    ////#endregion 總額金額文字1
+    //#region 總額金額文字1
     totalAmtText: {
         basic: (style, props) => ({
             ...style,
@@ -187,8 +189,9 @@ export default {
             textAlign: "center"
         })
     },
+    //#endregion
 
-    ////#endregion 總額金額文字2
+    //#region 總額金額文字2
     totalAmtText2: {
         basic: (style, props) => ({
             ...style,
@@ -201,6 +204,7 @@ export default {
             textAlign: "center"
         })
     },
+    //#endregion
 
     //#region Table標題容器
     tableTitleContainer: {
@@ -210,194 +214,276 @@ export default {
             width: "100%",
             display: "inline-block",
             // margin: "4px",
-            backgroundColor: "#F2F2F2",
-            height: "47px",
-            padding: "8px 18px"
+            // backgroundColor: "#F2F2F2",
+            // height: "66px",
+            padding: "10px 18px"
         })
     },
     //#endregion
 
-    ////#endregion Table標題 日期
-    tableDateTitleText: {
-        basic: (style, props) => ({
-            ...style,
-            width: "calc(20%)",
-            fontSize: "14px",
-            fontWeight: 400,
-            // color: "rgba(61,61,61,1)",
-            display: "inline-block",
-            // top: "-9px",
-            textAlign: "center"
-        })
-    },
-    ////#endregion Table標題 單數
-    tableCountTitleText: {
-        basic: (style, props) => ({
-            ...style,
-            width: "calc(20%)",
-            fontSize: "14px",
-            fontWeight: 400,
-            color: "rgba(61,61,61,1)",
-            display: "inline-block",
-            top: "-9px",
-            textAlign: "center"
-        })
-    },
-    ////#endregion Table標題 收款方式
-    tablePayWayTitleText: {
-        basic: (style, props) => ({
-            ...style,
-            width: "calc(40%)",
-            fontSize: "14px",
-            fontWeight: 400,
-            color: "rgba(61,61,61,1)",
-            display: "inline-block",
-            top: "-9px",
-            textAlign: "center"
-        })
-    },
-    ////#endregion Table標題 實收
-    tablePaidTitleText: {
-        basic: (style, props) => ({
-            ...style,
-            width: "calc(20%)",
-            fontSize: "14px",
-            fontWeight: 400,
-            color: "rgba(61,61,61,1)",
-            display: "inline-block",
-            top: "-9px",
-            textAlign: "center"
-        })
-    },
-
-    //#region 下車地點註記
-    toAddrRemarkText: {
-        basic: (style, props) => ({
-            ...style,
-            padding: "4px 28px 0",
-            fontWeight: 600,
-            fontSize: "16px"
-        })
-    },
-    //#endregion
-
-    //#region 下車地點
-    toAddrText: {
-        basic: (style, props) => ({
-            ...style,
-            padding: "4px 28px 0",
-            fontWeight: 500,
-            fontSize: "14px"
-        })
-    },
-    //#endregion
-
-    //#region 乘車時間(月+日)
-    reserveDateFirstText: {
-        basic: (style, props) => ({
-            ...style,
-            padding: "16px 4px 0 28px",
-            color: "rgba(246,126,1,1)",
-            fontWeight: 600,
-            fontSize: "18px",
-            display: "inline-block"
-        })
-    },
-    //#endregion
-
-    //#region 乘車時間(時+分)
-    reserveDateSecondText: {
-        basic: (style, props) => ({
-            ...style,
-            padding: "16px 28px 0 4px",
-            fontWeight: 500,
-            fontSize: "18px",
-            display: "inline-block"
-        })
-    },
-    //#endregion
-
-    //#region 輪椅icon
-    wheelChairSvg: {
-        top: "10px",
-        position: "absolute",
-        right: "135px",
-    },
-    //#endregion
-
-    //#region 輪椅
-    wheelChairText: {
-        basic: (style, props) => ({
-            ...style,
-            width: "calc(100% - 180px)",
-            textAlign: "right",
-            padding: "16px 28px 10px 0",
-            fontWeight: 600,
-            fontSize: "13px",
-            display: "inline-block",
-            top: "4px"
-        })
-    },
-    //#endregion
-
-    //#region 狀態容器
-    statusContainer: {
+    //#region Table標題內容器
+    tableTitleInsideContainer: {
         basic: (style, props) => ({
             ...style,
             width: "100%",
+            display: "inline-flex",
+            alignItems: "center",
+            // padding: "12px",
+            height: "47px",
+            backgroundColor: "#F2F2F2",
+        })
+    },
+    //#endregion
+
+    //#region Table標題 日期
+    tableDateTitleText: {
+        basic: (style, props) => ({
+            ...style,
+            width: "20%",
+            fontSize: "14px",
+            fontWeight: 400,
+            color: "rgba(61,61,61,1)",
+            // lineHeight: "47px",
             display: "inline-block",
-            padding: "12px",
+            // top: "11px",
+            textAlign: "center"
+        })
+    },
+    //#endregion
+
+    //#region Table標題 單數
+    tableCountTitleText: {
+        basic: (style, props) => ({
+            ...style,
+            width: "20%",
+            fontSize: "14px",
+            fontWeight: 400,
+            color: "rgba(61,61,61,1)",
+            // lineHeight: "47px",
+            display: "inline-block",
+            // top: "11px",
+            textAlign: "center"
+        })
+    },
+    //#endregion
+
+    //#region Table標題 收款方式
+    tablePayWayTitleText: {
+        basic: (style, props) => ({
+            ...style,
+            width: "40%",
+            fontSize: "14px",
+            fontWeight: 400,
+            color: "rgba(61,61,61,1)",
+            // lineHeight: "47px",
+            display: "inline-block",
+            // top: "11px",
+            textAlign: "center"
+        })
+    },
+    //#endregion
+
+    //#region Table標題 實收
+    tablePaidTitleText: {
+        basic: (style, props) => ({
+            ...style,
+            width: "20%",
+            fontSize: "14px",
+            fontWeight: 400,
+            color: "rgba(61,61,61,1)",
+            display: "inline-block",
+            // lineHeight: "47px",
+            // top: "11px",
+            textAlign: "center"
+        })
+    },
+    //#endregion
+
+    //#region 列表內容容器
+    paymentRecordContainer: {
+        basic: (style, props) => ({
+            ...style,
+            width: "100%",
+            // display: "inline-block",
+            padding: "12px 18px",
+            height: "auto"
             // backgroundColor: "#F5F5F5",
         })
     },
     //#endregion
 
-    //#region 狀態內容器
-    statusInsideContainer: {
+    //#region 列表內容日期容器
+    dateInsideContainer: {
         basic: (style, props) => ({
             ...style,
+            display: "inline-flex",
+            alignItems: "center",
+            width: "20%",
+            minHeight: "55px",
+            height: "auto",
+            backgroundColor: "#3F3F3F",
+        })
+    },
+    //#endregion   
+
+    //#region 列表內容日期文字
+    dateText: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#FFFFFF",
+            fontSize: "12px",
+            fontWeight: 400,
+            display: "block",
             width: "100%",
-            display: "inline-block",
-            padding: "12px",
-            backgroundColor: "#F5F5F5",
+            textAlign: "center"
         })
     },
-    //#endregion
+    //#endregion   
 
-    //#region 訂單狀態
-    statusText: {
+    //#region 列表內容單數容器
+    countInsideContainer: {
         basic: (style, props) => ({
             ...style,
-            width: "40%",
-            textAlign: "center",
-            top: "-4px",
-            // padding: "16px 28px 10px 0",
-            fontWeight: 600,
+            display: "inline-flex",
+            alignItems: "center",
+            // width: "20%",
+            width: "80%",
+            minHeight: "55px",
+            height: "auto",
+            backgroundColor: "#F2F2F2",
+        })
+    },
+    //#endregion   
+
+    //#region 列表內容單數文字
+    countText: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#3D3D3D",
             fontSize: "14px",
-            display: "inline-block"
+            fontWeight: 600,
+            display: "inline-block",
+            // width: "100%",
+            width: "25%",
+            textAlign: "center",
+            padding: "5px 0",
+            borderBottom: "1px dashed #D8D8D8",
         })
     },
-    //#endregion
+    //#endregion  
 
-    //#region 訂單狀態右方文字
-    statusRightText: {
+    //#region 列表內容單數文字
+    countLastText: {
         basic: (style, props) => ({
             ...style,
-            width: "60%",
-            textAlign: "center",
-            // padding: "16px 28px 10px 0",
+            color: "#3D3D3D",
+            fontSize: "14px",
             fontWeight: 600,
-            fontSize: "28px",
-            display: "inline-block"
+            display: "inline-block",
+            // width: "100%",
+            width: "25%",
+            textAlign: "center",
+            padding: "5px 0",
+            // borderBottom: "1px dashed #D8D8D8",
         })
     },
-    //#endregion
+    //#endregion    
 
-    //#region 箭頭圖標
-    arrowSvg: {
-        position: "absolute",
-        top: "14px",
-        right: "0px"
+    //#region 列表內容收款方式容器
+    paywayInsideContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-flex",
+            alignItems: "center",
+            width: "40%",
+            minHeight: "55px",
+            height: "auto",
+            backgroundColor: "#F2F2F2",
+        })
     },
-    //#endregion
+    //#endregion   
+
+    //#region 列表內容收款方式文字
+    payWayText: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#3D3D3D",
+            fontSize: "14px",
+            fontWeight: 400,
+            display: "inline-block",
+            // width: "100%",
+            width: "50%",
+            textAlign: "center",
+            padding: "5px 0",
+            borderBottom: "1px dashed #D8D8D8",
+            borderRight: "1px solid #6B6B6B"
+        })
+    },
+    //#endregion 
+
+    //#region 列表內容收款方式文字
+    payWayLastText: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#3D3D3D",
+            fontSize: "14px",
+            fontWeight: 400,
+            display: "inline-block",
+            // width: "100%",
+            width: "50%",
+            textAlign: "center",
+            padding: "5px 0",
+            // borderBottom: "1px dashed #D8D8D8",
+            borderRight: "1px solid #6B6B6B"
+        })
+    },
+    //#endregion 
+
+    //#region 列表內容實收容器
+    paidInsideContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-flex",
+            alignItems: "center",
+            width: "20%",
+            minHeight: "55px",
+            height: "auto",
+            backgroundColor: "#F2F2F2",
+        })
+    },
+    //#endregion   
+
+    //#region 列表內容實收文字
+    paidText: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#3D3D3D",
+            fontSize: "18px",
+            fontWeight: 700,
+            display: "inline-block",
+            // width: "100%",
+            width: "25%",
+            textAlign: "center",
+            padding: "5px 0",
+            borderBottom: "1px dashed #D8D8D8",
+        })
+    },
+    //#endregion 
+
+    //#region 列表內容實收文字
+    paidLastText: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#3D3D3D",
+            fontSize: "18px",
+            fontWeight: 700,
+            display: "inline-block",
+            // width: "100%",
+            width: "25%",
+            textAlign: "center",
+            padding: "5px 0",
+            // borderBottom: "1px dashed #D8D8D8",
+        })
+    },
+    //#endregion 
 }

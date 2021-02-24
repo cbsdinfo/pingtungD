@@ -243,7 +243,7 @@ const MobileMBase = (props) => {
                     <TaskCard
                         // key={index}
 
-                        data={props?.TodayTask?.[0].despatchOfCaseOrderCourseViews} // 調度單資料
+                        // data={props?.TodayTask} // 調度單資料
                         nameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                         // timeNameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                         // needAction // 是否需要點即後，文字變成執行中
@@ -257,12 +257,18 @@ const MobileMBase = (props) => {
                                 basic: (style, props) => ({
                                     ...style,
                                     minHeight: "55px",
-                                    height: "auto"
+                                    height: "auto",
+                                })
+                            },
+                            outcontainer: {
+                                basic: (style, props) => ({
+                                    ...style,
+                                    padding: "12px 5px 12px"
                                 })
                             }
                         }}
                         topContent={(data) => {
-                            console.log("data", data)
+                            // console.log("data", props?.TodayTask)
                             return (
                                 <>
                                     {/* 下車地點註記 */}
@@ -283,26 +289,30 @@ const MobileMBase = (props) => {
                                     <SubContainer
                                         theme={mobileM.tableTitleContainer}
                                     >
-                                        <Text
-                                            theme={mobileM.tableDateTitleText}
+                                        <SubContainer
+                                            theme={mobileM.tableTitleInsideContainer}
                                         >
-                                            日期
+                                            <Text
+                                                theme={mobileM.tableDateTitleText}
+                                            >
+                                                日期
                                         </Text>
-                                        <Text
-                                            theme={mobileM.tableCountTitleText}
-                                        >
-                                            單數
+                                            <Text
+                                                theme={mobileM.tableCountTitleText}
+                                            >
+                                                單數
                                         </Text>
-                                        <Text
-                                            theme={mobileM.tablePayWayTitleText}
-                                        >
-                                            收款方式
+                                            <Text
+                                                theme={mobileM.tablePayWayTitleText}
+                                            >
+                                                收款方式
                                         </Text>
-                                        <Text
-                                            theme={mobileM.tablePaidTitleText}
-                                        >
-                                            實收
+                                            <Text
+                                                theme={mobileM.tablePaidTitleText}
+                                            >
+                                                實收
                                         </Text>
+                                        </SubContainer>
                                     </SubContainer>
                                 </>
                             )
@@ -313,54 +323,141 @@ const MobileMBase = (props) => {
 
                             return (
                                 <>
-                                    <Container>
-                                        {/* 乘車時間 */}
-                                        <Text
-                                            theme={mobileM.reserveDateFirstText}
-                                        >
-                                            {dateToChinese(data?.reserveDate)}
-                                        </Text>
-                                        <Text
-                                            theme={mobileM.reserveDateSecondText}
-                                        >
-                                            {`${data?.reserveDate.split(' ')[1].substring(0, 5)}`}
-                                        </Text>
 
-                                        {/* 輪椅 */}
-                                        <Text
-                                            theme={mobileM.wheelChairText}
-                                        >
-                                            <WheelChair style={mobileM.wheelChairSvg} />
-                                            {data?.wheelchairType}
-                                        </Text>
-                                    </Container>
+                                    {props?.TodayTask?.map((item, index) => {
+                                        let effectCount = 0;
+                                        let countNow = 1;
+                                        const countNowAdd = () => {
+                                            countNow++
+                                        }
+                                        return (
+                                            <>
+                                                {/* 計算有效筆數 */}
+                                                {item.detail.map((detail) => {
+                                                    if (detail.count > 0) {
+                                                        effectCount++;
+                                                    }
+                                                })}
 
-                                    {/* 狀態容器 */}
-                                    <SubContainer
-                                        theme={mobileM.statusContainer}
-                                    >
-                                        <SubContainer
-                                            theme={mobileM.statusInsideContainer}
-                                            onClick={() => {
-                                                history.push(`/PerTaskHistory?despatch=${data.despatchNo}&defaultPrimary=${data.orderId}`)
-                                            }}
-                                        >
+                                                <React.Fragment key={index}>
+                                                    {/* 列表內容容器 */}
+                                                    <Container
+                                                        theme={mobileM.paymentRecordContainer}
+                                                    >
+                                                        {/* 日期容器 */}
+                                                        <SubContainer
+                                                            theme={mobileM.dateInsideContainer}
+                                                            style={{ height: `${effectCount * 37 - 1}px` }}
+                                                        >
 
-                                            {/* 訂單狀態 */}
-                                            <Text
-                                                theme={mobileM.statusText}
-                                            >
-                                                訂單狀態
-                                                    </Text>
-                                            <Text
-                                                theme={mobileM.statusRightText}
-                                            >
-                                                {statusMapping(data?.status)}
-                                                <Arrow style={mobileM.arrowSvg} />
-                                            </Text>
+                                                            <BasicContainer
+                                                                theme={{
+                                                                    basic: (style, props) => ({
+                                                                        ...style,
+                                                                        width: "100%"
+                                                                    })
+                                                                }}
+                                                            >
+                                                                {/* 日期 */}
+                                                                <Text
+                                                                    theme={mobileM.dateText}
+                                                                >
+                                                                    {item?.date?.substring(0, 4)}
+                                                                </Text>
+                                                                <Text
+                                                                    theme={mobileM.dateText}
+                                                                >
+                                                                    {item?.date?.substring(5, 7) + "/" + item?.date?.substring(8)}
+                                                                </Text>
+                                                            </BasicContainer>
 
-                                        </SubContainer>
-                                    </SubContainer>
+                                                        </SubContainer>
+
+                                                        <SubContainer
+
+                                                            theme={mobileM.countInsideContainer}
+                                                        >
+                                                            <SubContainer style={{ width: "100%" }}>
+
+                                                                {item.detail.map((item2, index2) => {
+                                                                    return (
+                                                                        <>
+                                                                            <React.Fragment key={index}>
+                                                                                {item2?.count > 0 &&
+                                                                                    <>
+                                                                                        {effectCount === countNow ?
+                                                                                            <>
+                                                                                                {/* 單數容器 */}
+                                                                                                {/* 單數 */}
+                                                                                                <Text
+                                                                                                    theme={mobileM.countLastText}
+                                                                                                >
+                                                                                                    {item2?.count}
+                                                                                                </Text>
+
+                                                                                                {/* 收款方式 */}
+                                                                                                <Text
+                                                                                                    theme={mobileM.payWayLastText}
+                                                                                                >
+                                                                                                    {item2?.typeName}
+                                                                                                </Text>
+
+                                                                                                {/* 實收 */}
+                                                                                                <Text
+                                                                                                    theme={mobileM.paidLastText}
+                                                                                                >
+                                                                                                    ${item2?.receivePay}
+                                                                                                </Text>
+                                                                                            </>
+                                                                                            :
+                                                                                            <>
+                                                                                                {/* 單數容器 */}
+                                                                                                {/* 單數 */}
+                                                                                                <Text
+                                                                                                    theme={mobileM.countText}
+                                                                                                >
+                                                                                                    {item2?.count}
+                                                                                                </Text>
+
+                                                                                                {/* 收款方式 */}
+                                                                                                <Text
+                                                                                                    theme={mobileM.payWayText}
+                                                                                                >
+                                                                                                    {item2?.typeName}
+                                                                                                </Text>
+
+                                                                                                {/* 實收 */}
+                                                                                                <Text
+                                                                                                    theme={mobileM.paidText}
+                                                                                                >
+                                                                                                    ${item2?.receivePay}
+                                                                                                </Text>
+
+                                                                                                {countNowAdd()}
+                                                                                            </>
+                                                                                        }
+
+                                                                                    </>
+                                                                                }
+                                                                            </React.Fragment>
+                                                                        </>
+                                                                    )
+                                                                })
+                                                                }
+                                                            </SubContainer>
+                                                        </SubContainer>
+
+                                                    </Container>
+
+                                                </React.Fragment>
+                                            </>
+                                        )
+                                    })}
+
+
+
+
+
                                 </>
                             )
                         }}
