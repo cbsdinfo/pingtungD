@@ -445,7 +445,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "100%",
-            display: "inline-flex",
+            display: props.view ? "inline-flex" : "none",
             position: "absolute",
             top: "80px"
         })
@@ -621,6 +621,11 @@ export default {
                     }
                 ),
                 //#endregion
+                ...(
+                    props.error && {
+                        border: "1px solid #F3411A"
+                    }
+                ),
                 height: "40px",
                 textAlign: "center"
             }),
@@ -637,9 +642,18 @@ export default {
         bottomLabel: {
             basic: (style, props) => ({
                 ...style,
-                height: "24px"
+                height: "24px",
             })
         }
+    },
+    //#endregion
+    //#region 手機號碼 下方文字
+    forgetPassFormRedPhone: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#F3411A",
+            textAlign: "right"
+        })
     },
     //#endregion
     //#region 驗證碼 AuthCode
@@ -648,7 +662,7 @@ export default {
             basic: (style, props) => ({
                 ...style,
                 ...style.occupy(7.7),
-                padding: "0 4px 28px 0"
+                padding: "0 4px 4px 0"
             })
         },
         topLabel: {
@@ -677,6 +691,12 @@ export default {
                     }
                 ),
                 //#endregion
+                ...(
+                    props.error && {
+                        border: "1px solid #F3411A"
+                    }
+                ),
+
                 height: "40px",
                 textAlign: "center"
             }),
@@ -689,7 +709,21 @@ export default {
                 border: "1px solid #FF7A45",
                 boxShadow: "0px 0px 0px 2px rgba(255, 122, 69, 0.2)"
             }
+        },
+        bottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                height: "24px"
+            })
         }
+    },
+    //#endregion
+    //#region 驗證碼 下方文字
+    forgetPassFormAuthRedCode: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#F3411A"
+        })
     },
     //#endregion
     //#region 傳送認證碼按鈕容器
@@ -741,7 +775,8 @@ export default {
             }),
             hover: (style, props) => ({
                 ...style,
-                backgroundColor: "rgba(255, 122, 69, 0.8)"
+                background: "#fff",
+                border: props.haveData ? "1px solid #F8A91E" : "1px solid #BBBBBB",
             })
         },
         text: {
@@ -789,7 +824,8 @@ export default {
             }),
             hover: (style, props) => ({
                 ...style,
-                backgroundColor: "rgba(255, 122, 69, 0.8)"
+                background: "#fff",
+                border: props.haveData ? "2px solid #F8A91E" : "2px solid #BBBBBB",
             })
         },
         text: {
@@ -812,13 +848,15 @@ export default {
         basic: (style, props) => ({
             ...style,
             display: "block",
-            width: "100%",
-            // height: "288px",
-            height: "auto",
+            width: "calc( 100% - 48px )",
+            // height: "352px",
+            height: `calc( ${props.height}px - 176px - 14px )`,
             minHeight: "460px",
             backgroundColor: "#ffffff",
             boxShadow: "0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05)",
-            borderRadius: "16px"
+            borderRadius: "16px",
+            position: "absolute",
+            top: "176px"
         })
     },
     //#endregion
@@ -826,13 +864,13 @@ export default {
     resetPassFormTitle: {
         basic: (style, props) => ({
             ...style,
-            color: "#FF7A45",
-            fontSize: "20px",
-            fontWeight: "bold",
+            color: "#3C4856",
+            fontWeight: 500,
+            fontSize: "18px",
             display: "block",
-            userSelect: "none",
-            lineHeight: "28px",
+            lineHeight: "24px",
             padding: "24px 24px 0",
+            textAlign: "center"
         })
     },
     //#endregion
@@ -984,7 +1022,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             ...style.occupy(12),
-            padding: "0 2px 8px"
+            padding: "40px 2px 8px"
         })
     },
     //#endregion
@@ -994,26 +1032,58 @@ export default {
             basic: (style, props) => ({
                 ...style,
                 width: "100%",
-                background: "#ff7a45",
-                boxShadow: "0px 2px 0px rgba(0, 0, 0, 0.043)",
-                borderRadius: "2px",
-                height: "32px"
+                background: "#fff",
+                border: props.haveData ? "2px solid #F8A91E" : "2px solid #BBBBBB",
+                borderRadius: "34px",
+                height: "40px"
             }),
             hover: (style, props) => ({
                 ...style,
-                backgroundColor: "rgba(255, 122, 69, 0.8)"
+                background: "#fff",
+                border: "2px solid #F8A91E",
             })
         },
         text: {
             basic: (style, props) => ({
                 ...style,
-                fontSize: "14px",
-                lineHeight: "32px",
+                fontWeight: 600,
+                fontSize: "16px",
+                lineHeight: "40px",
+                color: props.haveData ? "#F8A91E" : "#BBBBBB",
                 top: "-3px"
             }),
         }
     },
     //#endregion
+
+    //#region 完成 容器
+    completeButtonContainer: {
+        basic: (style, props) => ({
+            position: "absolute",
+            top: "24px",
+            display: "inline-flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "162px",
+            backgroundColor: "#fff"
+        })
+    },
+    //#endregion
+
+    //#region 完成 文字
+    completeButtonText: {
+        basic: (style, props) => ({
+            fontWeight: 600,
+            fontSize: "20px",
+            lineHeight: "24px",
+            color: "#3E9535",
+            margin: "16px 0 0"
+        })
+    },
+    //#endregion
+
     //#endregion
 
     //#region 登入頁Logo
