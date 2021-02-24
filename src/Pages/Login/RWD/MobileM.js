@@ -12,7 +12,7 @@ import { ReactComponent as LoginLogoNewTaipei } from '../../../Assets/img/LoginL
 import { ReactComponent as LoginSplitLine } from '../../../Assets/img/LoginSplitLine.svg'
 import { ReactComponent as LoginInfoIcon } from '../../../Assets/img/LoginInfoIcon.svg'
 import { BasicContainer, Container, ScrollBar, Radio, SubContainer, Text, FormContainer, FormRow, NewSelector, TextInput, BasicButton, Checkbox, CheckboxItem, modalsService, InfoModal, globalContextService, DateTimePicker, RadioItem } from '../../../Components';
-import { MapGoogleInput, MobileMPlacard } from '../../../ProjectComponent';
+import { MapGoogleInput, MobileMPlacard, TitleBar } from '../../../ProjectComponent';
 import moment from 'moment';
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { cityAndCountiesLite, Counties } from '../../../Mappings/Mappings';
@@ -58,6 +58,8 @@ const MobileMBase = (props) => {
     //console.log(mobileM)
     return (
         <>
+
+
             {/* 最外層容器 */}
             <BasicContainer
                 baseDefaultTheme={"DefaultTheme"}
@@ -74,6 +76,29 @@ const MobileMBase = (props) => {
                         bigHeight={props.WhichForm === "SingUp"}
                         theme={mobileM.aboveContainer}
                     >
+                        {/* 標題 */}
+                        {props.WhichForm !== "Login" &&
+                            <>
+                                <SubContainer
+                                    theme={mobileM.titleBarContainer}
+                                >
+                                    <TitleBar
+                                        returnIcon
+                                        MenuIcondontShow
+                                        returnIconOnClick={(e) => {
+                                            props.setWhichForm("Login")
+                                        }}
+                                        customTitleText={
+                                            <Text
+                                                theme={mobileM.titleBar}>
+                                                {props.WhichForm === "ForgetPass" ? `忘記密碼` : ""}
+                                            </Text>
+                                        }
+                                    />
+                                </SubContainer>
+                            </>
+                        }
+
                         {/* 背景自適應 */}
                         {/* <MobileMbg style={mobileM.bgImage} /> */}
                         <img src={LoginBg} style={{ width: "100%" }} alt="fireSpot" />
@@ -291,6 +316,58 @@ const MobileMBase = (props) => {
                             {/* 忘記密碼表單 ForgetPass */}
                             {props.WhichForm === "ForgetPass" &&
                                 <>
+                                    {/* 忘記密碼 步驟外側容器 */}
+                                    <SubContainer
+                                        theme={mobileM.forgetPassStepOutContainer}
+                                    >
+                                        {
+                                            ([
+                                                "驗證身份",
+                                                "設置新密碼",
+                                                "完成"
+                                            ]).map((item, index) => {
+                                                return (
+                                                    <>
+                                                        {/* 忘記密碼 步驟容器 */}
+                                                        <Container
+                                                            theme={mobileM.forgetPassStepContainer}
+                                                        >
+                                                            {/* 忘記密碼 左側橫線 */}
+                                                            <Text
+                                                                view={index !== 0}
+                                                                theme={mobileM.leftLine}
+                                                            >
+                                                            </Text>
+
+                                                            {/* 忘記密碼 右側橫線 */}
+                                                            <Text
+                                                                view={index !== 2}
+                                                                theme={mobileM.rightLine}
+                                                            >
+                                                            </Text>
+
+                                                            {/* 忘記密碼 步驟 順序 */}
+                                                            <Text
+                                                                theme={isEqual(index + 1, props.ForgetFlag) ? mobileM.forgetPassStepNum.onpage : mobileM.forgetPassStepNum}
+                                                            >
+                                                                {`0${index + 1}`}
+                                                            </Text>
+
+                                                            {/* 忘記密碼 步驟 文字 */}
+                                                            <Text
+                                                                theme={mobileM.forgetPassStepText}
+                                                            >
+                                                                {item}
+                                                            </Text>
+
+                                                        </Container>
+                                                    </>
+                                                )
+                                            })
+                                        }
+
+                                    </SubContainer>
+
                                     {/* 忘記密碼表單容器  */}
                                     <BasicContainer
                                         baseDefaultTheme={"DefaultTheme"}
@@ -301,7 +378,7 @@ const MobileMBase = (props) => {
                                             baseDefaultTheme={"DefaultTheme"}
                                             theme={mobileM.forgetPassFormTitle}
                                         >
-                                            忘記密碼
+                                            {`系統將會寄出確認簡訊至此手機號碼`}
                                         </Text>
                                         {/* 忘記密碼表單次標題 */}
                                         <Text

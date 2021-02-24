@@ -48,6 +48,28 @@ export default {
     // },
     //#endregion
 
+    //#region 標題 容器
+    titleBarContainer: {
+        basic: (style, props) => ({
+            ...style,
+            zIndex: 100
+        })
+    },
+    //#endregion
+
+    //#region 標題名稱
+    titleBar: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            fontWeight: 700,
+            fontSize: "30px",
+            lineHeight: "56px",
+            color: "#3C4856",
+        })
+    },
+    //#endregion
+
     //#region 背景
     bgImage: {
         width: "100%",
@@ -416,6 +438,108 @@ export default {
     //#endregion
 
     //#region 忘記密碼表單 相關樣式
+    //#region 忘記密碼步驟外側容器
+    forgetPassStepOutContainer: {
+        basic: (style, props) => ({
+            ...style,
+            width: "100%",
+            display: "inline-flex",
+            position: "absolute",
+            top: "80px"
+        })
+    },
+    //#endregion
+
+    //#region 忘記密碼步驟容器
+    forgetPassStepContainer: {
+        basic: (style, props) => ({
+            ...style,
+            width: "auto",
+            flex: 1,
+            justifyContent: "center"
+        })
+    },
+    //#endregion
+
+    //#region 左側橫線
+    leftLine: {
+        basic: (style, props) => ({
+            ...style,
+            display: props.view ? "inline-block" : "none",
+            position: "absolute",
+            top: "20px",
+            left: "0",
+            backgroundColor: "#fff",
+            height: "2px",
+            width: "calc( 50% - 20px - 8px)"
+        })
+    },
+    //#endregion
+
+    //#region 右側橫線
+    rightLine: {
+        basic: (style, props) => ({
+            ...style,
+            display: props.view ? "inline-block" : "none",
+            position: "absolute",
+            top: "20px",
+            right: "0",
+            backgroundColor: "#fff",
+            height: "2px",
+            width: "calc( 50% - 20px - 8px)"
+        })
+    },
+    //#endregion
+
+    //#region 忘記密碼步驟順序
+    forgetPassStepNum: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            borderRadius: "40px",
+            width: "40px",
+            height: "40px",
+            color: "#D8D8D8",
+            backgroundColor: "#635D5D",
+            textAlign: "center",
+            fontWeight: 600,
+            fontSize: "24px",
+            lineHeight: "40px"
+        }),
+        onpage: {
+            basic: (style, props) => ({
+                ...style,
+                display: "inline-block",
+                borderRadius: "40px",
+                width: "40px",
+                height: "40px",
+                color: "#fff",
+                backgroundColor: "#F8A91E",
+                textAlign: "center",
+                fontWeight: 600,
+                fontSize: "24px",
+                lineHeight: "40px"
+            })
+        },
+    },
+    //#endregion
+
+    //#region 忘記密碼步驟文字
+    forgetPassStepText: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            width: "100%",
+            color: "#fff",
+            textAlign: "center",
+            fontWeight: 400,
+            fontSize: "16px",
+            lineHeight: "24px",
+            margin: "16px 0 0"
+        })
+    },
+    //#endregion
+
     //#region 忘記密碼表單容器
     forgetPassFormContainer: {
         basic: (style, props) => ({
