@@ -438,6 +438,8 @@ export default {
     //#endregion
 
     //#region 忘記密碼表單 相關樣式
+
+    //#region 忘記密碼步驟
     //#region 忘記密碼步驟外側容器
     forgetPassStepOutContainer: {
         basic: (style, props) => ({
@@ -539,19 +541,22 @@ export default {
         })
     },
     //#endregion
+    //#endregion
 
     //#region 忘記密碼表單容器
     forgetPassFormContainer: {
         basic: (style, props) => ({
             ...style,
             display: "block",
-            width: "100%",
+            width: "calc( 100% - 48px )",
             // height: "352px",
-            height: "auto",
+            height: `calc( ${props.height}px - 176px - 14px )`,
             minHeight: "460px",
             backgroundColor: "#ffffff",
             boxShadow: "0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05)",
-            borderRadius: "16px"
+            borderRadius: "16px",
+            position: "absolute",
+            top: "176px"
         })
     },
     //#endregion
@@ -559,27 +564,13 @@ export default {
     forgetPassFormTitle: {
         basic: (style, props) => ({
             ...style,
-            color: "#FF7A45",
-            fontSize: "20px",
-            fontWeight: "bold",
+            color: "#3C4856",
+            fontSize: "16px",
+            fontWeight: 400,
             display: "block",
-            userSelect: "none",
-            lineHeight: "28px",
+            lineHeight: "24px",
             padding: "24px 24px 0",
-        })
-    },
-    //#endregion
-    //#region 忘記密碼表單次標題
-    forgetPassFormSubTitle: {
-        basic: (style, props) => ({
-            ...style,
-            color: "#FF7A45",
-            fontSize: "14px",
-            fontWeight: "normal",
-            display: "block",
-            userSelect: "none",
-            lineHeight: "22px",
-            padding: "8px 24px 1rem",
+            textAlign: "center"
         })
     },
     //#endregion
@@ -589,19 +580,10 @@ export default {
             basic: (style, props) => ({
                 ...style,
                 height: "fit-content",//"214px",
-                padding: "0 24px"
+                padding: "0 24px",
+                margin: "18px 0 0"
             })
         }
-    },
-    //#endregion
-    //#region 手機號碼 Phone 左方Icon
-    forgetPassFormPhoneLeftIcon: {
-        position: "absolute",
-        height: "100%",
-        left: "12px",
-        cursor: "default",
-        pointerEvents: "none",
-        top: 0,
     },
     //#endregion
     //#region 手機號碼 Phone
@@ -610,7 +592,7 @@ export default {
             basic: (style, props) => ({
                 ...style,
                 ...style.occupy(12),
-                padding: "0 0 12px 0"
+                padding: 0
             })
         },
         topLabel: {
@@ -639,7 +621,64 @@ export default {
                     }
                 ),
                 //#endregion
-                height: "40px"
+                height: "40px",
+                textAlign: "center"
+            }),
+            hover: {
+                //#region 覆寫樣式
+                border: "1px solid #FF7A45",
+                //#endregion
+            },
+            focus: {
+                border: "1px solid #FF7A45",
+                boxShadow: "0px 0px 0px 2px rgba(255, 122, 69, 0.2)"
+            }
+        },
+        bottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                height: "24px"
+            })
+        }
+    },
+    //#endregion
+    //#region 驗證碼 AuthCode
+    forgetPassFormAuthCode: {
+        container: {
+            basic: (style, props) => ({
+                ...style,
+                ...style.occupy(7.7),
+                padding: "0 4px 28px 0"
+            })
+        },
+        topLabel: {
+            basic: (style, props) => ({
+                ...style,
+                height: "0px"
+            })
+        },
+        textInputContainer: {
+            basic: (style, props) => {
+                //console.log(props)
+                return {
+                    ...style,
+                    color: (props.focus || props.hover) ? "#FF7A45" : "rgba(0, 0, 0, 0.65)"
+                }
+            }
+        },
+        textInput: {
+            basic: (style, props) => ({
+                ...style,
+                //#region 當有開啟 openEye 並且 hover 或 focus 時變色
+                ...(
+                    props.openEye && {
+                        border: `1px solid ${(props.focus || props.hover) ? "#FF7A45" : "#d9d9d9"}`,
+                        boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(255, 122, 69, 0.2)" : null
+                    }
+                ),
+                //#endregion
+                height: "40px",
+                textAlign: "center"
             }),
             hover: {
                 //#region 覆寫樣式
@@ -657,8 +696,8 @@ export default {
     forgetPassFormSendAuthCodeButtonContainer: {
         basic: (style, props) => ({
             ...style,
-            ...style.occupy(12),
-            padding: "0 2px 8px"
+            ...style.occupy(4.3),
+            padding: "0 0 28px 4px"
         })
     },
     //#endregion
@@ -668,11 +707,10 @@ export default {
             basic: (style, props) => ({
                 ...style,
                 width: "100%",
-                background: "#f5f5f5",
-                boxShadow: null,//"0px 2px 0px rgba(0, 0, 0, 0.043)",
-                border: "1px solid #d9d9d9",
-                borderRadius: "2px",
-                height: "32px"
+                background: "#fff",
+                border: "1px solid #BBBBBB",
+                borderRadius: "26px",
+                height: "42px"
             }),
             hover: (style, props) => ({
                 ...style,
@@ -681,10 +719,11 @@ export default {
         },
         text: {
             basic: (style, props) => ({
-                ...style,
-                fontSize: "14px",
-                lineHeight: "32px",
-                top: "-3px"
+                fontWeight: 500,
+                fontSize: "16px",
+                lineHeight: "42px",
+                color: "#BBBBBB",
+                top: "1px"
             }),
         }
     },
@@ -695,10 +734,10 @@ export default {
             basic: (style, props) => ({
                 ...style,
                 width: "100%",
-                background: "#ff7a45",
-                boxShadow: "0px 2px 0px rgba(0, 0, 0, 0.043)",
-                borderRadius: "2px",
-                height: "32px"
+                background: "#fff",
+                border: props.haveData ? "1px solid #F8A91E" : "1px solid #BBBBBB",
+                borderRadius: "26px",
+                height: "42px"
             }),
             hover: (style, props) => ({
                 ...style,
@@ -708,72 +747,17 @@ export default {
         text: {
             basic: (style, props) => ({
                 ...style,
-                fontSize: "14px",
+                fontWeight: 500,
+                fontSize: "16px",
                 lineHeight: "32px",
-                top: "-3px"
+                // backgroundColor: "#fff",
+                color: props.haveData ? "#F8A91E" : "#BBBBBB",
+                top: "1px"
             }),
         }
     },
     //#endregion
-    //#region 驗證碼 AuthCode 左方Icon
-    forgetPassFormAuthCodeLeftIcon: {
-        position: "absolute",
-        height: "100%",
-        left: "12px",
-        cursor: "default",
-        pointerEvents: "none",
-        top: 0,
-    },
-    //#endregion
-    //#region 驗證碼 AuthCode
-    forgetPassFormAuthCode: {
-        container: {
-            basic: (style, props) => ({
-                ...style,
-                ...style.occupy(12),
-                padding: "0 0 12px 0"
-            })
-        },
-        topLabel: {
-            basic: (style, props) => ({
-                ...style,
-                height: "0px"
-            })
-        },
-        textInputContainer: {
-            basic: (style, props) => {
-                //console.log(props)
-                return {
-                    ...style,
-                    color: (props.focus || props.hover) ? "#FF7A45" : "rgba(0, 0, 0, 0.65)"
-                }
-            }
-        },
-        textInput: {
-            basic: (style, props) => ({
-                ...style,
-                //#region 當有開啟 openEye 並且 hover 或 focus 時變色
-                ...(
-                    props.openEye && {
-                        border: `1px solid ${(props.focus || props.hover) ? "#FF7A45" : "#d9d9d9"}`,
-                        boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(255, 122, 69, 0.2)" : null
-                    }
-                ),
-                //#endregion
-                height: "40px"
-            }),
-            hover: {
-                //#region 覆寫樣式
-                border: "1px solid #FF7A45",
-                //#endregion
-            },
-            focus: {
-                border: "1px solid #FF7A45",
-                boxShadow: "0px 0px 0px 2px rgba(255, 122, 69, 0.2)"
-            }
-        }
-    },
-    //#endregion
+
     //#region 取消、下一步 表單列容器
     forgetPassFormCancelAndNextButtonFormRow: {
         container: {
@@ -784,66 +768,24 @@ export default {
         }
     },
     //#endregion
-    //#region 取消按鈕容器
-    forgetPassFormCancelButtonContainer: {
-        basic: (style, props) => ({
-            ...style,
-            maxWidth: "46.6%",
-            flexBasis: "46.6%",
-            padding: "0 2px 16px"
-        })
-    },
-    //#endregion
-    //#region 取消按鈕
-    forgetPassFormCancelButton: {
-        container: {
-            basic: (style, props) => ({
-                ...style,
-                width: "100%",
-                background: "#ffffff",
-                border: "1px solid #d9d9d9",
-                borderRadius: "2px",
-                height: "32px",
-                color: "rgba(0, 0, 0, 0.65)",
-            }),
-            hover: (style, props) => ({
-                ...style,
-                backgroundColor: "rgba(255, 255, 255, 0.85)",
-                border: "1px solid #ff7a45",
-                color: "#ff7a45",
-            })
-        },
-        text: {
-            basic: (style, props) => ({
-                ...style,
-                color: "inherit",
-                fontSize: "14px",
-                lineHeight: "32px",
-                top: "-3px"
-            }),
-        }
-    },
-    //#endregion
-    //#region 下一步按鈕容器
+    //#region 驗證按鈕容器
     forgetPassFormNextButtonContainer: {
         basic: (style, props) => ({
             ...style,
-            maxWidth: "46.6%",
-            flexBasis: "46.6%",
-            padding: "0 2px 16px"
+            width: "100%",
         })
     },
     //#endregion
-    //#region 下一步按鈕
+    //#region 驗證按鈕
     forgetPassFormNextButton: {
         container: {
             basic: (style, props) => ({
                 ...style,
                 width: "100%",
-                background: "#ff7a45",
-                boxShadow: "0px 2px 0px rgba(0, 0, 0, 0.043)",
-                borderRadius: "2px",
-                height: "32px"
+                background: "#fff",
+                border: props.haveData ? "2px solid #F8A91E" : "2px solid #BBBBBB",
+                borderRadius: "26px",
+                height: "40px"
             }),
             hover: (style, props) => ({
                 ...style,
@@ -853,34 +795,13 @@ export default {
         text: {
             basic: (style, props) => ({
                 ...style,
-                fontSize: "14px",
-                lineHeight: "32px",
+                fontWeight: 600,
+                fontSize: "16px",
+                lineHeight: "40px",
+                color: props.haveData ? "#F8A91E" : "#BBBBBB",
                 top: "-3px"
             }),
         }
-    },
-    //#endregion
-    //#region 忘記密碼連結容器
-    forgetPassFormForgetPassContainer: {
-        basic: (style, props) => ({
-            ...style,
-            ...style.occupy(12),
-            padding: "0 2px 24px",
-            userSelect: "none"
-        })
-    },
-    //#endregion
-    //#region 忘記密碼連結文字
-    forgetPassFormForgetPassText: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            fontSize: "14px",
-            color: "rgba(0, 0, 0, 0.65)",
-            cursor: "default",
-            lineHeight: "22px",
-            userSelect: "none"
-        })
     },
     //#endregion
     //#endregion

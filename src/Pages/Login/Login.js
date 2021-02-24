@@ -19,9 +19,9 @@ export const Login = (props) => {
 
     const { APIUrl, APIAppKey, Theme, Switch, History, Location } = useContext(Context);
     //const { pages: { login } } = Theme;
-    const [WhichForm, setWhichForm] = useState("ForgetPass"); // 切換 登入、忘記密碼、設定登入密碼 表單
+    const [WhichForm, setWhichForm] = useState("Login"); // 切換 登入、忘記密碼、設定登入密碼 表單
     const [SendedAuthCode, setSendedAuthCode] = useState(false); // 紀錄是否已經發送過驗證碼 (要不要顯示重新發送驗證碼)
-    const [WaitSecToZero, setWaitSecToZero] = useState(true); // 控制驗證碼倒數
+    const [WaitSecToZero, setWaitSecToZero] = useState(false); // 控制驗證碼倒數
     const [NowTab, setNowTab] = useState("車行公告"); // 目前公告頁面
     const [ForgetFlag, setForgetFlag] = useState(1); // 驗忘記密碼驗證步驟
     const [Width, Height] = useWindowSize();

@@ -16,7 +16,7 @@ import { MapGoogleInput, MobileMPlacard, TitleBar } from '../../../ProjectCompon
 import moment from 'moment';
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { cityAndCountiesLite, Counties } from '../../../Mappings/Mappings';
-import { isEqual, isNil } from 'lodash';
+import { isEqual, isNil, isEmpty } from 'lodash';
 import LoginBg from '../../../Assets/img/LoginBg.png'
 
 //#region 倒數10秒
@@ -86,7 +86,8 @@ const MobileMBase = (props) => {
                                         returnIcon
                                         MenuIcondontShow
                                         returnIconOnClick={(e) => {
-                                            props.setWhichForm("Login")
+                                            props.setWhichForm("Login");
+                                            props.setWaitSecToZero(false);
                                         }}
                                         customTitleText={
                                             <Text
@@ -370,6 +371,7 @@ const MobileMBase = (props) => {
 
                                     {/* 忘記密碼表單容器  */}
                                     <BasicContainer
+                                        height={Height}
                                         baseDefaultTheme={"DefaultTheme"}
                                         theme={mobileM.forgetPassFormContainer}
                                     >
@@ -380,17 +382,7 @@ const MobileMBase = (props) => {
                                         >
                                             {`系統將會寄出確認簡訊至此手機號碼`}
                                         </Text>
-                                        {/* 忘記密碼表單次標題 */}
-                                        <Text
-                                            baseDefaultTheme={"DefaultTheme"}
-                                            theme={mobileM.forgetPassFormSubTitle}
-                                        >
-                                            {!props.SendedAuthCode ?
-                                                "請準備好您的手機"
-                                                :
-                                                "已發送簡訊驗證碼到您的手機"
-                                            }
-                                        </Text>
+
                                         {/* 忘記密碼表單組件 */}
                                         <FormContainer
                                             baseDefaultTheme={"DefaultTheme"}
@@ -404,110 +396,85 @@ const MobileMBase = (props) => {
                                                 <TextInput
                                                     baseDefaultTheme={"DefaultTheme"}
                                                     type="phone"
-                                                    placeholder={"請輸入您的手機號碼"}
-                                                    leftIcon={
-                                                        <Phone
-                                                            style={mobileM.forgetPassFormPhoneLeftIcon}
-                                                        />
-                                                    }
+                                                    placeholder={"請輸入帳號(預設為手機號碼)"}
+                                                    value={globalContextService.get("LoginPage", "Phone")}
+                                                    onChange={(e, value, onInitial) => {
+                                                        if (!isEqual(value, globalContextService.get("LoginPage", "Phone"))) {
+                                                            globalContextService.set("LoginPage", "Phone", value);
+                                                            setForceUpdate(u => !u);
+                                                        }
+                                                    }}
                                                     theme={mobileM.forgetPassFormPhone}
                                                 />
                                             </FormRow>
-                                            <FormRow baseDefaultTheme={"DefaultTheme"}>
-                                                {/* 傳送認證碼按鈕 */}
-                                                <SubContainer
-                                                    theme={mobileM.forgetPassFormSendAuthCodeButtonContainer}
-                                                >
-                                                    {!props.SendedAuthCode ?
-                                                        <BasicButton
-                                                            baseDefaultTheme={"PrimaryTheme"}
-                                                            text={`傳送驗證碼`}
-                                                            theme={mobileM.forgetPassFormSendAuthCodeButton}
-                                                            onClick={() => {
-                                                                props.setSendedAuthCode(true);
-                                                            }}
-                                                        />
-                                                        : props.WaitSecToZero ?
-                                                            <BasicButton
-                                                                disable
-                                                                baseDefaultTheme={"DefaultTheme"}
-                                                                text={
-                                                                    <>
-                                                                        重送驗證碼(
-                                                                        <TimeCounter
-                                                                            onCountToZero={() => {
-                                                                                props.setWaitSecToZero(false);
-                                                                                console.log("End")
-                                                                            }}
-                                                                        />
-                                                                        秒)
-                                                                    </>
-                                                                }
-                                                                theme={mobileM.forgetPassFormWaitSecToZeroButton}
-                                                            />
-                                                            :
-                                                            <BasicButton
-                                                                baseDefaultTheme={"PrimaryTheme"}
-                                                                text={"重送驗證碼"}
-                                                                theme={mobileM.forgetPassFormSendAuthCodeButton}
-                                                                onClick={() => { props.setWaitSecToZero(true); console.log("Start") }}
-                                                            />
-                                                    }
-                                                </SubContainer>
-                                            </FormRow>
+
                                             <FormRow baseDefaultTheme={"DefaultTheme"}>
                                                 {/* 驗證碼 AuthCode */}
                                                 <TextInput
                                                     baseDefaultTheme={"DefaultTheme"}
                                                     type="text"
-                                                    placeholder={"請輸入簡訊內的認證碼"}
-                                                    leftIcon={
-                                                        <AuthCode
-                                                            style={mobileM.forgetPassFormAuthCodeLeftIcon}
-                                                        />
-                                                    }
+                                                    placeholder={"請輸入驗證碼"}
+                                                    value={globalContextService.get("LoginPage", "AuthCode")}
+                                                    onChange={(e, value, onInitial) => {
+                                                        if (!isEqual(value, globalContextService.get("LoginPage", "AuthCode"))) {
+                                                            globalContextService.set("LoginPage", "AuthCode", value);
+                                                            setForceUpdate(u => !u);
+                                                        }
+                                                    }}
                                                     theme={mobileM.forgetPassFormAuthCode}
                                                 />
+
+                                                {/* 傳送認證碼按鈕 */}
+                                                <SubContainer
+                                                    theme={mobileM.forgetPassFormSendAuthCodeButtonContainer}
+                                                >
+                                                    {!props.WaitSecToZero ?
+                                                        <BasicButton
+                                                            baseDefaultTheme={"PrimaryTheme"}
+                                                            haveData={!isEmpty(globalContextService.get("LoginPage", "Phone"))}
+                                                            text={`取得驗證碼`}
+                                                            theme={mobileM.forgetPassFormSendAuthCodeButton}
+                                                            onClick={() => {
+                                                                console.log("Start")
+                                                                props.setWaitSecToZero(true);
+                                                            }}
+                                                        />
+                                                        :
+                                                        <BasicButton
+                                                            disable
+                                                            baseDefaultTheme={"DefaultTheme"}
+                                                            text={
+                                                                <>
+                                                                    <TimeCounter
+                                                                        onCountToZero={() => {
+                                                                            props.setWaitSecToZero(false);
+                                                                            console.log("End")
+                                                                        }}
+                                                                    />
+                                                                        秒
+                                                                    </>
+                                                            }
+                                                            theme={mobileM.forgetPassFormWaitSecToZeroButton}
+                                                        />
+                                                    }
+                                                </SubContainer>
                                             </FormRow>
+
                                             <FormRow
                                                 baseDefaultTheme={"DefaultTheme"}
                                                 theme={mobileM.forgetPassFormCancelAndNextButtonFormRow}
                                             >
-                                                {/* 取消按鈕 */}
-                                                <SubContainer
-                                                    theme={mobileM.forgetPassFormCancelButtonContainer}
-                                                >
-                                                    <BasicButton
-                                                        baseDefaultTheme={"DefaultTheme"}
-                                                        text={"取消"}
-                                                        theme={mobileM.forgetPassFormCancelButton}
-                                                        onClick={() => { props.setWhichForm("Login") }}
-                                                    />
-                                                </SubContainer>
-                                                {/* 下一步按鈕 */}
+                                                {/* 驗證按鈕 */}
                                                 <SubContainer
                                                     theme={mobileM.forgetPassFormNextButtonContainer}
                                                 >
                                                     <BasicButton
                                                         baseDefaultTheme={"PrimaryTheme"}
-                                                        text={"下一步"}
+                                                        haveData={!isEmpty(globalContextService.get("LoginPage", "AuthCode"))}
+                                                        text={"驗證"}
                                                         theme={mobileM.forgetPassFormNextButton}
                                                         onClick={() => { props.setWhichForm("ResetPass") }}
                                                     />
-                                                </SubContainer>
-                                            </FormRow>
-                                            {/* 忘記密碼連結 */}
-                                            <FormRow baseDefaultTheme={"DefaultTheme"}>
-                                                <SubContainer
-                                                    baseDefaultTheme={"DefaultTheme"}
-                                                    theme={mobileM.forgetPassFormForgetPassContainer}
-                                                >
-                                                    <Text
-                                                        baseDefaultTheme={"DefaultTheme"}
-                                                        theme={mobileM.forgetPassFormForgetPassText}
-                                                    >
-                                                        點選下一步，請依照步驟完成驗證註冊。
-                                                        </Text>
                                                 </SubContainer>
                                             </FormRow>
                                         </FormContainer>
