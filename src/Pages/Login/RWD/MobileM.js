@@ -97,7 +97,7 @@ const MobileMBase = (props) => {
                                             props.setWhichForm("Login");
                                             props.setWaitSecToZero(false);
                                             props.controllGCS("Return");
-                                            props.setAuthCodeSuccess(null);
+                                            props.setAuthCodeSuccess(true);
                                         }}
                                         customTitleText={
                                             <Text

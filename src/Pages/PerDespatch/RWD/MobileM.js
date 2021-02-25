@@ -843,6 +843,7 @@ const MobileMBase = (props) => {
 
                                                                     resetValue(0)
                                                                     setDefaultPrimary(data.orderId)
+                                                                    props.setOpen(false)
                                                                 }}
                                                             />
 
