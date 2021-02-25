@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
 import { MainPageContainer, MainPageTitleBar, MapGoogle, mapGoogleControll, Sign, Silder, TaskCard, TitleBar } from '../../../ProjectComponent';
@@ -17,8 +17,9 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
-import { isEqual, isNil, isUndefined, toString } from 'lodash';
+import { isEqual, isNil, isUndefined, toString, isNumber } from 'lodash';
 import isEmpty from 'lodash/isEmpty';
+import { payWayshMapping } from '../../../Mappings/Mappings';
 
 const MobileMBase = (props) => {
 
@@ -52,6 +53,9 @@ const MobileMBase = (props) => {
                         props.setPayDetail([false, false])
                     } else if (props.PayDetail[0]) {
                         props.setPayDetail([false, false])
+                        props.controllGCS("return")
+                        props.setRealAmt(null)
+                        props.setPayWay("")
                     } else {
                         history.goBack();
                     }
@@ -613,18 +617,29 @@ const MobileMBase = (props) => {
 
                                                                 {/* 收款頁 陪同人數 */}
                                                                 < NumberInput
-                                                                    // viewType
-                                                                    // disable
                                                                     topLabel={""}
                                                                     baseDefaultTheme={"DefaultTheme"}
-                                                                    type="text"
+                                                                    type="number"
                                                                     placeholder={""}
                                                                     min={0}
                                                                     max={7}
                                                                     view={props.PayDetail[1]}
                                                                     value={globalContextService.get("PerDespatchPage", "payDetailFamilyWith") ?? data.familyWith}
                                                                     onChange={(e, value, onInitial) => {
-                                                                        globalContextService.set("PerDespatchPage", "payDetailFamilyWith", value);
+                                                                        // console.log(value)
+                                                                        // console.log(globalContextService.get("PerDespatchPage", "payDetailFamilyWith"))
+                                                                        if (!isEqual(value, globalContextService.get("PerDespatchPage", "payDetailFamilyWith")) && isNumber(value)) {
+                                                                            if (!onInitial) {
+                                                                                props.GetRealAmtExecute({
+                                                                                    despatchNo: data.despatchNo,
+                                                                                    orderId: data.orderId,
+                                                                                    familyWith: value > 7 ? 7 : value,
+                                                                                })
+                                                                            }
+                                                                            // console.log(onInitial)
+                                                                            globalContextService.set("PerDespatchPage", "payDetailFamilyWith", value > 7 ? 7 : value);
+                                                                        }
+
                                                                     }}
                                                                     theme={mobileM.payDetailFamilyWith}
                                                                 />
@@ -641,7 +656,7 @@ const MobileMBase = (props) => {
                                                                         <Text
                                                                             theme={mobileM.etFareText}
                                                                         >
-                                                                            {props?.RealAmt?.realSelfPay ? props?.RealAmt?.realSelfPay + props?.RealAmt?.realWithAmt : 0}
+                                                                            {props?.RealAmt ?? 0}
                                                                         </Text>
 
                                                                         {/* 收款頁 應收車資 標題 */}
@@ -661,14 +676,13 @@ const MobileMBase = (props) => {
                                                                             !props.PayDetail[1]
                                                                                 ?
                                                                                 <>
-
                                                                                     {/* 收款頁 實收金額 */}
                                                                                     <TextInput
                                                                                         topLabel={""}
                                                                                         baseDefaultTheme={"DefaultTheme"}
                                                                                         type="number"
                                                                                         placeholder={""}
-                                                                                        value={globalContextService.get("PerDespatchPage", "realFareText") ?? (props?.RealAmt?.realSelfPay + props?.RealAmt?.realWithAmt)}
+                                                                                        value={globalContextService.get("PerDespatchPage", "realFareText") ?? props?.RealAmt}
                                                                                         onChange={(e, value, onInitial) => {
                                                                                             if (value / 10000 < 1) {
                                                                                                 globalContextService.set("PerDespatchPage", "realFareText", value);
@@ -686,7 +700,7 @@ const MobileMBase = (props) => {
                                                                                     <Text
                                                                                         theme={mobileM.realFareViewText}
                                                                                     >
-                                                                                        {globalContextService.get("PerDespatchPage", "realFareText") ? globalContextService.get("PerDespatchPage", "realFareText") : props?.RealAmt?.realSelfPay + props?.RealAmt?.realWithAmt}
+                                                                                        {globalContextService.get("PerDespatchPage", "realFareText") ? globalContextService.get("PerDespatchPage", "realFareText") : props?.RealAmt ?? 0}
                                                                                     </Text>
                                                                                 </>
                                                                         }
@@ -734,25 +748,18 @@ const MobileMBase = (props) => {
                                                                             </Text>
 
                                                                             {
-                                                                                [
-                                                                                    "現金",
-                                                                                    "悠遊卡",
-                                                                                    "信用卡",
-                                                                                    "Apple pay",
-                                                                                    "Line pay",
-                                                                                    "街口支付",
-                                                                                ].map((item) => {
+                                                                                Object.keys(payWayshMapping).map((key) => {
                                                                                     return (
                                                                                         <>
                                                                                             <NativeLineButton
-                                                                                                isSelect={props?.PayWay === item}
+                                                                                                isSelect={props?.PayWay === key}
                                                                                                 theme={mobileM.payDetailWaysButton}
                                                                                                 onClick={() => {
-                                                                                                    props.setPayWay(item)
+                                                                                                    props.setPayWay(key)
                                                                                                     // setForceUpdate(f => !f)
                                                                                                 }}
                                                                                             >
-                                                                                                {item}
+                                                                                                {payWayshMapping[key]}
                                                                                             </NativeLineButton>
                                                                                         </>
                                                                                     )
@@ -780,7 +787,7 @@ const MobileMBase = (props) => {
                                                                             <Text
                                                                                 theme={mobileM.payDetailWaysViewText}
                                                                             >
-                                                                                {`付款方式：${props.PayWay}`}
+                                                                                {`付款方式：${payWayshMapping[props.PayWay]}`}
                                                                             </Text>
                                                                         </>
                                                                 }
@@ -821,16 +828,17 @@ const MobileMBase = (props) => {
                                                                     }
                                                                     else if (data.status === 4 && isEmpty(data?.orderPay?.signPic)) {
                                                                         props.AddPayExecute({
-                                                                            id: data.orderId,
+                                                                            despatchNo: data.despatchNo,
+                                                                            orderId: data.orderId,
                                                                             realFamilyWith: globalContextService.get("PerDespatchPage", "payDetailFamilyWith"),
-                                                                            realMaidWith: props.RealAmt.realMaidWith,
-                                                                            realWithAmt: props.RealAmt.realWithAmt,
-                                                                            realDiscountPercent: props.RealAmt.realDiscountPercent,
-                                                                            realDiscountAmt: props.RealAmt.realDiscountAmt,
-                                                                            totalDiscountAmt: props.RealAmt.totalDiscountAmt,
-                                                                            realSelfPay: props.RealAmt.realSelfPay,
+                                                                            // realMaidWith: props.RealAmt.realMaidWith,
+                                                                            // realWithAmt: props.RealAmt.realWithAmt,
+                                                                            // realDiscountPercent: props.RealAmt.realDiscountPercent,
+                                                                            // realDiscountAmt: props.RealAmt.realDiscountAmt,
+                                                                            // totalDiscountAmt: props.RealAmt.totalDiscountAmt,
+                                                                            // realSelfPay: props.RealAmt.realSelfPay,
                                                                             receivePay: globalContextService.get("PerDespatchPage", "realFareText"),
-                                                                            signPic: ""
+                                                                            payType: props.PayWay
                                                                         })
                                                                         props.setDriverSign(true)
                                                                     }
@@ -843,6 +851,7 @@ const MobileMBase = (props) => {
 
                                                                     resetValue(0)
                                                                     setDefaultPrimary(data.orderId)
+                                                                    props.setOpen(false)
                                                                 }}
                                                             />
 

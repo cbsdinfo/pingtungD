@@ -23,7 +23,7 @@ export const PerDespatch = (props) => {
     const [CheckDetail, setCheckDetail] = useState(false); // 確認身分
     const [PayDetail, setPayDetail] = useState([false, false]); // 收款(第一頁,第二頁)
     const [DriverSign, setDriverSign] = useState(false); // 簽名
-    const [RealAmt, setRealAmt] = useState([]); // 金額
+    const [RealAmt, setRealAmt] = useState(null); // 金額
     const [PayWay, setPayWay] = useState(""); // 付款方式
     const [Width, Height] = useWindowSize();
 

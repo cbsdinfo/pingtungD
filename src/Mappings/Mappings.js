@@ -1802,3 +1802,15 @@ export const weekDayChMapping = {
    "7": "星期日",
 }
 //#endregion
+
+//#region 取得付款方式中文敘述
+export const payWayshMapping = {
+   "Cash": "現金",
+   "iPass": "一卡通",
+   "EasyCard": "悠遊卡",
+   // "信用卡": "信用卡",
+   // "Apple pay": "Apple pay",
+   // "Line pay": "Line pay",
+   // "街口支付": "街口支付",
+}
+//#endregion

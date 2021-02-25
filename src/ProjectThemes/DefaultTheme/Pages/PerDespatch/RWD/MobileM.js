@@ -858,6 +858,65 @@ export default {
     },
     //#endregion
 
+    //#region 路線 Route
+    route: {
+        viewTypeContainer: {
+            basic: (style, props) => ({
+                ...style,
+                padding: "16px 12px 0",
+                // display: "inline-block",
+                ...style.occupy(12),
+                backgroundColor: "#FFF",
+                // margin: "16px"
+            })
+        },
+        viewTypeTopLabel: {
+            basic: (style, props) => ({
+                ...style,
+                //height: "0px"
+            })
+        },
+        viewTypeBottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                // height: "24px"
+                minHeight: "24px",
+                height: "auto"
+            })
+        },
+        container: {
+            basic: (style, props) => ({
+                ...style,
+                padding: "16px 12px 0",
+                // display: "inline-block",
+                ...style.occupy(12),
+                backgroundColor: "#FFF",
+                // margin: "16px"
+            })
+        },
+        topLabel: {
+            basic: (style, props) => ({
+                ...style,
+                // height: "0px"
+            })
+        },
+        selectorContainer: {
+            basic: (style, props) => ({
+                ...style,
+                //width: "200px"
+            })
+        },
+        bottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                // height: "24px"
+                minHeight: "24px",
+                height: "auto"
+            })
+        }
+    },
+    //#endregion
+
     //#region 收款頁 應收車資 容器
     etFareContainer: {
         basic: (style, props) => ({
