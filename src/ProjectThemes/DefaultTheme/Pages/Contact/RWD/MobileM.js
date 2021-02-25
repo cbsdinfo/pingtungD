@@ -14,8 +14,8 @@ export default {
             basic: (style, props) => {
                 return {
                     ...style,
-                    backgroundColor: "#DBE4E8",
-                    height: `calc( ${props.height}px - 245px)`
+                    backgroundColor: "#3C4856",
+                    height: `calc( ${props.height}px - 56px)`
                 }
             }
         },
@@ -23,7 +23,7 @@ export default {
             basic: (style, props) => {
                 return {
                     ...style,
-                    backgroundColor: "#DBE4E8",
+                    backgroundColor: "#3C4856",
                     padding: "4px 0 24px",
                     minHeight: `calc( ${props.height}px - 246px)`
                 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
-import { MainPageContainer, MainPageTitleBar } from '../../../ProjectComponent';
+import { MainPageContainer, MainPageTitleBar, TitleBar } from '../../../ProjectComponent';
 import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService } from '../../../Components';
 import { ReactComponent as Plus } from '../../../Assets/img/QAndA/Plus.svg'
 import { ReactComponent as Edit } from '../../../Assets/img/QAndA/Edit.svg'
@@ -26,19 +26,21 @@ const MobileMBase = (props) => {
 
     return (
         <>
+         <TitleBar />
+
             <MainPageContainer
                 height={Height}
                 theme={mobileM.mainPageContainer}
                 outSideTopComponent={
                     <>
                         {/* 標題列 */}
-                        <BasicContainer
+                        {/* <BasicContainer
                             theme={mobileM.titleBar}
-                        >
+                        > */}
                             {/* 日期區間容器 */}
-                            <SubContainer baseDefaultTheme={"DefaultTheme"}>
+                            {/* <SubContainer baseDefaultTheme={"DefaultTheme"}> */}
                                 {/* 日期區間 DateTimeRange  */}
-                                <DateTimePicker
+                                {/* <DateTimePicker
                                     topLabel={<>日期區間</>}
                                     // type={"time"} time、date、week、month、quarter、year
                                     type={"month"}
@@ -87,7 +89,7 @@ const MobileMBase = (props) => {
                                     </React.Fragment>
                                 )
                             })}
-                        </BasicContainer>
+                        </BasicContainer> */}
                     </>
                 }
             >
@@ -95,28 +97,28 @@ const MobileMBase = (props) => {
                 {/* {tabMap("tabUseComponent")?.[props.nowTab]} */}
                 {/* {console.log(props.NewsType)} */}
                 {/* {console.log(props.AllNews)} */}
-                {!isUndefined(props?.CheckDetail?.title)
+                {/* {!isUndefined(props?.CheckDetail?.title)
                     ?
                     <>
-                        <Container>
+                        <Container> */}
                             {/* 詳細資料外側容器 */}
-                            <BasicContainer
+                            {/* <BasicContainer
                                 height={Height}
                                 theme={mobileM.detailOutContainer}
-                            >
+                            > */}
                                 {/* 詳細資料容器 */}
-                                <BasicContainer
+                                {/* <BasicContainer
                                     theme={mobileM.detailContainer}
-                                >
+                                > */}
                                     {/* 詳細資料 標題 */}
-                                    <Text
+                                    {/* <Text
                                         theme={mobileM.detailHeader}
                                     >
-                                        {props.CheckDetail.title}
-                                    </Text>
+                                        {props.CheckDetail.title} */}
+                                    {/* </Text> */}
 
                                     {/* 詳細資料 內文 */}
-                                    <TextEditor
+                                    {/* <TextEditor
                                         viewType
                                         value={props.CheckDetail.contents?.replaceAll('<img', `<img style="max-width:100%" `)}
                                         // onChange={(e, value, onInitial) => {
@@ -127,10 +129,10 @@ const MobileMBase = (props) => {
                                         theme={mobileM.newsEditor}
                                     />
 
-                                </BasicContainer>
+                                </BasicContainer> */}
 
                                 {/* 回列表按鈕 */}
-                                <NativeLineButton
+                                {/* <NativeLineButton
                                     baseDefaultTheme={"DefaultTheme"}
                                     disable={false}
                                     type="button" // 防止提交
@@ -150,8 +152,8 @@ const MobileMBase = (props) => {
                         NowTab={props.NewsType.filter((it) => (it.label === props.NowTab))?.[0]}
                         CheckDetail={props.CheckDetail} // 詳細資料
                         setCheckDetail={props.setCheckDetail} // 設定詳細資料
-                    />
-                }
+                    /> */}
+                {/* } */}
             </MainPageContainer>
         </>
     )

@@ -18,11 +18,11 @@ export const Contact = (props) => {
         <>
             {/* laptopL、laptop、tablet 共用theme */}
             {
-                768 <= Width &&
-                <LaptopL
-                    nowTab={NowTab}
-                    setNowTab={setNowTab}
-                />
+                // 768 <= Width &&
+                // <LaptopL
+                //     nowTab={NowTab}
+                //     setNowTab={setNowTab}
+                // />
             }
             {/* {
                 (1024 <= Width && Width < 1440) &&

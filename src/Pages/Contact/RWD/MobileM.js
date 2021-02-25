@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
-import { MainPageContainer, MainPageTitleBar } from '../../../ProjectComponent';
+import { MainPageContainer, MainPageTitleBar, TitleBar } from '../../../ProjectComponent';
 import { Container, BasicContainer, TreeSelector, Tooltip, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService } from '../../../Components';
 import { ReactComponent as Search } from '../../../Assets/img/CasePage/Search.svg'
 import { useHistory } from 'react-router-dom';
@@ -37,19 +37,21 @@ const MobileMBase = (props) => {
 
     return (
         <>
+            <TitleBar />
+
             <MainPageContainer
                 theme={mobileM.mainPageContainer}
                 height={Height}
                 outSideTopComponent={
                     <>
-                        <Text
+                        {/* <Text
                             theme={mobileM.titleText}
                         >
                             聯繫客服
-                        </Text>
+                        </Text> */}
 
                         {/* 一般輸入框 請輸入車行名稱  */}
-                        <TextInput
+                        {/* <TextInput
                             bascDefaultTheme={"DefaultTheme"}
                             theme={mobileM.keyword}
                             type="text"
@@ -84,14 +86,14 @@ const MobileMBase = (props) => {
                                     </React.Fragment>
                                 )
                             })}
-                        </BasicContainer>
+                        </BasicContainer> */}
 
 
                     </>
                 }
             >
                 {/* 切換使用的組件 */}
-                {tabMap("tabUseComponent")?.[props.nowTab]}
+                {/* {tabMap("tabUseComponent")?.[props.nowTab]} */}
 
             </MainPageContainer>
         </>
