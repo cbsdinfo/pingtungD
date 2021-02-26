@@ -244,7 +244,7 @@ const MobileMBase = (props) => {
                         // key={index}
 
                         // data={props?.TodayTask} // 調度單資料
-                        nameType // timeNameType、nameType 顯示名字、或顯示時間與名字
+                        // nameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                         // timeNameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                         // needAction // 是否需要點即後，文字變成執行中
                         nameKeyName={"name"} // nameKeyName 對應資料 名字 的 key 名
@@ -258,6 +258,12 @@ const MobileMBase = (props) => {
                                     ...style,
                                     minHeight: "55px",
                                     height: "auto",
+                                })
+                            },
+                            container: {
+                                basic: (style, props) => ({
+                                    ...style,
+                                    height: "0px"
                                 })
                             },
                             outcontainer: {
@@ -337,6 +343,7 @@ const MobileMBase = (props) => {
                                                     if (detail.count > 0) {
                                                         effectCount++;
                                                     }
+                                                    return ""
                                                 })}
 
                                                 <React.Fragment key={index}>

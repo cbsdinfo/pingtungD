@@ -426,7 +426,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             color: "#3D3D3D",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 400,
             display: "inline-block",
             // width: "100%",
