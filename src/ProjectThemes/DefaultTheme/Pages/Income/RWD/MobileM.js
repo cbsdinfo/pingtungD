@@ -240,7 +240,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "20%",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 400,
             color: "rgba(61,61,61,1)",
             // lineHeight: "47px",
@@ -256,7 +256,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "20%",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 400,
             color: "rgba(61,61,61,1)",
             // lineHeight: "47px",
@@ -272,7 +272,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "40%",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 400,
             color: "rgba(61,61,61,1)",
             // lineHeight: "47px",
@@ -288,7 +288,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "20%",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 400,
             color: "rgba(61,61,61,1)",
             display: "inline-block",
@@ -331,7 +331,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             color: "#FFFFFF",
-            fontSize: "12px",
+            fontSize: "18px",
             fontWeight: 400,
             display: "block",
             width: "100%",
@@ -360,7 +360,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             color: "#3D3D3D",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 600,
             display: "inline-block",
             // width: "100%",
@@ -377,7 +377,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             color: "#3D3D3D",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 600,
             display: "inline-block",
             // width: "100%",
@@ -408,7 +408,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             color: "#3D3D3D",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 400,
             display: "inline-block",
             // width: "100%",
