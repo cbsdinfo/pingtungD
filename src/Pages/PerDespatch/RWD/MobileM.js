@@ -20,6 +20,8 @@ import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { isEqual, isNil, isUndefined, toString, isNumber } from 'lodash';
 import isEmpty from 'lodash/isEmpty';
 import { payWayshMapping } from '../../../Mappings/Mappings';
+import isInteger from 'lodash/isInteger';
+import isString from 'lodash/isString';
 
 const MobileMBase = (props) => {
 
@@ -363,7 +365,7 @@ const MobileMBase = (props) => {
                                                                         {`預估里程`}
                                                                     </Text>
 
-                                                                    {`${data.totalMileage / 1000}`}
+                                                                    {`${Math.round(data.totalMileage / 1000 * 100) / 100}`}
 
                                                                     <Text
                                                                         theme={mobileM.minuteText}
@@ -680,15 +682,20 @@ const MobileMBase = (props) => {
                                                                                     <TextInput
                                                                                         topLabel={""}
                                                                                         baseDefaultTheme={"DefaultTheme"}
-                                                                                        type="number"
+                                                                                        type="text"
                                                                                         placeholder={""}
                                                                                         value={globalContextService.get("PerDespatchPage", "realFareText") ?? props?.RealAmt}
                                                                                         onChange={(e, value, onInitial) => {
-                                                                                            if (value / 10000 < 1) {
-                                                                                                globalContextService.set("PerDespatchPage", "realFareText", value);
-                                                                                            } else {
+                                                                                            if (isEmpty(value.toString())) {
+                                                                                                globalContextService.set("PerDespatchPage", "realFareText", 0);
+                                                                                            }
+                                                                                            else if (value / 10000 < 1 && !isNaN(value)) {
+                                                                                                globalContextService.set("PerDespatchPage", "realFareText", parseInt(value));
+                                                                                            }
+                                                                                            else {
                                                                                                 setForceUpdate(f => !f)
                                                                                             }
+
                                                                                         }}
                                                                                         theme={mobileM.realFareText}
                                                                                     />
@@ -700,7 +707,7 @@ const MobileMBase = (props) => {
                                                                                     <Text
                                                                                         theme={mobileM.realFareViewText}
                                                                                     >
-                                                                                        {globalContextService.get("PerDespatchPage", "realFareText") ? globalContextService.get("PerDespatchPage", "realFareText") : props?.RealAmt ?? 0}
+                                                                                        {globalContextService.get("PerDespatchPage", "realFareText") ?? props.RealAmt}
                                                                                     </Text>
                                                                                 </>
                                                                         }
