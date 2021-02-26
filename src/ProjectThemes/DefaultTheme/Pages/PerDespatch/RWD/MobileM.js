@@ -279,7 +279,7 @@ export default {
             fontWeight: 700,
             fontSize: "24px",
             lineHeight: "32px",
-            padding: "7px 30px",
+            padding: "7px 0",
             zIndex: 10
         }),
         hover: (style, props) => ({
