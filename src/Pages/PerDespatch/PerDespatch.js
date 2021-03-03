@@ -25,11 +25,13 @@ export const PerDespatch = (props) => {
     const [DriverSign, setDriverSign] = useState(false); // 簽名
     const [RealAmt, setRealAmt] = useState(null); // 金額
     const [PayWay, setPayWay] = useState(""); // 付款方式
+
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
     let urlParams = new URLSearchParams(useLocation().search);//取得參數
 
+    const [NowTabOrderData, setNowTabOrderData] = useState([]); // 當前分頁的訂單
     //#region 當頁 GlobalContextService (GCS) 值 控制
     const controllGCS = (type, payload) => {
         // console.log(type)
@@ -481,6 +483,8 @@ export const PerDespatch = (props) => {
                     setPayDetail={setPayDetail} // 收款
                     DriverSign={DriverSign} // 簽名
                     setDriverSign={setDriverSign} // 設定簽名
+                    NowTabOrderData={NowTabOrderData}
+                    setNowTabOrderData={setNowTabOrderData}
                     ChangeStatussExecute={ChangeStatussExecute} // 更改訂單狀態
                     GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
                     GetRealAmtExecute={GetRealAmtExecute} // 金額查詢

@@ -25,7 +25,7 @@ export default {
                     ...style,
                     padding: "0", //188 是授權圖高度
                     backgroundColor: "#3c4856",
-                    // height:""
+                    minHeight: props.isPay ? "768px" : "unset"
                 }
             }
         },
@@ -108,6 +108,7 @@ export default {
             display: "inline-block",
             width: "100%",
             height: `calc( ${props.height}px - 56px - 113px )`,
+            minHeight: props.isCheck ? "unset" : `calc( ${props.width}px + 98px + 45px )`,
         })
     },
     //#endregion
@@ -265,12 +266,12 @@ export default {
 
     //#region 收款按鈕
     payButton: {
-        basic: (style) => ({
+        basic: (style, props) => ({
             ...style,
             position: "absolute",
             right: "14px",
             top: "12px",
-            width: "110px",
+            width: props.width < 375 ? "80px" : "110px",
             color: "#fff",
             backgroundColor: "#F8A91E",
             borderColor: "#F8A91E",
@@ -579,9 +580,9 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "100%",
-            height:
+            height: (
                 props.status === 2 ?
-                    (props.open ? `calc( ${props.height}px - 483px )` : `calc( ${props.height}px - 320px )`)
+                    (props.open ? `calc( ${props.height}px - 479px )` : `calc( ${props.height}px - 316px )`)
                     :
                     (
                         props.status === 4 ?
@@ -589,6 +590,9 @@ export default {
                             :
                             "auto"
                     )
+            ),
+            minHeight: `calc(${props.width}px - 10px )`
+
         })
     },
     //#endregion
@@ -653,12 +657,10 @@ export default {
     checkIdContainer: {
         basic: (style, props) => ({
             ...style,
-            position: "fixed",
-            top: "56px",
-            left: "0px",
+            position: "relative",
             width: "100%",
-            zIndex: 100,
-            backgroundColor: "#F8A91E"
+            backgroundColor: "#F8A91E",
+            height: `calc(${props.height}px - 56px )`
         })
     },
     //#endregion
@@ -670,6 +672,7 @@ export default {
             padding: "12px 20px",
             width: "100%",
             height: `calc( ${props.height}px - 56px - 100px )`,
+            minHeight: `500px`,
             backgroundColor: "#fff",
             borderRadius: "10px 10px 0 0",
             textAlign: "right"
@@ -779,6 +782,21 @@ export default {
         })
     },
     //#endregion
+
+    //#region 核對身分 確認按鈕 容器
+    checkButtonContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            textAlign: "center",
+            width: "100%",
+            position: "absolute",
+            bottom: "16px",
+            left: 0
+        }),
+    },
+    //#endregion
+
     //#endregion
 
     //#region 收款頁
@@ -790,6 +808,7 @@ export default {
             width: "100%",
             height: `calc( ${props.height}px - 56px - 113px )`,
             backgroundColor: "#fff",
+            minHeight: `657px`,
         })
     },
     //#endregion
@@ -1202,6 +1221,20 @@ export default {
     },
     //#endregion
 
+    //#region 收款頁 確認按鈕 容器
+    payComfirmButtonContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            textAlign: "center",
+            width: "100%",
+            position: "absolute",
+            left: 0,
+            bottom: "16px"
+        }),
+    },
+    //#endregion
+
     //#endregion
 
 
@@ -1212,8 +1245,9 @@ export default {
             ...style,
             padding: "12px",
             position: "fixed",
-            bottom: "5%",
-            width: "100%"
+            bottom: "24px",
+            width: "100%",
+            zIndex: 11
         })
     },
     //#endregion
@@ -1221,20 +1255,6 @@ export default {
     //#endregion
 
     //#region 確認按鈕
-    //#region 確認按鈕 容器
-    comfirmButtonContainer: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            textAlign: "center",
-            width: "100%",
-            position: "absolute",
-            bottom: "16px",
-            zIndex: 101
-        })
-    },
-    //#endregion
-
     //#region 確認按鈕
     comfirmButton: {
         basic: (style) => ({
@@ -1260,8 +1280,8 @@ export default {
     signContainer: {
         basic: (style, props) => ({
             ...style,
-            position: "absolute",
-            top: "-100px",
+            // position: "absolute",
+            // top: "-100px",
             width: "100%",
             backgroundColor: "#383838",
             padding: "5px",
