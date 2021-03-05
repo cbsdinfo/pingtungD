@@ -166,7 +166,7 @@ const MobileMBase = (props) => {
                                                         預估里程
                                                     </Text>
                                                     <Text theme={mobileM.expectedValueText}>
-                                                        {data?.totalMileage}
+                                                        {`${Math.round(data.totalMileage / 1000 * 100) / 100}`}
                                                     </Text>
                                                     <Text theme={mobileM.expectedRightText}>
                                                         公里
