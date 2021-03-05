@@ -837,7 +837,7 @@ const MobileMBase = (props) => {
                                                                         props.AddPayExecute({
                                                                             despatchNo: data.despatchNo,
                                                                             orderId: data.orderId,
-                                                                            realFamilyWith: globalContextService.get("PerDespatchPage", "payDetailFamilyWith"),
+                                                                            familyWith: globalContextService.get("PerDespatchPage", "payDetailFamilyWith"),
                                                                             // realMaidWith: props.RealAmt.realMaidWith,
                                                                             // realWithAmt: props.RealAmt.realWithAmt,
                                                                             // realDiscountPercent: props.RealAmt.realDiscountPercent,
