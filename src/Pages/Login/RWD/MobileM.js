@@ -229,13 +229,13 @@ const MobileMBase = (props) => {
                                                         baseDefaultTheme={"DefaultTheme"}
                                                         theme={mobileM.loginFormForgetPassSubContainer}
                                                     >
-                                                        <Text
+                                                        {/* <Text
                                                             baseDefaultTheme={"DefaultTheme"}
                                                             theme={mobileM.loginFormForgetPassText}
                                                             onClick={() => { props.setWhichForm("SingUp") }}
                                                         >
                                                             註冊
-                                                        </Text>
+                                                        </Text> */}
 
                                                         <BasicContainer
                                                             theme={mobileM.loginFormForgetPassTextIconsContainer}
