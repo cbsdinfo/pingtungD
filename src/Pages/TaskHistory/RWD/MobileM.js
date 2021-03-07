@@ -80,7 +80,7 @@ const MobileMBase = (props) => {
                         rightText={"(起)"}
                         topLabel={<>日期區間</>}
                         // type={"time"} time、date、week、month、quarter、year
-                        type={"day"}
+                        type={"date"}
                         format={"YYYY-MM-DD"}
                         bascDefaultTheme={"DefaultTheme"}
                         // viewType
@@ -140,7 +140,7 @@ const MobileMBase = (props) => {
                         rightText={"(迄)"}
                         topLabel={<>日期區間</>}
                         // type={"time"} time、date、week、month、quarter、year
-                        type={"day"}
+                        type={"date"}
                         format={"YYYY-MM-DD"}
                         bascDefaultTheme={"DefaultTheme"}
                         // viewType

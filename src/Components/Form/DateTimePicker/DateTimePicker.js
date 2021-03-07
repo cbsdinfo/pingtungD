@@ -112,6 +112,13 @@ const DatePickerExtendStyle = styled(DatePickerExtend).attrs((props) => ({}))`
     //#endregion
 }
 
+//#region 是否開啟清除功能
+&& .ant-picker-clear {
+    transition: none;
+    ${props => props.canClear ? "right: 24px;" : "display:none;"}
+}
+//#endregion
+
 & .ant-picker-input:before {
     content: ${props => `"${props.rightText}"`};
     position: absolute;
@@ -135,12 +142,6 @@ const DatePickerExtendStyle = styled(DatePickerExtend).attrs((props) => ({}))`
 
 //#endregion
 
-//#region 是否開啟清除功能
-&& .ant-picker-clear {
-    transition: none;
-    ${props => props.canClear ? "right: 24px;" : "display:none;"}
-}
-//#endregion
 
 `
 //#endregion
@@ -168,6 +169,14 @@ const TimePickerExtendStyle = styled(TimePickerExtend).attrs((props) => ({}))`
     }
     //#endregion
 }
+
+//#region 是否開啟清除功能
+&& .ant-picker-clear {
+    transition: none;
+    ${props => props.canClear ? "right: 24px;" : "display:none;"}
+}
+//#endregion
+
 & .ant-picker-input:before {
     content: ${props => `"${props.rightText}"`};
     position: absolute;
@@ -190,13 +199,6 @@ const TimePickerExtendStyle = styled(TimePickerExtend).attrs((props) => ({}))`
 }
 
 
-//#endregion
-
-//#region 是否開啟清除功能
-&& .ant-picker-clear {
-    transition: none;
-    ${props => props.canClear ? "right: 24px;" : "display:none;"}
-}
 //#endregion
 
 `
