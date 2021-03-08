@@ -148,10 +148,10 @@ export default {
             ...style,
             display: "block",
             fontWeight: 600,
-            fontSize: "36px",
+            fontSize: "30px",
             lineHeight: "46px",
             color: "#3D3D3D",
-            cursor: "pointer"
+            // cursor: "pointer"
         }),
     },
     //#endregion

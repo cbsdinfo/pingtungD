@@ -97,96 +97,103 @@ const MobileMBase = (props) => {
                                     // console.log(data)
                                     return (
                                         <>
-                                            {/* 上方容器 */}
-                                            <Container>
+                                            <Container
+                                                onClick={() => {
+                                                    history.push(`/PerDespatch?despatch=${data.despatchNo}&defaultPrimary=${data.orderId}`)
+                                                }}
+                                            >
+                                                {/* 上方容器 */}
+                                                <Container>
 
-                                                {/* 乘客名稱 容器 */}
-                                                <SubContainer
-                                                    theme={mobileM.nameContainer}
-                                                >
-                                                    {/* 乘客名稱 */}
-                                                    <Text
-                                                        theme={mobileM.nameText}
-                                                        onClick={() => {
-                                                            history.push(`/PerDespatch?despatch=${data.despatchNo}&defaultPrimary=${data.orderId}`)
-                                                        }}
+                                                    {/* 乘客名稱 容器 */}
+                                                    <SubContainer
+                                                        theme={mobileM.nameContainer}
                                                     >
-                                                        {data.name}
-
-                                                        <Arrow style={mobileM.arrowSvg} />
-
-                                                        {/* 輪椅 */}
+                                                        {/* 乘客名稱 */}
                                                         <Text
-                                                            theme={mobileM.wheelchairTypeText}
+                                                            theme={mobileM.nameText}
+                                                        // onClick={() => {
+                                                        //     history.push(`/PerDespatch?despatch=${data.despatchNo}&defaultPrimary=${data.orderId}`)
+                                                        // }}
                                                         >
-                                                            {data.wheelchairType}
+                                                            {data.name}
+
+                                                            <Arrow style={mobileM.arrowSvg} />
+
+                                                            {/* 輪椅 */}
+                                                            <Text
+                                                                theme={mobileM.wheelchairTypeText}
+                                                            >
+                                                                {data.wheelchairType}
+                                                            </Text>
+                                                        </Text>
+
+                                                    </SubContainer>
+
+                                                    {/* 陪同人數 容器 */}
+                                                    <SubContainer
+                                                        theme={mobileM.withContainer}
+                                                    >
+                                                        {/* 陪同人數 */}
+                                                        <Text
+                                                            theme={mobileM.withCount}
+                                                        >
+                                                            {data.familyWith}
+
+                                                            {/* 預估陪同 */}
+                                                            <Text
+                                                                theme={mobileM.withText}
+                                                            >
+                                                                {"預估陪同"}
+                                                            </Text>
+                                                        </Text>
+
+                                                    </SubContainer>
+
+                                                </Container>
+
+                                                {/* 下方容器 */}
+                                                <SubContainer
+                                                    theme={mobileM.addrContainer}
+                                                >
+                                                    {/* 起點 */}
+                                                    <Text
+                                                        theme={mobileM.fromAddrText}
+                                                    >
+                                                        {/* 起點圖標 */}
+                                                        <Start style={mobileM.startSvg} />
+
+                                                        {data.fromAddr}
+
+                                                        {/* 起點備註 */}
+                                                        <Text
+                                                            theme={mobileM.fromAddrRemarkText}
+                                                        >
+                                                            {`(${data.fromAddrRemark})`}
                                                         </Text>
                                                     </Text>
 
-                                                </SubContainer>
-
-                                                {/* 陪同人數 容器 */}
-                                                <SubContainer
-                                                    theme={mobileM.withContainer}
-                                                >
-                                                    {/* 陪同人數 */}
+                                                    {/* 迄點 */}
                                                     <Text
-                                                        theme={mobileM.withCount}
+                                                        theme={mobileM.toAddrText}
                                                     >
-                                                        {data.familyWith}
 
-                                                        {/* 預估陪同 */}
+                                                        {/* 迄點圖標 */}
+                                                        <End style={mobileM.EndSvg} />
+
+                                                        {data.toAddr}
+
+                                                        {/* 迄點備註 */}
                                                         <Text
-                                                            theme={mobileM.withText}
+                                                            theme={mobileM.toAddrRemarkText}
                                                         >
-                                                            {"預估陪同"}
+                                                            {`(${data.toAddrRemark})`}
                                                         </Text>
                                                     </Text>
 
                                                 </SubContainer>
 
                                             </Container>
-
-                                            {/* 下方容器 */}
-                                            <SubContainer
-                                                theme={mobileM.addrContainer}
-                                            >
-                                                {/* 起點 */}
-                                                <Text
-                                                    theme={mobileM.fromAddrText}
-                                                >
-                                                    {/* 起點圖標 */}
-                                                    <Start style={mobileM.startSvg} />
-
-                                                    {data.fromAddr}
-
-                                                    {/* 起點備註 */}
-                                                    <Text
-                                                        theme={mobileM.fromAddrRemarkText}
-                                                    >
-                                                        {`(${data.fromAddrRemark})`}
-                                                    </Text>
-                                                </Text>
-
-                                                {/* 迄點 */}
-                                                <Text
-                                                    theme={mobileM.toAddrText}
-                                                >
-
-                                                    {/* 迄點圖標 */}
-                                                    <End style={mobileM.EndSvg} />
-
-                                                    {data.toAddr}
-
-                                                    {/* 迄點備註 */}
-                                                    <Text
-                                                        theme={mobileM.toAddrRemarkText}
-                                                    >
-                                                        {`(${data.toAddrRemark})`}
-                                                    </Text>
-                                                </Text>
-
-                                            </SubContainer>
                                         </>
                                     )
                                 }}
