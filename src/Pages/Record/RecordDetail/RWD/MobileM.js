@@ -185,7 +185,7 @@ const MobileMBase = (props) => {
                         <Text
                             theme={mobileM.userName}
                         >
-                            {props.data?.userName ?? getParseItemLocalStorage("UserName")}
+                            {props.data?.userName ?? getParseItemLocalStorage("DUserName")}
                         </Text>
 
                         {/* 案號檢核 */}

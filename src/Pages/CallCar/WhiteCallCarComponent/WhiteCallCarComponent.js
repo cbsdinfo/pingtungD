@@ -134,7 +134,7 @@ export const WhiteCallCarComponent = (props) => {
                 <LaptopL
                     UserId={getParseItemLocalStorage("UserID")}
                     CaseUserId={props.WhiteUserId}
-                    CaseName={getParseItemLocalStorage("UserName")}
+                    CaseName={getParseItemLocalStorage("DUserName")}
                     AllCarType={props.CarType} // 車種
                     WhiteOrderAmt={WhiteOrderAmt} // 訂單金額資訊
                     TodayToDoOpen={TodayToDoOpen}
@@ -152,7 +152,7 @@ export const WhiteCallCarComponent = (props) => {
                 <MobileM
                     UserId={getParseItemLocalStorage("UserID")}
                     CaseUserId={props.WhiteUserId}
-                    CaseName={getParseItemLocalStorage("UserName")}
+                    CaseName={getParseItemLocalStorage("DUserName")}
                     AllCarType={props.CarType} // 車種
                     WhiteOrderAmt={WhiteOrderAmt} // 訂單金額資訊
                     TodayToDoOpen={TodayToDoOpen}

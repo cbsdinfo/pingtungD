@@ -191,7 +191,7 @@ export const Login = (props) => {
             .then((PreResult) => {
                 if (PreResult.code === 200) {
                     //成功取得使用者名稱 與 ID
-                    setItemLocalStorage("UserName", JSON.stringify(PreResult.result?.name));
+                    setItemLocalStorage("DUserName", JSON.stringify(PreResult.result?.name));
                     setItemLocalStorage("DAuth", JSON.stringify(token));
                     setItemLocalStorage("DriverID", JSON.stringify(PreResult.result?.id));
                     setItemLocalStorage("DriverAccount", JSON.stringify(PreResult.result?.account));
@@ -387,7 +387,7 @@ export const Login = (props) => {
             .then((PreResult) => {
                 if (PreResult.code === 200) {
                     //成功取得使用者名稱 與 ID
-                    setItemLocalStorage("UserName", JSON.stringify(PreResult.result?.name));
+                    setItemLocalStorage("DUserName", JSON.stringify(PreResult.result?.name));
                     setItemLocalStorage("DAuth", JSON.stringify(token));
                     setItemLocalStorage("DriverID", JSON.stringify(PreResult.result?.id));
                 } else {

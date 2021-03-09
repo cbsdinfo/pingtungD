@@ -262,7 +262,7 @@ export const Layout = (props) => {
                             })
                         }}
                     >
-                        {getParseItemLocalStorage("UserName")}
+                        {getParseItemLocalStorage("DUserName")}
                     </Text>
 
                     <Text

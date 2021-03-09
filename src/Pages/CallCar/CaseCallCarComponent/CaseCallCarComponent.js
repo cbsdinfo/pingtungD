@@ -269,7 +269,7 @@ export const CaseCallCarComponent = (props) => {
                 <LaptopL
                     UserId={getParseItemLocalStorage("UserID")}
                     CaseUserId={props.CaseUserId}
-                    UserName={getParseItemLocalStorage("UserName")}
+                    UserName={getParseItemLocalStorage("DUserName")}
                     BasicInf={props.BasicInf}
                     CaseUsers={props.CaseInf} // 用戶長照身份的基本資料
                     CarType={props.CarType}  // 車輛類別
@@ -290,7 +290,7 @@ export const CaseCallCarComponent = (props) => {
                 <MobileM
                     UserId={getParseItemLocalStorage("UserID")}
                     CaseUserId={urlParams.get("caseUserId")}
-                    UserName={getParseItemLocalStorage("UserName")}
+                    UserName={getParseItemLocalStorage("DUserName")}
                     BasicInf={props.BasicInf}
                     CaseUsers={props.CaseInf} // 用戶長照身份的基本資料
                     CarType={props.CarType}  // 車輛類別

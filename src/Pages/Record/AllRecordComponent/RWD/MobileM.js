@@ -165,7 +165,7 @@ const MobileMBase = (props) => {
                                                                 <Text
                                                                     theme={mobileM.userName}
                                                                 >
-                                                                    {rowData?.userName ?? getParseItemLocalStorage("UserName")}
+                                                                    {rowData?.userName ?? getParseItemLocalStorage("DUserName")}
 
 
                                                                     {props.nowTab === "長照"

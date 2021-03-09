@@ -102,7 +102,7 @@ export const AllBusRouteAomponent = (props) => {
                 <Laptop
                     UserId={urlParams.get("userId")}
                     CaseUserId={urlParams.get("caseUserId")}
-                    UserName={urlParams.get("caseName")}
+                    DUserName={urlParams.get("caseName")}
                     data={data}
                     controllGCS={controllGCS}
                 />
@@ -112,7 +112,7 @@ export const AllBusRouteAomponent = (props) => {
                 <Tablet
                     UserId={urlParams.get("userId")}
                     CaseUserId={urlParams.get("caseUserId")}
-                    UserName={urlParams.get("caseName")}
+                    DUserName={urlParams.get("caseName")}
                     data={data}
                     controllGCS={controllGCS}
                 />

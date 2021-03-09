@@ -196,7 +196,7 @@ const LaptopLBase = (props) => {
                                 <Text
                                     theme={laptopL.userName}
                                 >
-                                    {props.data?.userName ?? getParseItemLocalStorage("UserName")}
+                                    {props.data?.userName ?? getParseItemLocalStorage("DUserName")}
                                 </Text>
 
                                 {/* 案號檢核 */}

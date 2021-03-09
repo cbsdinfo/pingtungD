@@ -150,7 +150,7 @@ export const BusCallCarComponent = (props) => {
                 <LaptopL
                     UserId={getParseItemLocalStorage("UserID")}
                     CaseUserId={props.BusUserId}
-                    CaseName={getParseItemLocalStorage("UserName")}
+                    CaseName={getParseItemLocalStorage("DUserName")}
                     BusOrderAmt={BusOrderAmt} // 訂單金額資訊
                     TodayToDoOpen={TodayToDoOpen}
                     setTodayToDoOpen={setTodayToDoOpen}
@@ -167,7 +167,7 @@ export const BusCallCarComponent = (props) => {
                 <MobileM
                     UserId={getParseItemLocalStorage("UserID")}
                     CaseUserId={props.BusUserId}
-                    CaseName={getParseItemLocalStorage("UserName")}
+                    CaseName={getParseItemLocalStorage("DUserName")}
                     BusOrderAmt={BusOrderAmt} // 訂單金額資訊
                     TodayToDoOpen={TodayToDoOpen}
                     setTodayToDoOpen={setTodayToDoOpen}
