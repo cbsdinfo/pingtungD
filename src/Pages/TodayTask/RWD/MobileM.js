@@ -43,7 +43,7 @@ const MobileMBase = (props) => {
 
                     {/* 司機名 */}
                     <Text theme={mobileM.driverNameText}  >
-                        楊銘輝
+                        {getParseItemLocalStorage("DUserName")}
                     </Text>
 
                     {/* 打卡按鈕 */}
