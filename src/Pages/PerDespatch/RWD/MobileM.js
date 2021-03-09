@@ -959,7 +959,8 @@ const MobileMBase = (props) => {
                                                                                     // totalDiscountAmt: props.RealAmt.totalDiscountAmt,
                                                                                     // realSelfPay: props.RealAmt.realSelfPay,
                                                                                     receivePay: globalContextService.get("PerDespatchPage", "realFareText"),
-                                                                                    payType: props.PayWay
+                                                                                    payType: props.PayWay,
+                                                                                    remark: globalContextService.get("PerDespatchPage", "NoteText") ?? ""
                                                                                 })
                                                                                 props.setDriverSign(true)
                                                                                 props.setPayDetail([false, false])
