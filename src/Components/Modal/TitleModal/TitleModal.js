@@ -90,15 +90,18 @@ const TitleModalBase = (props) => {
                                     >
                                         {props.title}
                                         {/* 關閉按紐 */}
-                                        <Close
-                                            style={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.baseDefaultTheme), "closeIcon")['basic'] }}
-                                            {...props.closeIconEvent}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                props.closeIconOnClick && props.closeIconOnClick(e);
-                                                props.closeIconEvent?.onClick && props.closeIconEvent.onClick(e);
-                                            }}
-                                        />
+                                        {!props?.noCloseBtn
+                                            &&
+                                            <Close
+                                                style={{ ...iterateTheme(props, props.theme, switchDefaultTheme(props.baseDefaultTheme), "closeIcon")['basic'] }}
+                                                {...props.closeIconEvent}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    props.closeIconOnClick && props.closeIconOnClick(e);
+                                                    props.closeIconEvent?.onClick && props.closeIconEvent.onClick(e);
+                                                }}
+                                            />
+                                        }
                                     </Text>
                                 }
                                 {/* 內容容器 */}
@@ -226,17 +229,20 @@ const TitleModalBase = (props) => {
                                     >
                                         {props.fromModals?.title}
                                         {/* 關閉按紐 */}
-                                        <Close
-                                            style={{ ...iterateTheme(props.fromModals, props.fromModals?.theme, switchDefaultTheme(props.fromModals?.baseDefaultTheme), "closeIcon")['basic'] }}
-                                            {...props.fromModals?.closeIconEvent}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                props.fromModals?.closeIconOnClick && props.fromModals.closeIconOnClick(e);
-                                                props.fromModals?.closeIconEvent?.onClick && props.fromModals.closeIconEvent.onClick(e);
-                                                // 最後移除該Modal
-                                                props.fromModals.removeModal(props.fromModals.thisModal)
-                                            }}
-                                        />
+                                        {!props.fromModals?.noCloseBtn
+                                            &&
+                                            <Close
+                                                style={{ ...iterateTheme(props.fromModals, props.fromModals?.theme, switchDefaultTheme(props.fromModals?.baseDefaultTheme), "closeIcon")['basic'] }}
+                                                {...props.fromModals?.closeIconEvent}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    props.fromModals?.closeIconOnClick && props.fromModals.closeIconOnClick(e);
+                                                    props.fromModals?.closeIconEvent?.onClick && props.fromModals.closeIconEvent.onClick(e);
+                                                    // 最後移除該Modal
+                                                    props.fromModals.removeModal(props.fromModals.thisModal)
+                                                }}
+                                            />
+                                        }
                                     </Text>
                                 }
                                 {/* 內容容器 */}

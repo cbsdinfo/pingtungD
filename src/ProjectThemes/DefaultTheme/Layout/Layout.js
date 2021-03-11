@@ -626,6 +626,210 @@ export default {
     },
     //#endregion
 
+    //#region 修改密碼
+    titleBarChangePasswordMobileM: {
+        basic: (style, props) => ({
+            ...style,
+            position: "absolute",
+            textAlign: "center",
+            fontSize: "14px",
+            cursor: "pointer",
+            userSelect: "none",
+            display: "inline-block",
+            bottom: "30px",
+            left: "11px",
+            width: "100px",
+            border: "1px solid #fff",
+            borderRadius: "31px",
+            color: "#fff",
+            height: "40px",
+            padding: "9px 0"
+
+        }),
+        hover: (style, props) => ({
+            // color: "#FFE977",
+        })
+    },
+    //#endregion
+    //#region 修改密碼提示文字
+    editPwdTip: {
+        basic: (style, props) => ({
+            ...style,
+            fontWeight: 400,
+            fontSize: "14px",
+            lineHeight: "22px",
+            color: "rgba(0, 0, 0, 0.65)",
+        })
+    },
+    //#endregion
+    //#region 舊密碼 OldPwd
+    oldPwd: {
+        container: {
+            basic: (style, props) => ({
+                ...style,
+                padding: 0,
+                display: "inline-block",
+                ...style.occupy(12),
+                margin: "24px 0 0"
+            })
+        },
+        topLabel: {
+            basic: (style, props) => ({
+                ...style,
+                //height: "0px"
+            })
+        },
+        textInputContainer: {
+            basic: (style, props) => {
+
+                return {
+                    ...style,
+                    color: (props.focus || props.hover) ? "#1890ff" : "rgba(0, 0, 0, 0.65)"
+                }
+            }
+        },
+        textInput: {
+            basic: (style, props) => {
+                //console.log(style, props)
+                return {
+                    ...style,
+                    //#region 當有開啟 openEye 並且 hover 或 focus 時變色
+                    ...(
+                        props.openEye && {
+                            border: `1px solid ${(props.focus || props.hover) ? "#1890ff" : "#d9d9d9"}`,
+                            boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(24, 144, 255, 0.2)" : null
+                        }
+                    ),
+                    //#endregion
+                    height: "28px"
+                }
+            }
+        },
+        bottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                // height: "24px"
+                minHeight: "24px",
+                height: "auto"
+            })
+        }
+    },
+    //#endregion
+    //#region 新密碼 NewPwd 
+    newPwd: {
+        container: {
+            basic: (style, props) => ({
+                ...style,
+                padding: 0,
+                display: "inline-block",
+                ...style.occupy(12),
+                margin: "24px 0 0"
+            })
+        },
+        topLabel: {
+            basic: (style, props) => ({
+                ...style,
+                //height: "0px"
+            })
+        },
+        textInputContainer: {
+            basic: (style, props) => {
+
+                return {
+                    ...style,
+                    color: (props.focus || props.hover) ? "#1890ff" : "rgba(0, 0, 0, 0.65)"
+                }
+            }
+        },
+        textInput: {
+            basic: (style, props) => {
+                //console.log(style, props)
+                return {
+                    ...style,
+                    //#region 當有開啟 openEye 並且 hover 或 focus 時變色
+                    ...(
+                        props.openEye && {
+                            border: `1px solid ${(props.focus || props.hover) ? "#1890ff" : "#d9d9d9"}`,
+                            boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(24, 144, 255, 0.2)" : null
+                        }
+                    ),
+                    //#endregion
+                    height: "28px"
+                }
+            }
+        },
+        bottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                // height: "24px"
+                minHeight: "24px",
+                height: "auto"
+            })
+        }
+    },
+    //#endregion
+    //#region 確認新密碼 ConfirmPwd
+    confirmPwd: {
+        container: {
+            basic: (style, props) => ({
+                ...style,
+                padding: 0,
+                display: "inline-block",
+                ...style.occupy(12),
+            })
+        },
+        topLabel: {
+            basic: (style, props) => ({
+                ...style,
+                //height: "0px"
+            })
+        },
+        textInputContainer: {
+            basic: (style, props) => {
+
+                return {
+                    ...style,
+                    color: (props.focus || props.hover) ? "#1890ff" : "rgba(0, 0, 0, 0.65)"
+                }
+            }
+        },
+        textInput: {
+            basic: (style, props) => {
+                //console.log(style, props)
+                return {
+                    ...style,
+                    //#region 當有開啟 openEye 並且 hover 或 focus 時變色
+                    ...(
+                        props.openEye && {
+                            border: `1px solid ${(props.focus || props.hover) ? "#1890ff" : "#d9d9d9"}`,
+                            boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(24, 144, 255, 0.2)" : null
+                        }
+                    ),
+                    //#endregion
+                    height: "28px"
+                }
+            }
+        },
+        bottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                height: 0
+                // minHeight: "24px",
+                // height: "auto"
+            })
+        }
+    },
+    //#endregion
+    //#region 密碼 左方圖標
+    pwdLeftIcon: {
+        position: "absolute",
+        height: "100%",
+        left: "12px",
+        cursor: "pointer",
+        top: 0,
+    },
+    //#endregion
+
     //#region 登出
     titleBarLogoutMobileM: {
         basic: (style, props) => ({
@@ -637,7 +841,7 @@ export default {
             userSelect: "none",
             display: "inline-block",
             bottom: "30px",
-            left: "11px",
+            left: "129px",
             width: "100px",
             border: "1px solid #fff",
             borderRadius: "31px",

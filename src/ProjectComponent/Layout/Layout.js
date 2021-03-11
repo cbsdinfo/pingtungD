@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Context, Tooltip, BackstageLeftSideMenuBar, BackstagePageTabBar, BackstageTopMenuBar, ScrollBar, BasicContainer, LeftSideDrawer, SubContainer, Text, BasicButton, DropDown, modalsService, globalContextService, Container } from '../../Components'
+import React, { useState, useContext, useEffect, useCallback } from 'react';
+import { Context, Tooltip, BackstageLeftSideMenuBar, BackstagePageTabBar, BackstageTopMenuBar, ScrollBar, BasicContainer, LeftSideDrawer, SubContainer, Text, BasicButton, DropDown, modalsService, globalContextService, Container, TextInput, FormRow, FormContainer } from '../../Components'
 import { useWindowSize } from '../../SelfHooks/useWindowSize'
 import { ReactComponent as ArrowUp } from '../../Assets/img/BackstageLeftSideMenuBar/ArrowUp.svg'
 import { ReactComponent as WhiteBlock } from '../../Assets/img/BackstageLeftSideMenuBar/WhiteBlock.svg'
@@ -21,23 +21,25 @@ import { ReactComponent as QAndATab } from '../../Assets/img/QAndATab.svg'
 import { ReactComponent as LogoutLaptop } from '../../Assets/img/LogoutLaptop.svg'
 import { ReactComponent as LoginLaptop } from '../../Assets/img/LoginLaptop.svg'
 
+import { ReactComponent as Lock } from '../../Assets/img/Lock.svg'
 import { ReactComponent as Line } from '../../Assets/img/Line.svg'
 import { ReactComponent as Castle } from '../../Assets/img/Castle.svg'
 import { ReactComponent as Clock } from '../../Assets/img/Clock.svg'
 import { ReactComponent as CallWorkTime } from '../../Assets/img/CallWorkTime.svg'
 import { ReactComponent as DotOfmap } from '../../Assets/img/DotOfmap.svg'
 
-import { getParseItemLocalStorage, setStringifyItemSession, pushAndNotExsistItemSession, getParseItemSession, removeByKeyItemSession, clearLocalStorage, clearSession, setStringifyItemLocalStorage } from '../../Handlers';
+import { getParseItemLocalStorage, setStringifyItemSession, pushAndNotExsistItemSession, getParseItemSession, removeByKeyItemSession, clearLocalStorage, clearSession, setStringifyItemLocalStorage, valid } from '../../Handlers';
 import { iconMap, pageTabBarUrlMapping, pageTextUrlMapping } from '../../Mappings/Mappings'
 import { useHistory, useLocation } from 'react-router-dom';
 import { isNil } from 'lodash';
 import { TitleBar } from '../TitleBar/TitleBar';
+import isEqual from 'lodash/isEqual';
 
 export const Layout = (props) => {
     const [NeedHover, setNeedHover] = useState(false); // DropDown 開啟時需要hover
     const [width] = useWindowSize();
 
-    const { Collapse, APIFileUrl, setCollapse, DrawerCollapse, setDrawerCollapse, Theme, Switch } = useContext(Context);
+    const { Collapse, APIFileUrl, setCollapse, DrawerCollapse, setDrawerCollapse, Theme, Switch, APIUrl } = useContext(Context);
     const { layout } = Theme;
     let history = useHistory();
     let location = useLocation();
@@ -200,6 +202,102 @@ export const Layout = (props) => {
         }
     }
 
+    //驗證密碼
+    const passWordVerify = () => {
+        let validMsg = ""
+        if (valid(globalContextService.get("LayoutPage", "NewPassword") ?? "", ["^.{1,}$", "^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_]+$)(?![a-z0-9]+$)(?![a-z\\W_]+$)(?![0-9\\W_]+$)[a-zA-Z0-9\\W_]{8,}$"], ["請輸入新密碼", "新密碼請輸入：8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。"])[1]) {
+            validMsg = valid(globalContextService.get("LayoutPage", "NewPassword") ?? "", ["^.{1,}$", "^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_]+$)(?![a-z0-9]+$)(?![a-z\\W_]+$)(?![0-9\\W_]+$)[a-zA-Z0-9\\W_]{8,}$"], ["請輸入新密碼", "新密碼請輸入：8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。"])[1]
+        }
+        else if (!isEqual(globalContextService.get("LayoutPage", "NewPassword"), globalContextService.get("LayoutPage", "ConfirmPwd"))) {
+            validMsg = "請確認兩次密碼輸入是否相符"
+        }
+
+        if (validMsg !== "") {
+            modalsService.infoModal.error({
+                id: "top1", //注意 這裡要加上固定id
+                iconRightText: validMsg,
+                yes: true,
+                yesText: "確認",
+                // no: true,
+                // autoClose: true,
+                backgroundClose: false,
+                yesOnClick: (e, close) => {
+                    close();
+                }
+            })
+            return false
+        }
+        else {
+            return true
+        }
+    }
+
+    const changePassWord = useCallback(async (changePassWordObject) => {
+        //#region 修改密碼彈窗 (確認後發送)
+        fetch(`${APIUrl}Users/ChangePassword`,
+            {
+                headers: {
+                    "X-Token": getParseItemLocalStorage("DAuth"),
+                    "content-type": "application/json; charset=utf-8",
+                },
+                method: "POST",
+                body: JSON.stringify({ ...changePassWordObject })
+            })
+            .then(Result => {
+                const ResultJson = Result.clone().json();//Respone.clone()
+                return ResultJson;
+            })
+            .then((PreResult) => {
+
+                if (PreResult.code === 200) {
+                    // 成功 修改密碼 API 
+
+                    //修改成功後強制登出
+                    clearSession();
+                    clearLocalStorage();
+                    globalContextService.clear();
+
+                    modalsService.infoModal.success({
+                        iconRightText: "修改密碼成功，請重新登入",
+                        yes: true,
+                        yesText: "確認",
+                        // no: true,
+                        // autoClose: true,
+                        backgroundClose: false,
+                        yesOnClick: (e, close) => {
+                            Switch();
+                            close();
+                        }
+                    })
+                }
+                else {
+                    throw PreResult;
+                }
+            })
+            .catch((Error) => {
+                modalsService.infoModal.warn({
+                    iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                    yes: true,
+                    yesText: "確認",
+                    // no: true,
+                    // autoClose: true,
+                    backgroundClose: false,
+                    yesOnClick: (e, close) => {
+                        if (Error.code === 401) {
+                            clearSession();
+                            clearLocalStorage();
+                            globalContextService.clear();
+                            Switch();
+                        }
+                        close();
+                    }
+                })
+                throw Error.message;
+            })
+            .finally(() => {
+            });
+        //#endregion
+    }, [APIUrl, Switch])
 
     return (
         <>
@@ -286,7 +384,106 @@ export const Layout = (props) => {
                         {getParseItemLocalStorage("DriverOrg")?.orgName}
                     </Text>
 
+                    <Text
+                        theme={layout.titleBarChangePasswordMobileM}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setDrawerCollapse(true);
 
+                            //#region 打開修改密碼 Modal
+                            modalsService.titleModal.normal({
+                                //id: "top1",
+                                title: "修改密碼",
+                                yes: true,
+                                yesText: "確認",
+                                no: true,
+                                noText: "取消",
+                                // autoClose: true,
+                                backgroundClose: false,
+                                noOnClick: (e) => {
+                                    globalContextService.remove("LayoutPage", "NewPassword")
+                                    globalContextService.remove("LayoutPage", "ConfirmPwd")
+                                },
+                                yesOnClick: (e, close) => {
+                                    //#region 表單驗證
+                                    if (passWordVerify()) {
+                                        changePassWord({
+                                            account: getParseItemLocalStorage("DriverAccount"), // 帳號
+                                            passWord: globalContextService.get("LayoutPage", "NewPassword"), // 新密碼
+                                        })
+                                        close();
+                                    }
+                                    //#endregion
+                                },
+                                closeIconOnClick: (e) => {
+                                    globalContextService.remove("LayoutPage", "NewPassword")
+                                    globalContextService.remove("LayoutPage", "ConfirmPwd")
+                                },
+                                content: (
+                                    <FormContainer
+                                        baseDefaultTheme={"DefaultTheme"}
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                        }}
+                                        theme={layout.editPwdFormContainer}
+                                    >
+                                        <FormRow baseDefaultTheme={"DefaultTheme"}>
+
+                                            {/* 修改密碼提示文字 */}
+                                            < Text
+                                                theme={layout.editPwdTip}
+                                            >
+                                                8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。
+                                            </Text>
+
+                                            {/* 新密碼 NewPwd */}
+                                            <TextInput
+                                                topLabel={<>新密碼</>}
+                                                baseDefaultTheme={"DefaultTheme"}
+                                                type="password"
+                                                placeholder={"請輸入新密碼"}
+                                                leftIcon={
+                                                    <Lock
+                                                        style={layout.pwdLeftIcon}
+                                                    />
+                                                }
+                                                openEye
+                                                value={globalContextService.get("LayoutPage", "NewPassword") ?? props.Client?.name}
+                                                onChange={(e, value, onInitial) => {
+                                                    globalContextService.set("LayoutPage", "NewPassword", value);
+                                                }}
+                                                theme={layout.newPwd}
+                                            />
+
+                                            {/* 確認新密碼 ConfirmPwd */}
+                                            <TextInput
+                                                topLabel={<>確認新密碼</>}
+                                                baseDefaultTheme={"DefaultTheme"}
+                                                type="password"
+                                                placeholder={"請輸入新密碼"}
+                                                leftIcon={
+                                                    <Lock
+                                                        style={layout.pwdLeftIcon}
+                                                    />
+                                                }
+                                                openEye
+                                                value={globalContextService.get("LayoutPage", "ConfirmPwd") ?? props.Client?.name}
+                                                onChange={(e, value, onInitial) => {
+                                                    globalContextService.set("LayoutPage", "ConfirmPwd", value);
+                                                }}
+                                                theme={layout.confirmPwd}
+                                            />
+
+                                        </FormRow>
+                                    </FormContainer>
+                                ),
+                                theme: layout.editPwdModal
+                            })
+                            //#endregion
+                        }}
+                    >
+                        修改密碼
+                    </Text>
                     <Text
                         theme={layout.titleBarLogoutMobileM}
                         onClick={() => {
@@ -314,6 +511,191 @@ export const Layout = (props) => {
                         登出
                     </Text>
 
+                    {getParseItemLocalStorage("DriverAccountStatus") === "Default" &&
+
+                        modalsService.titleModal.normal({
+                            //id: "top1",
+                            title: "首次登入，請設定新密碼",
+                            yes: true,
+                            yesText: "確認",
+                            // no: true,
+                            // noText: "取消",
+                            // autoClose: true,
+                            noCloseBtn: true,
+                            backgroundClose: false,
+                            noOnClick: (e) => {
+                                globalContextService.remove("LayoutPage", "NewPassword")
+                                globalContextService.remove("LayoutPage", "ConfirmPwd")
+                            },
+                            yesOnClick: (e, close) => {
+                                //#region 表單驗證
+                                if (passWordVerify()) {
+                                    changePassWord({
+                                        account: getParseItemLocalStorage("DriverAccount"), // 帳號
+                                        passWord: globalContextService.get("LayoutPage", "NewPassword"), // 新密碼
+                                    })
+                                    close();
+                                }
+                                //#endregion
+                            },
+                            closeIconOnClick: (e) => {
+                                globalContextService.remove("LayoutPage", "NewPassword")
+                                globalContextService.remove("LayoutPage", "ConfirmPwd")
+                            },
+                            content: (
+                                <FormContainer
+                                    baseDefaultTheme={"DefaultTheme"}
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                    }}
+                                    theme={layout.editPwdFormContainer}
+                                >
+                                    <FormRow baseDefaultTheme={"DefaultTheme"}>
+
+                                        {/* 修改密碼提示文字 */}
+                                        < Text
+                                            theme={layout.editPwdTip}
+                                        >
+                                            8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。
+                                        </Text>
+
+                                        {/* 新密碼 NewPwd */}
+                                        <TextInput
+                                            topLabel={<>新密碼</>}
+                                            baseDefaultTheme={"DefaultTheme"}
+                                            type="password"
+                                            placeholder={"請輸入新密碼"}
+                                            leftIcon={
+                                                <Lock
+                                                    style={layout.pwdLeftIcon}
+                                                />
+                                            }
+                                            openEye
+                                            value={globalContextService.get("LayoutPage", "NewPassword") ?? props.Client?.name}
+                                            onChange={(e, value, onInitial) => {
+                                                globalContextService.set("LayoutPage", "NewPassword", value);
+                                            }}
+                                            theme={layout.newPwd}
+                                        />
+
+                                        {/* 確認新密碼 ConfirmPwd */}
+                                        <TextInput
+                                            topLabel={<>確認新密碼</>}
+                                            baseDefaultTheme={"DefaultTheme"}
+                                            type="password"
+                                            placeholder={"請輸入新密碼"}
+                                            leftIcon={
+                                                <Lock
+                                                    style={layout.pwdLeftIcon}
+                                                />
+                                            }
+                                            openEye
+                                            value={globalContextService.get("LayoutPage", "ConfirmPwd") ?? props.Client?.name}
+                                            onChange={(e, value, onInitial) => {
+                                                globalContextService.set("LayoutPage", "ConfirmPwd", value);
+                                            }}
+                                            theme={layout.confirmPwd}
+                                        />
+
+                                    </FormRow>
+                                </FormContainer>
+                            ),
+                            theme: layout.editPwdModal
+                        })
+                    }
+
+                    {getParseItemLocalStorage("DriverAccountStatus") === "ThreeMonth" &&
+
+                        modalsService.titleModal.normal({
+                            //id: "top1",
+                            title: "三個月未修改密碼，請設定新密碼",
+                            yes: true,
+                            yesText: "確認",
+                            // no: true,
+                            // noText: "取消",
+                            // autoClose: true,
+                            noCloseBtn: true,
+                            backgroundClose: false,
+                            noOnClick: (e) => {
+                                globalContextService.remove("LayoutPage", "NewPassword")
+                                globalContextService.remove("LayoutPage", "ConfirmPwd")
+                            },
+                            yesOnClick: (e, close) => {
+                                //#region 表單驗證
+                                if (passWordVerify()) {
+                                    changePassWord({
+                                        account: getParseItemLocalStorage("DriverAccount"), // 帳號
+                                        passWord: globalContextService.get("LayoutPage", "NewPassword"), // 新密碼
+                                    })
+                                    close();
+                                }
+                                //#endregion
+                            },
+                            closeIconOnClick: (e) => {
+                                globalContextService.remove("LayoutPage", "NewPassword")
+                                globalContextService.remove("LayoutPage", "ConfirmPwd")
+                            },
+                            content: (
+                                <FormContainer
+                                    baseDefaultTheme={"DefaultTheme"}
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                    }}
+                                    theme={layout.editPwdFormContainer}
+                                >
+                                    <FormRow baseDefaultTheme={"DefaultTheme"}>
+
+                                        {/* 修改密碼提示文字 */}
+                                        < Text
+                                            theme={layout.editPwdTip}
+                                        >
+                                            8碼以上且大寫英文、小寫英文、數字、特殊符號，4選3。
+                                        </Text>
+
+                                        {/* 新密碼 NewPwd */}
+                                        <TextInput
+                                            topLabel={<>新密碼</>}
+                                            baseDefaultTheme={"DefaultTheme"}
+                                            type="password"
+                                            placeholder={"請輸入新密碼"}
+                                            leftIcon={
+                                                <Lock
+                                                    style={layout.pwdLeftIcon}
+                                                />
+                                            }
+                                            openEye
+                                            value={globalContextService.get("LayoutPage", "NewPassword") ?? props.Client?.name}
+                                            onChange={(e, value, onInitial) => {
+                                                globalContextService.set("LayoutPage", "NewPassword", value);
+                                            }}
+                                            theme={layout.newPwd}
+                                        />
+
+                                        {/* 確認新密碼 ConfirmPwd */}
+                                        <TextInput
+                                            topLabel={<>確認新密碼</>}
+                                            baseDefaultTheme={"DefaultTheme"}
+                                            type="password"
+                                            placeholder={"請輸入新密碼"}
+                                            leftIcon={
+                                                <Lock
+                                                    style={layout.pwdLeftIcon}
+                                                />
+                                            }
+                                            openEye
+                                            value={globalContextService.get("LayoutPage", "ConfirmPwd") ?? props.Client?.name}
+                                            onChange={(e, value, onInitial) => {
+                                                globalContextService.set("LayoutPage", "ConfirmPwd", value);
+                                            }}
+                                            theme={layout.confirmPwd}
+                                        />
+
+                                    </FormRow>
+                                </FormContainer>
+                            ),
+                            theme: layout.editPwdModal
+                        })
+                    }
                 </BasicContainer>
 
                 {/* Menu區 MobileM */}

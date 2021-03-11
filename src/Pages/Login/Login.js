@@ -141,6 +141,7 @@ export const Login = (props) => {
                 if (PreResult.code === 200) {
                     // 成功取得token
                     token = PreResult.token;
+                    setItemLocalStorage("DriverAccountStatus", JSON.stringify(PreResult?.result));
                 } else {
                     throw PreResult.message;
                 }
