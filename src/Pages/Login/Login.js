@@ -439,7 +439,20 @@ export const Login = (props) => {
 
                 if (PreResult.code === 200) {
                     // 成功取得token
-
+                    setWaitSecToZero(true);
+                } else {
+                    modalsService.infoModal.warn({
+                        iconRightText: PreResult.message,
+                        yes: true,
+                        yesText: "確認",
+                        // no: true,
+                        // autoClose: true,
+                        backgroundClose: true,
+                        // theme: {
+                        yesOnClick: (e, close) => {
+                            close();
+                        }
+                    })
                 }
             })
             .catch((Error) => {
@@ -454,18 +467,6 @@ export const Login = (props) => {
                     yesOnClick: (e, close) => {
                         close();
                     }
-                    //     yesButton: {
-                    //         text: {
-                    //             basic: (style, props) => {
-                    //                 console.log(style)
-                    //                 return {
-                    //                     ...style,
-                    //                     color: "red"
-                    //                 }
-                    //             },
-                    //         }
-                    //     }
-                    // }
                 })
                 throw Error;
             })

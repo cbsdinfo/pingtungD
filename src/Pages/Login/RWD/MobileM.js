@@ -24,7 +24,7 @@ import { valid } from '../../../Handlers';
 //#region 倒數10秒
 const TimeCounter = (props) => {
 
-    const [Sec, setSec] = useState(10);
+    const [Sec, setSec] = useState(300);
 
     useEffect(() => {
         let counter = setInterval(() => {
@@ -464,7 +464,7 @@ const MobileMBase = (props) => {
                                                             theme={mobileM.forgetPassFormSendAuthCodeButton}
                                                             onClick={() => {
                                                                 console.log("Start")
-                                                                props.setWaitSecToZero(true);
+                                                                // props.setWaitSecToZero(true);
                                                                 props.SendAuthCodeExecute(globalContextService.get("LoginPage", "Phone"))
                                                             }}
                                                         />
