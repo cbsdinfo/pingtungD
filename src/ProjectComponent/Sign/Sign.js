@@ -187,6 +187,10 @@ export const Sign = (props) => {
                             canvasContainer.ontouchstart = () => {
                                 setEmptyCanvas(false)
                             }
+
+                            canvasContainer.onmouseover = () => {
+                                setEmptyCanvas(false)
+                            }
                         }
                     }}
                     brushColor={"black"}
