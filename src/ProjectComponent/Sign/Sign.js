@@ -194,7 +194,7 @@ export const Sign = (props) => {
                         }
                     }}
                     brushColor={"black"}
-                    brushRadius={2}
+                    brushRadius={4}
                     lazyRadius={0}
                     canvasWidth={"100%"}
                     canvasHeight={`${props?.height - 49}px`}
@@ -206,6 +206,7 @@ export const Sign = (props) => {
                             JSON.stringify({ "height": `${props?.height - 49}px`, "lines": [], "width": "100%" })
                     }
                     hideGrid
+
                 />
 
                 {/* <button
