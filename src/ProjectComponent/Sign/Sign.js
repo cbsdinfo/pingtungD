@@ -72,6 +72,7 @@ import { isEqual } from 'lodash';
 
 export const Sign = (props) => {
     const [SaveableCanvas, setSaveableCanvas] = useState(0);
+    const [EmptyCanvas, setEmptyCanvas] = useState(true);
 
     return (
         <>
@@ -99,6 +100,7 @@ export const Sign = (props) => {
                     <button
                         onClick={() => {
                             SaveableCanvas.clear();
+                            setEmptyCanvas(true);
                             localStorage.removeItem(`${props?.primaryKey}_savedDrawing`)
                         }}
                         style={{
@@ -155,8 +157,38 @@ export const Sign = (props) => {
 
                 </BasicContainer>
 
+                <BasicContainer
+                    theme={{
+                        basic: (style, prop) => ({
+                            ...style,
+                            width: "100%",
+                            height: `${props?.height - 49}px`,
+                            pointerEvents: "none",
+
+                            // width: "10px",
+                            // height: "48px",
+                            // top: `calc( 58% - 0px )`,
+                            // left: `calc( 50% + 0px )`,
+
+                            position: "absolute",
+                            zIndex: "3000",
+                            background: "#fff",
+                            display: EmptyCanvas ? "block" : "none"
+                        })
+                    }}
+                >
+
+                </BasicContainer>
                 <CanvasDraw
-                    ref={canvasDraw => (setSaveableCanvas(canvasDraw))}
+                    ref={canvasDraw => {
+                        setSaveableCanvas(canvasDraw);
+                        let canvasContainer = canvasDraw?.canvasContainer;
+                        if (canvasContainer) {
+                            canvasContainer.ontouchstart = () => {
+                                setEmptyCanvas(false)
+                            }
+                        }
+                    }}
                     brushColor={"black"}
                     brushRadius={2}
                     lazyRadius={0}
