@@ -752,6 +752,18 @@ export const Layout = (props) => {
                             {
                                 children: [],
                                 item: {
+                                    id: "77777777-339a-1cc6-802e-16ee172aazzz",
+                                    name: "打卡紀錄",
+                                    parentId: null,
+                                    parentName: "根節點",
+                                    sortNo: 3,
+                                    status: 0,
+                                    url: "/HitCardList",
+                                }
+                            },
+                            {
+                                children: [],
+                                item: {
                                     id: "77777777-33ca-6cc6-802e-16ee172aaabbb",
                                     name: "聯繫行控",
                                     parentId: null,

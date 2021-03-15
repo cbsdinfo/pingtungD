@@ -14,6 +14,7 @@ import { ReactComponent as RouteAndStopSvg } from '../Assets/img/BackstageLeftSi
 import { ReactComponent as ContactSvg } from '../Assets/img/BackstageLeftSideMenuBar/Contact.svg'
 
 import { ReactComponent as TodayTaskSvg } from '../Assets/img/BackstageLeftSideMenuBar/TodayTask.svg'
+import { ReactComponent as HitCardListSvg } from '../Assets/img/BackstageLeftSideMenuBar/HitCardListSvg.svg'
 import { ReactComponent as TaskHistorySvg } from '../Assets/img/BackstageLeftSideMenuBar/TaskHistory.svg'
 import { ReactComponent as IncomeSvg } from '../Assets/img/BackstageLeftSideMenuBar/Income.svg'
 import { ReactComponent as ContactsSvg } from '../Assets/img/BackstageLeftSideMenuBar/Contacts.svg'
@@ -23,6 +24,7 @@ import { ReactComponent as DayCheckSvg } from '../Assets/img/BackstageLeftSideMe
 import { TodayTask } from '../Pages/TodayTask/TodayTask';
 import { PerDespatch } from '../Pages/PerDespatch/PerDespatch';
 import { HitCard } from '../Pages/HitCard/HitCard';
+import { HitCardList } from '../Pages/HitCardList/HitCardList';
 import { PerTaskHistory } from '../Pages/PerTaskHistory/PerTaskHistory';
 import { TaskHistory } from '../Pages/TaskHistory/TaskHistory';
 import { Income } from '../Pages/Income/Income';
@@ -47,6 +49,7 @@ export const urlMapping = {
    "/TodayTask": <TodayTask />, // 今日任務
    "/PerDespatch": <PerDespatch />, // 今日任務單張調度單
    "/HitCard": <HitCard />, // 打卡
+   "/HitCardList": <HitCardList />, // 打卡紀錄
    "/PerTaskHistory": <PerTaskHistory />, // 任務歷程
    "/TaskHistory": <TaskHistory />, // 任務歷程單筆訂單
    "/Income": <Income />, // 收入列表
@@ -338,6 +341,7 @@ export const iconMap = {
    "今日任務": (style, props) => <TodayTaskSvg style={{ ...style, left: "10px" }} {...props} />,
    "任務歷程": (style, props) => <TaskHistorySvg style={{ ...style, left: "12px" }} {...props} />,
    "收入列表": (style, props) => <IncomeSvg style={{ ...style, left: "12px" }} {...props} />,
+   "打卡紀錄": (style, props) => <HitCardListSvg style={{ ...style, left: "15px" }} {...props} />,
    "聯繫行控": (style, props) => <ContactsSvg style={{ ...style, left: "18px" }} {...props} />,
    "司機學院": (style, props) => <SchoolSvg style={{ ...style, left: "13px" }} {...props} />,
    "每日檢查": (style, props) => <DayCheckSvg style={{ ...style, left: "14px" }} {...props} />,

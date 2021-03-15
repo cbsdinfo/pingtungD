@@ -29,6 +29,7 @@ import userInfo from './Pages/UserInfo/UserInfo'
 import todayTask from './Pages/TodayTask/TodayTask'
 import perDespatch from './Pages/PerDespatch/PerDespatch'
 import hitCard from './Pages/HitCard/HitCard'
+import hitCardList from './Pages/hitCardList/HitCardList'
 import taskHistory from './Pages/TaskHistory/TaskHistory'
 import perTaskHistory from './Pages/PerTaskHistory/PerTaskHistory'
 import income from './Pages/Income/Income'
@@ -156,6 +157,7 @@ export default {
         todayTask, // 今日任務
         perDespatch,  // 今日任務單張調度單
         hitCard, // 打卡
+        hitCardList, // 打卡紀錄
         taskHistory, // 任務歷程
         perTaskHistory,// 任務歷程單筆訂單
         income, // 收入列表

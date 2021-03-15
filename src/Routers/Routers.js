@@ -95,12 +95,12 @@ const mapRouters = (data) => {
                         return (localStorage.getItem("DAuth") !== null) ? (
                             urlMapping[data.item.url]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }}>
                 </Route>
             )
@@ -122,12 +122,12 @@ const mapRouters = (data) => {
                                     return (localStorage.getItem("DAuth") !== null) ? (
                                         urlMapping[`${data.item.url}/${func.domId}`]
                                     ) : (
-                                            <Redirect
-                                                to={{
-                                                    pathname: "/Login",
-                                                }}
-                                            />
-                                        );
+                                        <Redirect
+                                            to={{
+                                                pathname: "/Login",
+                                            }}
+                                        />
+                                    );
                                 }}>
                             </Route>
                         )
@@ -177,12 +177,12 @@ export const Routers = (props) => {
                                 }}
                             />
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -196,12 +196,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/TodayTask"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -210,12 +210,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/PerDespatch"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -224,12 +224,26 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/HitCard"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
+                    }
+                    }>
+                </Route>
+                <Route exact path={"/HitCardList"}
+                    render={({ location }) => {
+                        return (getParseItemLocalStorage("DAuth") !== null) ? (
+                            urlMapping["/HitCardList"]
+                        ) : (
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -238,12 +252,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/TaskHistory"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -252,12 +266,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/PerTaskHistory"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -266,12 +280,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/Income"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -280,12 +294,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/Contact"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -294,12 +308,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/School"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -308,12 +322,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/DayCheck"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -346,12 +360,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") === null) ? (
                             urlMapping["/Login"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/TodayTask",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/TodayTask",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -365,12 +379,12 @@ export const Routers = (props) => {
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/404"]
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
@@ -397,12 +411,12 @@ export const Routers = (props) => {
                                 }}
                             />
                         ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "/Login",
-                                    }}
-                                />
-                            );
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
                     }
                     }>
                 </Route>
