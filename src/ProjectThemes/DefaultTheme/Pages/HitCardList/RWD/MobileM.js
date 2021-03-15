@@ -208,7 +208,7 @@ export default {
             width: "100%",
             textAlign: "center",
             fontWeight: 400,
-            fontSize: "12px",
+            fontSize: "14px",
             lineHeight: "29px",
             color: "#FFFFFF",
             top: "5px"
@@ -226,7 +226,7 @@ export default {
             width: "100%",
             textAlign: "center",
             fontWeight: 400,
-            fontSize: "12px",
+            fontSize: "14px",
             lineHeight: "29px",
             color: "#FFFFFF",
             top: "-5px"
@@ -258,7 +258,7 @@ export default {
             lineHeight: "58px",
             color: "#3D3D3D",
             backgroundColor: "#e5e5e5",
-            flexGrow: 1,
+            flexGrow: 0.5,
             // borderBottom: "1px dashed #D8D8D8"
         })
     },

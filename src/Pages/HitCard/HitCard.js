@@ -7,7 +7,7 @@ import { MobileM } from './RWD/MobileM';
 // import { Tablet } from './RWD/Tablet';
 import { useWindowSize } from '../../SelfHooks/useWindowSize';
 import { clearLocalStorage, clearSession, getParseItemLocalStorage, valid } from '../../Handlers';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useAsync } from '../../SelfHooks/useAsync';
 import { isUndefined } from 'lodash';
 import { fmt } from '../../Handlers/DateHandler';
@@ -21,6 +21,7 @@ export const HitCard = (props) => {
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
+    let urlParams = new URLSearchParams(useLocation().search);//取得參數
 
     //#region 當頁 GlobalContextService (GCS) 值 控制
     const controllGCS = (type, payload) => {
@@ -50,7 +51,7 @@ export const HitCard = (props) => {
     //#endregion
 
     //#region 取得打卡紀錄 選項 API
-    const getDriverPunch = useCallback(async (useAPI = false, start = fmt(moment().startOf("day")), end = fmt(moment().endOf("day"))) => {
+    const getDriverPunch = useCallback(async (useAPI = false, start = urlParams.get("StartDate") ?? fmt(moment().startOf("day")), end = urlParams.get("EndDate") ?? fmt(moment().startOf("day"))) => {
 
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)

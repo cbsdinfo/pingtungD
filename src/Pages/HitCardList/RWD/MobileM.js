@@ -70,37 +70,37 @@ const MobileMBase = (props) => {
                         }
                         onChange={(value, momentObj, OnInitial) => {
                             let preSet = globalContextService.get("HitCardListPage", "DateBegin");
-                            // if (!isEqual(value, globalContextService.get("HitCardListPage", "DateBegin"))) {
-                            //     if (!isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetTodayTask"))) {
-                            //         if (moment(value).startOf("day").isAfter(moment(globalContextService.get("HitCardListPage", "DateEnd")))) {
-                            //             modalsService.infoModal.warn({
-                            //                 iconRightText: "起日不可大於迄日",
-                            //                 yes: true,
-                            //                 yesText: "確認",
-                            //                 // no: true,
-                            //                 // autoClose: true,
-                            //                 backgroundClose: false,
-                            //                 yesOnClick: (e, close) => {
-                            //                     close();
-                            //                 }
-                            //             })
-                            //         } else {
-                            //             props.GetTodayTaskExecute(
-                            //                 true,
-                            //                 fmt(moment(value, "YYYY-MM-DD").startOf("day")),
-                            //                 fmt(moment(globalContextService.get("HitCardListPage", "DateEnd"), "YYYY-MM-DD").endOf("day"))
-                            //             )
-                            //         }
-                            //     }
+                            if (!isEqual(value, globalContextService.get("HitCardListPage", "DateBegin"))) {
+                                if (!isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetDriverPunch"))) {
+                                    if (moment(value).startOf("day").isAfter(moment(globalContextService.get("HitCardListPage", "DateEnd")))) {
+                                        modalsService.infoModal.warn({
+                                            iconRightText: "起日不可大於迄日",
+                                            yes: true,
+                                            yesText: "確認",
+                                            // no: true,
+                                            // autoClose: true,
+                                            backgroundClose: false,
+                                            yesOnClick: (e, close) => {
+                                                close();
+                                            }
+                                        })
+                                    } else {
+                                        props.GetDriverPunchExecute(
+                                            true,
+                                            fmt(moment(value, "YYYY-MM-DD").startOf("day")),
+                                            fmt(moment(globalContextService.get("HitCardListPage", "DateEnd"), "YYYY-MM-DD").startOf("day"))
+                                        )
+                                    }
+                                }
 
-                            //     if (moment(value).startOf("day").isAfter(moment(globalContextService.get("HitCardListPage", "DateEnd")))) {
-                            //         globalContextService.set("HitCardListPage", "DateBegin", preSet);
-                            //     } else {
-                            //         globalContextService.set("HitCardListPage", "DateBegin", value);
+                                if (moment(value).startOf("day").isAfter(moment(globalContextService.get("HitCardListPage", "DateEnd")))) {
+                                    globalContextService.set("HitCardListPage", "DateBegin", preSet);
+                                } else {
+                                    globalContextService.set("HitCardListPage", "DateBegin", value);
 
-                            //     }
-                            //     setForceUpdate(f => !f)
-                            // }
+                                }
+                                setForceUpdate(f => !f)
+                            }
 
                         }
                         }
@@ -126,40 +126,40 @@ const MobileMBase = (props) => {
                             (globalContextService.get("HitCardListPage", "DateEnd")) ?
                                 moment(globalContextService.get("HitCardListPage", "DateEnd"), "YYYY-MM-DD")
                                 :
-                                moment().endOf("day")
+                                moment().startOf("day")
                         }
                         onChange={(value, momentObj, OnInitial) => {
                             let preSet = globalContextService.get("HitCardListPage", "DateEnd");
-                            // if (!isEqual(value, globalContextService.get("HitCardListPage", "DateEnd"))) {
-                            //     if (!isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetTodayTask"))) {
-                            //         if (moment(value).isBefore(moment(globalContextService.get("HitCardListPage", "DateBegin")))) {
-                            //             modalsService.infoModal.warn({
-                            //                 iconRightText: "迄日不可小於起日",
-                            //                 yes: true,
-                            //                 yesText: "確認",
-                            //                 // no: true,
-                            //                 // autoClose: true,
-                            //                 backgroundClose: false,
-                            //                 yesOnClick: (e, close) => {
-                            //                     close();
-                            //                 }
-                            //             })
-                            //         } else {
-                            //             props.GetTodayTaskExecute(
-                            //                 true,
-                            //                 fmt(moment(globalContextService.get("HitCardListPage", "DateBegin"), "YYYY-MM-DD").startOf("day")),
-                            //                 fmt(moment(value, "YYYY-MM-DD").endOf("day"))
-                            //             )
-                            //         }
-                            //     }
+                            if (!isEqual(value, globalContextService.get("HitCardListPage", "DateEnd"))) {
+                                if (!isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetDriverPunch"))) {
+                                    if (moment(value).isBefore(moment(globalContextService.get("HitCardListPage", "DateBegin")))) {
+                                        modalsService.infoModal.warn({
+                                            iconRightText: "迄日不可小於起日",
+                                            yes: true,
+                                            yesText: "確認",
+                                            // no: true,
+                                            // autoClose: true,
+                                            backgroundClose: false,
+                                            yesOnClick: (e, close) => {
+                                                close();
+                                            }
+                                        })
+                                    } else {
+                                        props.GetDriverPunchExecute(
+                                            true,
+                                            fmt(moment(globalContextService.get("HitCardListPage", "DateBegin"), "YYYY-MM-DD").startOf("day")),
+                                            fmt(moment(value, "YYYY-MM-DD").startOf("day"))
+                                        )
+                                    }
+                                }
 
-                            //     if (moment(value).isBefore(moment(globalContextService.get("HitCardListPage", "DateBegin")))) {
-                            //         globalContextService.set("HitCardListPage", "DateEnd", preSet);
-                            //     } else {
-                            //         globalContextService.set("HitCardListPage", "DateEnd", value);
-                            //     }
-                            //     setForceUpdate(f => !f)
-                            // }
+                                if (moment(value).isBefore(moment(globalContextService.get("HitCardListPage", "DateBegin")))) {
+                                    globalContextService.set("HitCardListPage", "DateEnd", preSet);
+                                } else {
+                                    globalContextService.set("HitCardListPage", "DateEnd", value);
+                                }
+                                setForceUpdate(f => !f)
+                            }
                         }}
                         disabledDate={(perMoment) => {
                             // 去除掉前後一個月外的日期
@@ -218,6 +218,7 @@ const MobileMBase = (props) => {
                                             style={{ padding: "6px 0" }}
                                             onClick={() => {
                                                 //  導巷至 hitCard 裡面但試查詢日期 改成 {item?.date}
+                                                history.push(`/HitCard?StartDate=${fmt(moment(item?.date, "YYYY-MM-DD").startOf("day"))}&EndDate=${fmt(moment(item?.date, "YYYY-MM-DD").startOf("day"))}`)
                                             }}
                                         >
                                             <SubContainer
@@ -230,13 +231,13 @@ const MobileMBase = (props) => {
                                                     <Text
                                                         theme={mobileM.hitCardYearText}
                                                     >
-                                                        {item?.date}
+                                                        {item?.date?.substring(0, 4)}
                                                     </Text>
                                                     {/* 日期(日)內文 */}
                                                     <Text
                                                         theme={mobileM.hitCardDateText}
                                                     >
-                                                        04/22
+                                                        {item?.date?.substring(5)}
                                                     </Text>
                                                 </SubContainer>
 
@@ -245,14 +246,14 @@ const MobileMBase = (props) => {
                                                     theme={mobileM.timeText}
                                                 >
                                                     <Arrow style={mobileM.arrowIcon}></Arrow>
-                                                    {item?.start?.punchTime}
+                                                    {fmt(moment(item?.start?.punchTime), "HH:mm")}
                                                 </Text>
 
                                                 {/* 時間 內文 */}
                                                 <Text
                                                     theme={mobileM.timeText}
                                                 >
-                                                    {item?.end?.punchTime}
+                                                    {fmt(moment(item?.end?.punchTime), "HH:mm")}
                                                 </Text>
                                             </SubContainer>
                                         </SubContainer>

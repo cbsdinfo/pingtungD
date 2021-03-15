@@ -47,7 +47,7 @@ const MobileMBase = (props) => {
                 <Text
                     theme={mobileM.nowDateText}
                 >
-                    {fmt(moment(), "YYYY / MM / DD")}
+                    {fmt(moment(props?.DriverPunch?.[0]?.createDate), "YYYY / MM / DD")}
                 </Text>
 
                 {/* 打卡紀錄 容器*/}

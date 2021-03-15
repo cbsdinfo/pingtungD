@@ -27,7 +27,7 @@ export const HitCardList = (props) => {
         switch (type) {
             case "return":
                 //#region 當 回上一頁時，要清除的資料
-                globalContextService.remove("HitCardPage");
+                globalContextService.remove("HitCardListPage");
                 //#endregion
                 break;
             default:
@@ -40,7 +40,7 @@ export const HitCardList = (props) => {
     useEffect(() => {
         const historyUnlisten = history.listen((location, action) => {
             // console.log(location, action)
-            globalContextService.remove("HitCardPage", "firstUseAPIgetDriverPunch");
+            globalContextService.remove("HitCardListPage");
         });
 
         return () => {
@@ -50,11 +50,10 @@ export const HitCardList = (props) => {
     //#endregion
 
     //#region 取得打卡紀錄 選項 API
-    // const getDriverPunch = useCallback(async (useAPI = false, start = fmt(moment().startOf("day")), end = fmt(moment().startOf("day"))) => {
-    const getDriverPunch = useCallback(async (useAPI = false, start = "2021-03-07", end = "2021-03-15") => {
+    const getDriverPunch = useCallback(async (useAPI = false, start = fmt(moment().startOf("day")), end = fmt(moment().startOf("day"))) => {
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
-        if (isUndefined(globalContextService.get("HitCardPage", "firstUseAPIgetDriverPunch")) || useAPI) {
+        if (isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetDriverPunch")) || useAPI) {
             //#endregion
 
             //#region 取得打卡紀錄 API
@@ -131,7 +130,7 @@ export const HitCardList = (props) => {
                 })
                 .finally(() => {
                     //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
-                    globalContextService.set("HitCardPage", "firstUseAPIgetDriverPunch", false);
+                    globalContextService.set("HitCardListPage", "firstUseAPIgetDriverPunch", false);
                     //#endregion
                 });
             //#endregion
@@ -175,6 +174,7 @@ export const HitCardList = (props) => {
                 <MobileM
                     DriverPunch={DriverPunch} // 所有最新消息類別
                     controllGCS={controllGCS}
+                    GetDriverPunchExecute={GetDriverPunchExecute}
                 // GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
                 />
             }
