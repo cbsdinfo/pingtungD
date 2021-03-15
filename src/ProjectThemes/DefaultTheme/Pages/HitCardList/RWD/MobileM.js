@@ -46,23 +46,6 @@ export default {
     },
     //#endregion
 
-    //#region 日期
-    nowDateText: {
-        basic: (style, props) => ({
-            ...style,
-            display: "inline-block",
-            width: "100%",
-            textAlign: "center",
-            fontWeight: 700,
-            fontSize: "36px",
-            lineHeight: "42px",
-            color: "#fff",
-            backgroundColor: "transparent",
-            margin: "0 0 8px"
-        })
-    },
-    //#endregion
-
     //#region 打卡紀錄 容器
     hitCardList: {
         basic: (style, props) => ({
@@ -76,6 +59,59 @@ export default {
     },
     //#endregion
 
+    //#region 選擇日期區間 DateTimeRange 
+    dateTimeRange: {
+        viewTypeContainer: {
+            basic: (style, props) => ({
+                ...style,
+                padding: "0px 8px 8px",
+                display: "inline-block",
+                // width: "100%"
+                ...style.occupy(6),
+            })
+        },
+        container: {
+            basic: (style, props) => ({
+                ...style,
+                display: "inline-block",
+                padding: "0px 8px 8px",
+                // width: "100%"
+                ...style.occupy(6),
+            })
+        },
+        topLabel: {
+            basic: (style, props) => ({
+                ...style,
+                height: "0px"
+            })
+        },
+        dateTimePickerContainer: {
+            basic: (style, props) => {
+                return {
+                    ...style,
+                    // width: "100%",
+                    color: props.disable ? null : ((props.focus || props.hover) ? "#1890ff" : "rgba(0, 0, 0, 0.25)")
+                }
+            }
+        },
+        dateTimePickerSubContainer: {
+            basic: (style, props) => ({
+                ...style,
+                height: "28px",
+            })
+        },
+        bottomLabel: {
+            basic: (style, props) => ({
+                ...style,
+                // height: "24px"
+                // minHeight: "24px",
+                // height: "auto"
+                height: "0px"
+            })
+        }
+    },
+    //#endregion
+
     //#region 列表標題
     //#region 列表標題 容器
     listTitleContainer: {
@@ -84,13 +120,14 @@ export default {
             display: "inline-flex",
             width: "100%",
             backgroundColor: "#fff",
-            margin: "0 0 2px"
+            margin: "0 0 2px",
+            padding: "0px 0px 6px"
         })
     },
     //#endregion
 
-    //#region 打卡 標題
-    hitCardTitle: {
+    //#region 日期 標題
+    dateTitle: {
         basic: (style, props) => ({
             ...style,
             display: "inline-block",
@@ -101,13 +138,29 @@ export default {
             lineHeight: "55px",
             color: "#fff",
             backgroundColor: "#6B6B6B",
-            margin: "0 6px 0 0"
+            // margin: "0 6px 0 0"
         })
     },
     //#endregion
 
-    //#region 時間 標題
-    timeTitle: {
+    //#region 上班 標題
+    startWorkTitle: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            textAlign: "center",
+            fontWeight: 700,
+            fontSize: "24px",
+            lineHeight: "55px",
+            color: "#fff",
+            backgroundColor: "#6B6B6B",
+            flexGrow: 1
+        })
+    },
+    //#endregion
+
+    //#region 下班 標題
+    endWorkTitle: {
         basic: (style, props) => ({
             ...style,
             display: "inline-block",
@@ -141,24 +194,56 @@ export default {
             ...style,
             display: "inline-flex",
             width: "100%",
+            border: "dashed 2px #ababab",
+            // padding: "6px 0px"
         })
     },
     //#endregion
 
-    //#region 打卡 內文
-    hitCardText: {
+    //#region 日期(年) 內文
+    hitCardYearText: {
         basic: (style, props) => ({
             ...style,
             display: "inline-block",
-            width: "22%",
+            width: "100%",
             textAlign: "center",
-            fontWeight: 700,
-            fontSize: "30px",
-            lineHeight: "58px",
-            color: "#3D3D3D",
-            backgroundColor: "transparent",
-            borderBottom: "1px dashed #D8D8D8"
+            fontWeight: 400,
+            fontSize: "12px",
+            lineHeight: "29px",
+            color: "#FFFFFF",
+            top: "5px"
+            // backgroundColor: "#3f3f3f",
+            // borderBottom: "1px dashed #D8D8D8"
         })
+    },
+    //#endregion
+
+    //#region 日期(日) 內文
+    hitCardDateText: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-block",
+            width: "100%",
+            textAlign: "center",
+            fontWeight: 400,
+            fontSize: "12px",
+            lineHeight: "29px",
+            color: "#FFFFFF",
+            top: "-5px"
+            // backgroundColor: "#3f3f3f",
+            // borderBottom: "1px dashed #D8D8D8"
+        })
+    },
+    //#endregion
+
+    //#region 箭頭icon
+    arrowIcon: {
+        backgroundColor: "#e5e5e5",
+        height: "auto",
+        color: "#3C4856",
+        position: "absolute",
+        left: "8px",
+        top: "25px"
     },
     //#endregion
 
@@ -169,12 +254,12 @@ export default {
             display: "inline-block",
             textAlign: "center",
             fontWeight: 700,
-            fontSize: "30px",
+            fontSize: "22px",
             lineHeight: "58px",
             color: "#3D3D3D",
-            backgroundColor: "transparent",
+            backgroundColor: "#e5e5e5",
             flexGrow: 1,
-            borderBottom: "1px dashed #D8D8D8"
+            // borderBottom: "1px dashed #D8D8D8"
         })
     },
     //#endregion

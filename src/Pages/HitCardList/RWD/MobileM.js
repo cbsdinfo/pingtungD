@@ -8,11 +8,11 @@ import moment from 'moment';
 import { fmt } from '../../../Handlers/DateHandler';
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { isEqual, isNil, isUndefined } from 'lodash';
-
+import { ReactComponent as Arrow } from '../../../Assets/img/HitCardListPage/Arrow.svg'
 const MobileMBase = (props) => {
 
     const { APIUrl, Theme, Switch, History, Location } = useContext(Context);
-    const { pages: { hitCard: { rwd: { mobileM } } } } = Theme;
+    const { pages: { hitCardList: { rwd: { mobileM } } } } = Theme;
     let history = useHistory()
     const [ForceUpdate, setForceUpdate] = useState(false); // 供強制刷新組件
     const [Width, Height] = useWindowSize();
@@ -31,7 +31,7 @@ const MobileMBase = (props) => {
                     props.controllGCS("return")
                     history.goBack()
                 }}
-                customTitleText={<Text theme={mobileM.titleBar}>打卡列表</Text>}
+                customTitleText={<Text theme={mobileM.titleBar}>打卡紀錄</Text>}
             />
 
             <MainPageContainer
@@ -42,12 +42,132 @@ const MobileMBase = (props) => {
                     </>
                 }
             >
-                {/* 日期 */}
-                <Text
-                    theme={mobileM.nowDateText}
+
+                <Container
+                    theme={{
+                        basic: (style, props) => ({
+                            ...style,
+                            background: "#3c4856"
+                        })
+                    }}
                 >
-                    {fmt(moment(), "YYYY / MM / DD")}
-                </Text>
+                    {/* 日期區間 DateTimeRange  */}
+                    <DateTimePicker
+                        rightText={"(起)"}
+                        topLabel={<>日期區間</>}
+                        // type={"time"} time、date、week、month、quarter、year
+                        type={"date"}
+                        format={"YYYY-MM-DD"}
+                        bascDefaultTheme={"DefaultTheme"}
+                        // viewType
+                        isSearchableHitCardListPage
+                        placeholder={""}
+                        value={
+                            (globalContextService.get("HitCardListPage", "DateBegin")) ?
+                                moment(globalContextService.get("HitCardListPage", "DateBegin"), "YYYY-MM-DD")
+                                :
+                                moment().startOf("day").add(1, "day")
+                        }
+                        onChange={(value, momentObj, OnInitial) => {
+                            let preSet = globalContextService.get("HitCardListPage", "DateBegin");
+                            // if (!isEqual(value, globalContextService.get("HitCardListPage", "DateBegin"))) {
+                            //     if (!isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetTodayTask"))) {
+                            //         if (moment(value).startOf("day").isAfter(moment(globalContextService.get("HitCardListPage", "DateEnd")))) {
+                            //             modalsService.infoModal.warn({
+                            //                 iconRightText: "起日不可大於迄日",
+                            //                 yes: true,
+                            //                 yesText: "確認",
+                            //                 // no: true,
+                            //                 // autoClose: true,
+                            //                 backgroundClose: false,
+                            //                 yesOnClick: (e, close) => {
+                            //                     close();
+                            //                 }
+                            //             })
+                            //         } else {
+                            //             props.GetTodayTaskExecute(
+                            //                 true,
+                            //                 fmt(moment(value, "YYYY-MM-DD").startOf("day")),
+                            //                 fmt(moment(globalContextService.get("HitCardListPage", "DateEnd"), "YYYY-MM-DD").endOf("day"))
+                            //             )
+                            //         }
+                            //     }
+
+                            //     if (moment(value).startOf("day").isAfter(moment(globalContextService.get("HitCardListPage", "DateEnd")))) {
+                            //         globalContextService.set("HitCardListPage", "DateBegin", preSet);
+                            //     } else {
+                            //         globalContextService.set("HitCardListPage", "DateBegin", value);
+
+                            //     }
+                            //     setForceUpdate(f => !f)
+                            // }
+
+                        }
+                        }
+                        disabledDate={(perMoment) => {
+                            // 去除掉前後一個月外的日期
+                            return perMoment && ((perMoment > moment().startOf('day').add(1, "day").add(1, "months")) || (perMoment < moment().startOf('day').add(1, "day").subtract(1, "months")));
+                        }}
+                        theme={mobileM.dateTimeRange}
+                    />
+
+                    {/* 日期區間 DateTimeRange  */}
+                    <DateTimePicker
+                        rightText={"(迄)"}
+                        topLabel={<>日期區間</>}
+                        // type={"time"} time、date、week、month、quarter、year
+                        type={"date"}
+                        format={"YYYY-MM-DD"}
+                        bascDefaultTheme={"DefaultTheme"}
+                        // viewType
+                        isSearchableHitCardListPage
+                        placeholder={""}
+                        value={
+                            (globalContextService.get("HitCardListPage", "DateEnd")) ?
+                                moment(globalContextService.get("HitCardListPage", "DateEnd"), "YYYY-MM-DD")
+                                :
+                                moment().endOf("day").add(1, "day")
+                        }
+                        onChange={(value, momentObj, OnInitial) => {
+                            let preSet = globalContextService.get("HitCardListPage", "DateEnd");
+                            // if (!isEqual(value, globalContextService.get("HitCardListPage", "DateEnd"))) {
+                            //     if (!isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetTodayTask"))) {
+                            //         if (moment(value).isBefore(moment(globalContextService.get("HitCardListPage", "DateBegin")))) {
+                            //             modalsService.infoModal.warn({
+                            //                 iconRightText: "迄日不可小於起日",
+                            //                 yes: true,
+                            //                 yesText: "確認",
+                            //                 // no: true,
+                            //                 // autoClose: true,
+                            //                 backgroundClose: false,
+                            //                 yesOnClick: (e, close) => {
+                            //                     close();
+                            //                 }
+                            //             })
+                            //         } else {
+                            //             props.GetTodayTaskExecute(
+                            //                 true,
+                            //                 fmt(moment(globalContextService.get("HitCardListPage", "DateBegin"), "YYYY-MM-DD").startOf("day")),
+                            //                 fmt(moment(value, "YYYY-MM-DD").endOf("day"))
+                            //             )
+                            //         }
+                            //     }
+
+                            //     if (moment(value).isBefore(moment(globalContextService.get("HitCardListPage", "DateBegin")))) {
+                            //         globalContextService.set("HitCardListPage", "DateEnd", preSet);
+                            //     } else {
+                            //         globalContextService.set("HitCardListPage", "DateEnd", value);
+                            //     }
+                            //     setForceUpdate(f => !f)
+                            // }
+                        }}
+                        disabledDate={(perMoment) => {
+                            // 去除掉前後一個月外的日期
+                            return perMoment && ((perMoment > moment().startOf('day').add(1, "day").add(1, "months")) || (perMoment < moment().startOf('day').add(1, "day").subtract(1, "months")));
+                        }}
+                        theme={mobileM.dateTimeRange}
+                    />
+                </Container>
 
                 {/* 打卡紀錄 容器*/}
                 <BasicContainer
@@ -58,18 +178,28 @@ const MobileMBase = (props) => {
                     <SubContainer
                         theme={mobileM.listTitleContainer}
                     >
-                        {/* 打卡 標題 */}
+                        {/* 日期 標題 */}
                         <Text
-                            theme={mobileM.hitCardTitle}
+                            theme={mobileM.dateTitle}
                         >
-                            打卡
+                            日期
                         </Text>
 
-                        {/* 時間 標題 */}
+                        <Text theme={mobileM.arrowSpace} >
+                        </Text>
+
+                        {/* 上班 標題 */}
                         <Text
-                            theme={mobileM.timeTitle}
+                            theme={mobileM.startWorkTitle}
                         >
-                            時間
+                            上班
+                        </Text>
+
+                        {/* 下班 標題 */}
+                        <Text
+                            theme={mobileM.endWorkTitle}
+                        >
+                            下班
                         </Text>
 
                     </SubContainer>
@@ -80,30 +210,52 @@ const MobileMBase = (props) => {
                     >
 
                         {
-                            (props?.DriverPunch ?? []).map((item, index) => {
-                                return (
-                                    <>
-                                        {/* 列表內文 容器 */}
+                            // (props?.DriverPunch ?? []).map((item, index) => {
+                            // return (
+                            <>
+                                {/* 列表內文 容器 */}
+                                <SubContainer
+                                    style={{ padding: "6px 0" }}
+                                >
+                                    <SubContainer
+                                        theme={mobileM.listContainer}
+                                    >
                                         <SubContainer
-                                            theme={mobileM.listContainer}
+                                            style={{ width: "22%", backgroundColor: "#3f3f3f", }}
                                         >
-                                            {/* 打卡 內文 */}
+                                            {/* 日期(年)內文 */}
                                             <Text
-                                                theme={mobileM.hitCardText}
+                                                theme={mobileM.hitCardYearText}
                                             >
-                                                {(index + 1).toString().length < 2 ? "0" + (index + 1) : (index + 1)}
+                                                2020
                                             </Text>
-
-                                            {/* 時間 內文 */}
+                                            {/* 日期(日)內文 */}
                                             <Text
-                                                theme={mobileM.timeText}
+                                                theme={mobileM.hitCardDateText}
                                             >
-                                                {item.punchTime.split(' ')[1].substring(0, 5)}
+                                                04/22
                                             </Text>
                                         </SubContainer>
-                                    </>
-                                )
-                            })
+
+                                        {/* 時間 內文 */}
+                                        <Text
+                                            theme={mobileM.timeText}
+                                        >
+                                            <Arrow style={mobileM.arrowIcon}></Arrow>
+                                            09:10
+                                        </Text>
+
+                                        {/* 時間 內文 */}
+                                        <Text
+                                            theme={mobileM.timeText}
+                                        >
+                                            09:10
+                                    </Text>
+                                    </SubContainer>
+                                </SubContainer>
+                            </>
+                            // )
+                            // })
                         }
 
 
