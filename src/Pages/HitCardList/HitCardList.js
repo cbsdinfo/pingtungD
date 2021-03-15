@@ -50,8 +50,8 @@ export const HitCardList = (props) => {
     //#endregion
 
     //#region 取得打卡紀錄 選項 API
-    const getDriverPunch = useCallback(async (useAPI = false, start = fmt(moment().startOf("day")), end = fmt(moment().endOf("day"))) => {
-
+    // const getDriverPunch = useCallback(async (useAPI = false, start = fmt(moment().startOf("day")), end = fmt(moment().startOf("day"))) => {
+    const getDriverPunch = useCallback(async (useAPI = false, start = "2021-03-07", end = "2021-03-15") => {
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
         if (isUndefined(globalContextService.get("HitCardPage", "firstUseAPIgetDriverPunch")) || useAPI) {
@@ -75,11 +75,22 @@ export const HitCardList = (props) => {
                     if (PreResult.code === 200) {
                         // 成功取得打卡紀錄 API
                         // console.log(PreResult)
-                        // console.log(PreResult?.data.sort((a, b) => {
-                        //     return a.sortNo - b.sortNo;
-                        // }).map(d => ({ data: { ...d }, value: d?.id, label: d?.name })))
+                        let dateMap = [...new Set((PreResult.data ?? []).map(item => item.punchTime.split(' ')[0]))]
 
-                        setDriverPunch(PreResult.data);
+                        let data = (dateMap ?? []).map((item) => {
+                            let reqData = (PreResult.data ?? [])
+                            let start = reqData.find((it => it.punchTime.split(' ')[0] === item))
+                            let end = reqData.reverse().find((it => it.punchTime.split(' ')[0] === item))
+
+                            return {
+                                date: item, start,
+                                end,
+                                ...((start?.punchTime === end?.punchTime) && { end: null })
+                            }
+                        })
+
+                        console.log(data)
+                        setDriverPunch(data);
                     }
                     else {
                         throw PreResult;

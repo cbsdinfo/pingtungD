@@ -66,7 +66,7 @@ const MobileMBase = (props) => {
                             (globalContextService.get("HitCardListPage", "DateBegin")) ?
                                 moment(globalContextService.get("HitCardListPage", "DateBegin"), "YYYY-MM-DD")
                                 :
-                                moment().startOf("day").add(1, "day")
+                                moment().startOf("day")
                         }
                         onChange={(value, momentObj, OnInitial) => {
                             let preSet = globalContextService.get("HitCardListPage", "DateBegin");
@@ -126,7 +126,7 @@ const MobileMBase = (props) => {
                             (globalContextService.get("HitCardListPage", "DateEnd")) ?
                                 moment(globalContextService.get("HitCardListPage", "DateEnd"), "YYYY-MM-DD")
                                 :
-                                moment().endOf("day").add(1, "day")
+                                moment().endOf("day")
                         }
                         onChange={(value, momentObj, OnInitial) => {
                             let preSet = globalContextService.get("HitCardListPage", "DateEnd");
@@ -210,52 +210,55 @@ const MobileMBase = (props) => {
                     >
 
                         {
-                            // (props?.DriverPunch ?? []).map((item, index) => {
-                            // return (
-                            <>
-                                {/* 列表內文 容器 */}
-                                <SubContainer
-                                    style={{ padding: "6px 0" }}
-                                >
-                                    <SubContainer
-                                        theme={mobileM.listContainer}
-                                    >
+                            (props?.DriverPunch ?? []).map((item, index) => {
+                                return (
+                                    <>
+                                        {/* 列表內文 容器 */}
                                         <SubContainer
-                                            style={{ width: "22%", backgroundColor: "#3f3f3f", }}
+                                            style={{ padding: "6px 0" }}
+                                            onClick={() => {
+                                                //  導巷至 hitCard 裡面但試查詢日期 改成 {item?.date}
+                                            }}
                                         >
-                                            {/* 日期(年)內文 */}
-                                            <Text
-                                                theme={mobileM.hitCardYearText}
+                                            <SubContainer
+                                                theme={mobileM.listContainer}
                                             >
-                                                2020
-                                            </Text>
-                                            {/* 日期(日)內文 */}
-                                            <Text
-                                                theme={mobileM.hitCardDateText}
-                                            >
-                                                04/22
-                                            </Text>
+                                                <SubContainer
+                                                    style={{ width: "22%", backgroundColor: "#3f3f3f", }}
+                                                >
+                                                    {/* 日期(年)內文 */}
+                                                    <Text
+                                                        theme={mobileM.hitCardYearText}
+                                                    >
+                                                        {item?.date}
+                                                    </Text>
+                                                    {/* 日期(日)內文 */}
+                                                    <Text
+                                                        theme={mobileM.hitCardDateText}
+                                                    >
+                                                        04/22
+                                                    </Text>
+                                                </SubContainer>
+
+                                                {/* 時間 內文 */}
+                                                <Text
+                                                    theme={mobileM.timeText}
+                                                >
+                                                    <Arrow style={mobileM.arrowIcon}></Arrow>
+                                                    {item?.start?.punchTime}
+                                                </Text>
+
+                                                {/* 時間 內文 */}
+                                                <Text
+                                                    theme={mobileM.timeText}
+                                                >
+                                                    {item?.end?.punchTime}
+                                                </Text>
+                                            </SubContainer>
                                         </SubContainer>
-
-                                        {/* 時間 內文 */}
-                                        <Text
-                                            theme={mobileM.timeText}
-                                        >
-                                            <Arrow style={mobileM.arrowIcon}></Arrow>
-                                            09:10
-                                        </Text>
-
-                                        {/* 時間 內文 */}
-                                        <Text
-                                            theme={mobileM.timeText}
-                                        >
-                                            09:10
-                                    </Text>
-                                    </SubContainer>
-                                </SubContainer>
-                            </>
-                            // )
-                            // })
+                                    </>
+                                )
+                            })
                         }
 
 
