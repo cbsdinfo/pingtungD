@@ -246,14 +246,14 @@ const MobileMBase = (props) => {
                                                     theme={mobileM.timeText}
                                                 >
                                                     <Arrow style={mobileM.arrowIcon}></Arrow>
-                                                    {fmt(moment(item?.start?.punchTime), "HH:mm")}
+                                                    {item?.start?.punchTime ? fmt(moment(item?.start?.punchTime), "HH:mm") : "未打卡"}
                                                 </Text>
 
                                                 {/* 時間 內文 */}
                                                 <Text
                                                     theme={mobileM.timeText}
                                                 >
-                                                    {fmt(moment(item?.end?.punchTime), "HH:mm")}
+                                                    {item?.end?.punchTime ? fmt(moment(item?.end?.punchTime), "HH:mm") : "未打卡"}
                                                 </Text>
                                             </SubContainer>
                                         </SubContainer>
