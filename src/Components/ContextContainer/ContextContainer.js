@@ -3,6 +3,16 @@ import { Routers } from '../../Routers/Routers'
 import { Layout } from '../../ProjectComponent/Layout/Layout'
 import { Modals, Container, BackstagePageTabBar, SubContainer, BasicContainer, ScrollBar, BasicButton, LineButton, Text, NativeBasicButton, NativeLineButton } from '../';
 import styled from 'styled-components'
+import { useHistory, useLocation } from 'react-router';
+import { useAsync } from '../../SelfHooks/useAsync';
+import { useContext } from 'react';
+import { Context } from '../../Store/Store';
+import { useCallback } from 'react';
+import { clearLocalStorage, clearSession, setItemLocalStorage } from '../../Handlers';
+import { globalContextService } from '../../Store/GlobalContext';
+import { modalsService } from '../Modal/Modals/Modals';
+import isNil from 'lodash/isNil';
+import { useEffect } from 'react';
 //#region 引入預設字體
 // import NotoSansTCBlackotf from '../../Assets/fonts/NotoSansTC/NotoSansTC-Black.otf'
 // import NotoSansTCBoldotf from '../../Assets/fonts/NotoSansTC/NotoSansTC-Bold.otf'
@@ -17,6 +27,7 @@ import styled from 'styled-components'
 // import { JumpAlert } from './JumpAlerts'
 // import { Portal } from './Portal'
 
+
 /* 
    Date   : 2020-06-09 14:40:41
    Author : Arhua Ho
@@ -24,42 +35,116 @@ import styled from 'styled-components'
 */
 export const ContextContainerBase = (props) => {
 
-    //const { Theme, setTheme } = useContext(Context);
-    //const { } = Theme;
+  const { APIUrl, Switch } = useContext(Context);
+  //const { } = Theme;
+  let urlParams = new URLSearchParams(useLocation().search);//取得參數
+  let history = useHistory();
 
-    return (
-        <>
-            {/* 
+  useEffect(() => {
+    let token = urlParams.get("token"); //會是最新的值
+    console.log(token)
+
+    if (!isNil(token)) {
+      setItemLocalStorage("DriverAccountStatus", JSON.stringify(""));
+      LoginExecute()
+    }
+  }, [])
+
+  //#region 登入 API
+  const login = useCallback(async () => {
+    let token = urlParams.get("token");
+
+
+    //#region 取得使用者名稱 與 ID
+    await fetch(`${APIUrl}DriverInfos/GetByToken`, //Check/GetUserProfile
+      {
+        headers: {
+          "X-Token": token,
+        }
+      })
+      .then(Result => {
+        //portalService.clear();
+        const ResultJson = Result.clone().json();//Respone.clone()
+        return ResultJson;
+      })
+      .then((PreResult) => {
+        if (PreResult.code === 200) {
+          //成功取得使用者名稱 與 ID
+          setItemLocalStorage("DUserName", JSON.stringify(PreResult.result?.name));
+          setItemLocalStorage("DAuth", JSON.stringify(token));
+          setItemLocalStorage("DriverID", JSON.stringify(PreResult.result?.id));
+          setItemLocalStorage("DriverAccount", JSON.stringify(PreResult.result?.account));
+          setItemLocalStorage("DriverPic", JSON.stringify(PreResult.result?.pic));
+          setItemLocalStorage("DriverOrg", JSON.stringify({ orgId: PreResult.result?.orgId, orgName: PreResult.result?.orgName }));
+        } else {
+          throw PreResult;
+        }
+      })
+      .catch((Error) => {
+        modalsService.infoModal.warn({
+          iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+          yes: true,
+          yesText: "確認",
+          // no: true,
+          // autoClose: true,
+          backgroundClose: false,
+          yesOnClick: (e, close) => {
+            if (Error.code === 401) {
+              clearSession();
+              clearLocalStorage();
+              globalContextService.clear();
+              Switch();
+              history.push("/Login")
+            }
+            close();
+          }
+        })
+        throw Error.message;
+      })
+      .finally(() => {
+        Switch();
+      });
+    //#endregion
+
+  }, [APIUrl, Switch])
+
+  const [LoginExecute, LoginPending] = useAsync(login, false);
+  //#endregion 
+
+
+  return (
+    <>
+      {/* 
               Date   : 2020-06-12 12:18:46
               Author : Arhua Ho
               Content: 不隨Router re-render的組件
             */}
-            {/* <Layout /> */}
-            {/* <BackstagePageTabBar /> */}
-            {/* {(localStorage.getItem("DAuth") !== null) && */}
-            <>
-                <Layout />
-                {/* <MenuBar />
+      {/* <Layout /> */}
+      {/* <BackstagePageTabBar /> */}
+      {/* {(localStorage.getItem("DAuth") !== null) && */}
+      <>
+        <Layout />
+        {/* <MenuBar />
           <JumpAlert />
           <Portal /> */}
-            </>
-            {/* } */}
-  
-            {/* 
+      </>
+      {/* } */}
+
+      {/* 
               Date   : 2020-06-12 12:18:46
               Author : Arhua Ho
               Content: 寫死的路由
             */}
-            <Routers />
+      <Routers />
 
-            {/* 最底層Modal */}
-            <Modals />
-            {/* 次層Modal */}
-            <Modals id="top1" />
-            {/* 最上層Modal */}
-            <Modals id="top2" />
-        </>
-    )
+      {/* 最底層Modal */}
+      <Modals />
+      {/* 次層Modal */}
+      <Modals id="top1" />
+      {/* 最上層Modal */}
+      <Modals id="top2" />
+    </>
+  )
 }
 
 export const ContextContainer = styled(ContextContainerBase).attrs((props) => ({}))`
