@@ -465,18 +465,27 @@ const openNavigation = async (to, from) => {
             let longitude = position.coords.longitude;
             // console.log(latitude, longitude)
 
-            let mywin = window.open("about:blank", "redirect");
-            let someCallback = function (url) {
-                mywin.open(url, "redirect");
-            };
+            // let mywin = window.open("about:blank", "redirect");
+            // let someCallback = function (url) {
+            //     mywin.open(url, "redirect");
+            // };
+
+            function newWin(url) {
+                var a = document.createElement("a");
+                a.setAttribute("href", url);
+                a.setAttribute("target", "_blank");
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
 
             if (from) {
-
-                someCallback(`https://www.google.com/maps/dir/${from}/${to}`)
+                newWin(`https://www.google.com/maps/dir/${from}/${to}`)
+                // someCallback(`https://www.google.com/maps/dir/${from}/${to}`)
                 // window.open(`https://www.google.com/maps/dir/${from}/${to}`);
             } else {
-
-                someCallback(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`)
+                newWin(`https://www.google.com/maps/dir/${latitude}, ${longitude} / ${to}`)
+                // someCallback(`https://www.google.com/maps/dir/${latitude}, ${longitude} / ${to}`)
                 // window.open(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`);
             }
         },
