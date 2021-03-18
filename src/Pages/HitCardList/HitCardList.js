@@ -77,9 +77,10 @@ export const HitCardList = (props) => {
                         let dateMap = [...new Set((PreResult.data ?? []).map(item => item.punchTime.split(' ')[0]))]
 
                         let data = (dateMap ?? []).map((item) => {
-                            let reqData = (PreResult.data ?? [])
+                            let reqData = [...(PreResult.data ?? [])];
+                            let reqReData = [...(PreResult.data ?? [])];
                             let start = reqData.find((it => it.punchTime.split(' ')[0] === item))
-                            let end = reqData.reverse().find((it => it.punchTime.split(' ')[0] === item))
+                            let end = reqReData.reverse().find((it => it.punchTime.split(' ')[0] === item))
 
                             return {
                                 date: item, start,
@@ -88,7 +89,7 @@ export const HitCardList = (props) => {
                             }
                         })
 
-                        console.log(data)
+                        // console.log(data)
                         setDriverPunch(data);
                     }
                     else {
