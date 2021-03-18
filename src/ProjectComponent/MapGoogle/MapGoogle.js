@@ -470,21 +470,26 @@ const openNavigation = async (to, from) => {
             //     mywin.open(url, "redirect");
             // };
 
-            function newWin(url) {
-                var a = document.createElement("a");
-                a.setAttribute("href", url);
-                a.setAttribute("target", "_blank");
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            }
+            // function newWin(url) {
+            //     var a = document.createElement("a");
+            //     a.setAttribute("href", url);
+            //     a.setAttribute("target", "_blank");
+            //     document.body.appendChild(a);
+            //     a.click();
+            //     document.body.removeChild(a);
+            // }
+
+            // Open a new window and save a reference to it
+            var newWindow = window.open();
 
             if (from) {
-                newWin(`https://www.google.com/maps/dir/${from}/${to}`)
+                newWindow.location = `https://www.google.com/maps/dir/${from}/${to}`;
+                // newWin(`https://www.google.com/maps/dir/${from}/${to}`)
                 // someCallback(`https://www.google.com/maps/dir/${from}/${to}`)
                 // window.open(`https://www.google.com/maps/dir/${from}/${to}`);
             } else {
-                newWin(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`)
+                newWindow.location = `https://www.google.com/maps/dir/${latitude},${longitude}/${to}`
+                // newWin(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`)
                 // someCallback(`https://www.google.com/maps/dir/${latitude}, ${longitude} / ${to}`)
                 // window.open(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`);
             }
