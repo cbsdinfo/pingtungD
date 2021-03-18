@@ -484,7 +484,7 @@ const openNavigation = async (to, from) => {
                 // someCallback(`https://www.google.com/maps/dir/${from}/${to}`)
                 // window.open(`https://www.google.com/maps/dir/${from}/${to}`);
             } else {
-                newWin(`https://www.google.com/maps/dir/${latitude}, ${longitude} / ${to}`)
+                newWin(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`)
                 // someCallback(`https://www.google.com/maps/dir/${latitude}, ${longitude} / ${to}`)
                 // window.open(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`);
             }
