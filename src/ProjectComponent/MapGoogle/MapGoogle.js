@@ -464,10 +464,20 @@ const openNavigation = async (to, from) => {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
             // console.log(latitude, longitude)
+
+            let mywin = window.open("about:blank", "redirect");
+            let someCallback = function (url) {
+                mywin.open(url, "redirect");
+            };
+
             if (from) {
-                window.open(`https://www.google.com/maps/dir/${from}/${to}`);
+
+                someCallback(`https://www.google.com/maps/dir/${from}/${to}`)
+                // window.open(`https://www.google.com/maps/dir/${from}/${to}`);
             } else {
-                window.open(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`);
+
+                someCallback(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`)
+                // window.open(`https://www.google.com/maps/dir/${latitude},${longitude}/${to}`);
             }
         },
         function (error) {
