@@ -368,6 +368,7 @@ export const CardTableBase = (props) => {
                         pageSize: props.pageSize,
                         showTitle: false,
                         pageSizeTitle: false,
+                        showSizeChanger: false,
                         pageSizeOptions: props?.pageSizeOptions ?? [10, 20, 50, 100],
                         showQuickJumper: props.quickJump ?? true,
                         total: props?.data?.[props?.countKeyName ?? 'count'],
