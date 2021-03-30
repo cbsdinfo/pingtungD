@@ -337,7 +337,7 @@ export const Layout = (props) => {
                     />
 
                     <img
-                        src={`${APIFileUrl}${getParseItemLocalStorage("DriverPic")}`}
+                        src={`${APIFileUrl}${getParseItemLocalStorage("DriverPic")}${isNil(getParseItemLocalStorage("DriverPic")) ? ".jpg" : ""}`}
                         alt=""
                         height="100px"
                         width="100px"
