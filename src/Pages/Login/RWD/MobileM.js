@@ -407,7 +407,7 @@ const MobileMBase = (props) => {
                                                 <TextInput
                                                     baseDefaultTheme={"DefaultTheme"}
                                                     error={errorPhone() && !isEmpty(globalContextService.get("LoginPage", "Phone"))}
-                                                    type="number"
+                                                    type="phone"
                                                     placeholder={"請輸入帳號(預設為手機號碼)"}
                                                     bottomLabel={
                                                         !isEmpty(globalContextService.get("LoginPage", "Phone"))
