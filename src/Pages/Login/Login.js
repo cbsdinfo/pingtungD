@@ -441,18 +441,7 @@ export const Login = (props) => {
                     // 成功取得token
                     setWaitSecToZero(true);
                 } else {
-                    modalsService.infoModal.warn({
-                        iconRightText: PreResult.message,
-                        yes: true,
-                        yesText: "確認",
-                        // no: true,
-                        // autoClose: true,
-                        backgroundClose: true,
-                        // theme: {
-                        yesOnClick: (e, close) => {
-                            close();
-                        }
-                    })
+                    throw PreResult.message;
                 }
             })
             .catch((Error) => {
@@ -502,6 +491,7 @@ export const Login = (props) => {
                     setWhichForm("ResetPass");
                 } else {
                     setAuthCodeSuccess(false);
+                    throw PreResult.message;
                 }
             })
             .catch((Error) => {
@@ -561,6 +551,9 @@ export const Login = (props) => {
                 if (PreResult.code === 200) {
                     // 成功設置新密碼
                     setForgetFlag(3);
+                }
+                else {
+                    throw PreResult.message;
                 }
             })
             .catch((Error) => {
