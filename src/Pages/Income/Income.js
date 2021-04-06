@@ -68,9 +68,28 @@ export const Income = (props) => {
 
     ]); //所有今日任務
     const [Income, setIncome] = useState([]); // 類別下所有最新消息
-    const [AllNews, setAllNews] = useState([]); // 類別下所有最新消息
-    const [CheckDetail, setCheckDetail] = useState({}); // 詳細資料
+    const [OrderCount, setOrderCount] = useState(0) // 訂單總計
+    const [CashTotal, setCashTotal] = useState(0) // 現金總計
+    const [VirtualTotal, setVirtualTotal] = useState(0) // 非現金總計
     const [Width, Height] = useWindowSize();
+
+    // 訂單總計計算
+    let orderCount = 0
+    const orderCountAdd = (a) => {
+        orderCount += a
+    }
+
+    // 現金總計計算
+    let cashTotal = 0
+    const cashTotalAdd = (a) => {
+        cashTotal += a
+    }
+
+    // 非現金總計計算
+    let virtualTotal = 0
+    const virtualTotalAdd = (a) => {
+        virtualTotal += a
+    }
 
     let history = useHistory();
 
@@ -116,8 +135,48 @@ export const Income = (props) => {
                         // console.log(PreResult?.data.sort((a, b) => {
                         //     return a.sortNo - b.sortNo;
                         // }).map(d => ({ data: { ...d }, value: d?.id, label: d?.name })))
-                        console.log(PreResult.data)
                         setIncome(PreResult.data);
+
+
+                        setOrderCount(0)
+                        setCashTotal(0)
+                        setVirtualTotal(0)
+                        PreResult.data.map((item, index) => {
+                            orderCount = 0;
+                            cashTotal = 0;
+                            virtualTotal = 0;
+                            let effectCount = item.data?.length;
+                            let countNow = 1;
+                            const countNowAdd = () => {
+                                countNow++
+                            }
+                            return (
+                                item.data.map((item2, index2) => {
+                                    return (
+                                        <>
+                                            {effectCount === countNow ?
+                                                <>
+                                                    {orderCountAdd(item2?.orderCount)}
+                                                    {setOrderCount(orderCount)}
+                                                    {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
+                                                    {setCashTotal(cashTotal)}
+                                                    {setVirtualTotal(virtualTotal)}
+                                                </>
+                                                :
+                                                <>
+                                                    {orderCountAdd(item2?.orderCount)}
+                                                    {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
+                                                    {countNowAdd()}
+                                                </>
+                                            }
+                                        </>
+                                    )
+                                })
+                            )
+                        })
+
+
+
                     }
                     else {
                         throw PreResult;
@@ -199,6 +258,9 @@ export const Income = (props) => {
             {
                 // Width < 768 &&
                 <MobileM
+                    OrderCount={OrderCount}
+                    CashTotal={CashTotal}
+                    VirtualTotal={VirtualTotal}
                     Income={Income}
                     GetIncomeExecute={GetIncomeExecute} // 選單更新值調用，取得特定類別所有最新消息
                 />

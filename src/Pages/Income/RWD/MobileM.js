@@ -18,9 +18,6 @@ const MobileMBase = (props) => {
     let history = useHistory()
     const [ForceUpdate, setForceUpdate] = useState(false); // 供強制刷新組件
     const [Width, Height] = useWindowSize();
-    const [OrderCount, setOrderCount] = useState(0) // 訂單總計
-    const [CashTotal, setCashTotal] = useState(0) // 現金總計
-    const [VirtualTotal, setVirtualTotal] = useState(0) // 非現金總計
 
     return (
         <>
@@ -176,7 +173,7 @@ const MobileMBase = (props) => {
                             訂單總計
                         </Text>
                         <Text theme={mobileM.totalAmtText}>
-                            {OrderCount}
+                            {props.OrderCount}
                         </Text>
                     </SubContainer>
 
@@ -186,7 +183,7 @@ const MobileMBase = (props) => {
                             現金總計
                         </Text>
                         <Text theme={mobileM.totalAmtText}>
-                            {CashTotal}
+                            {props.CashTotal}
                         </Text>
                     </SubContainer>
 
@@ -196,7 +193,7 @@ const MobileMBase = (props) => {
                             非現金總計
                         </Text>
                         <Text theme={mobileM.totalAmtText2}>
-                            {VirtualTotal}
+                            {props.VirtualTotal}
                         </Text>
                     </SubContainer>
 
@@ -343,8 +340,6 @@ const MobileMBase = (props) => {
                                                                                                     theme={mobileM.countLastText}
                                                                                                 >
                                                                                                     {item2?.orderCount}
-                                                                                                    {/* {setOrderCount.bind(OrderCount + item2?.orderCount)} */}
-                                                                                                    {console.log(OrderCount)}
                                                                                                 </Text>
 
                                                                                                 {/* 收款方式 */}
@@ -369,8 +364,6 @@ const MobileMBase = (props) => {
                                                                                                     theme={mobileM.countText}
                                                                                                 >
                                                                                                     {item2?.orderCount}
-                                                                                                    {/* {setOrderCount.bind(OrderCount + item2?.orderCount)} */}
-                                                                                                    {console.log(OrderCount)}
                                                                                                 </Text>
 
                                                                                                 {/* 收款方式 */}
