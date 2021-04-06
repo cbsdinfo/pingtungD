@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { Context } from '../../../Store/Store'
 import { MainPageContainer, MainPageTitleBar, TaskCard, TitleBar } from '../../../ProjectComponent';
 import { Container, BasicContainer, DateTimePicker, TextEditor, Tooltip, Tag, OldTable, Selector, NativeLineButton, SubContainer, LineButton, Text, FormContainer, FormRow, TextInput, globalContextService, modalsService } from '../../../Components';
-import { ReactComponent as WheelChair } from '../../../Assets/img/TaskHistoryPage/WheelChair.svg'
-import { ReactComponent as Arrow } from '../../../Assets/img/TaskHistoryPage/Arrow.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { fmt } from '../../../Handlers/DateHandler';
@@ -20,41 +18,10 @@ const MobileMBase = (props) => {
     let history = useHistory()
     const [ForceUpdate, setForceUpdate] = useState(false); // 供強制刷新組件
     const [Width, Height] = useWindowSize();
-    //#region 分頁映射
-    const tabMap = (key) => {
-        return props.NewsType.map(item => { return item.label })
-    }
+    const [OrderCount, setOrderCount] = useState(0) // 訂單總計
+    const [CashTotal, setCashTotal] = useState(0) // 現金總計
+    const [VirtualTotal, setVirtualTotal] = useState(0) // 非現金總計
 
-    const statusMapping = (status, getTheme = false) => {
-
-        switch (toString(status)) {
-            case "1":
-                return "新訂單";
-            case "2":
-                return "已排班";
-            case "3":
-                return "已抵達";
-            case "4":
-                return "客上";
-            case "5":
-                return "完成";
-            case "9":
-                return "取消-空趟";
-            default:
-                return "無此狀態";
-        }
-    }
-
-    const dateToChinese = (date) => {
-        const reserveDate = date?.split(' ');
-        if (reserveDate?.[0].substring(5, 7) >= 10) {
-            return reserveDate?.[0].substring(5, 7) + "月" + (reserveDate?.[0].substring(8, 10) + "日")
-        } else {
-            return reserveDate?.[0].substring(6, 7) + "月" + (reserveDate?.[0].substring(8, 10) + "日")
-        }
-    }
-    //#endregion
-    console.log(mobileM.dateTimeRange)
     return (
         <>
             <TitleBar />
@@ -84,19 +51,19 @@ const MobileMBase = (props) => {
                         format={"YYYY-MM-DD"}
                         bascDefaultTheme={"DefaultTheme"}
                         // viewType
-                        isSearchableTaskHistoryPage
+                        isSearchableIncomePage
                         placeholder={""}
                         value={
-                            (globalContextService.get("TaskHistoryPage", "DateBegin")) ?
-                                moment(globalContextService.get("TaskHistoryPage", "DateBegin"), "YYYY-MM-DD")
+                            (globalContextService.get("IncomePage", "DateBegin")) ?
+                                moment(globalContextService.get("IncomePage", "DateBegin"), "YYYY-MM-DD")
                                 :
-                                moment().startOf("day").add(1, "day")
+                                moment().startOf("day")
                         }
                         onChange={(value, momentObj, OnInitial) => {
-                            let preSet = globalContextService.get("TaskHistoryPage", "DateBegin");
-                            if (!isEqual(value, globalContextService.get("TaskHistoryPage", "DateBegin"))) {
-                                if (!isUndefined(globalContextService.get("TaskHistoryPage", "firstUseAPIgetTodayTask"))) {
-                                    if (moment(value).startOf("day").isAfter(moment(globalContextService.get("TaskHistoryPage", "DateEnd")))) {
+                            let preSet = globalContextService.get("IncomePage", "DateBegin");
+                            if (!isEqual(value, globalContextService.get("IncomePage", "DateBegin"))) {
+                                if (!isUndefined(globalContextService.get("IncomePage", "firstUseAPIgetIncome"))) {
+                                    if (moment(value).startOf("day").isAfter(moment(globalContextService.get("IncomePage", "DateEnd")))) {
                                         modalsService.infoModal.warn({
                                             iconRightText: "起日不可大於迄日",
                                             yes: true,
@@ -109,18 +76,18 @@ const MobileMBase = (props) => {
                                             }
                                         })
                                     } else {
-                                        props.GetTodayTaskExecute(
+                                        props.GetIncomeExecute(
                                             true,
                                             fmt(moment(value, "YYYY-MM-DD").startOf("day")),
-                                            fmt(moment(globalContextService.get("TaskHistoryPage", "DateEnd"), "YYYY-MM-DD").endOf("day"))
+                                            fmt(moment(globalContextService.get("IncomePage", "DateEnd"), "YYYY-MM-DD").endOf("day"))
                                         )
                                     }
                                 }
 
-                                if (moment(value).startOf("day").isAfter(moment(globalContextService.get("TaskHistoryPage", "DateEnd")))) {
-                                    globalContextService.set("TaskHistoryPage", "DateBegin", preSet);
+                                if (moment(value).startOf("day").isAfter(moment(globalContextService.get("IncomePage", "DateEnd")))) {
+                                    globalContextService.set("IncomePage", "DateBegin", preSet);
                                 } else {
-                                    globalContextService.set("TaskHistoryPage", "DateBegin", value);
+                                    globalContextService.set("IncomePage", "DateBegin", value);
 
                                 }
                                 setForceUpdate(f => !f)
@@ -128,10 +95,10 @@ const MobileMBase = (props) => {
 
                         }
                         }
-                        disabledDate={(perMoment) => {
-                            // 去除掉前後一個月外的日期
-                            return perMoment && ((perMoment > moment().startOf('day').add(1, "day").add(1, "months")) || (perMoment < moment().startOf('day').add(1, "day").subtract(1, "months")));
-                        }}
+                        // disabledDate={(perMoment) => {
+                        //     // 去除掉前後一個月外的日期
+                        //     return perMoment && ((perMoment > moment().startOf('day').add(1, "day").add(1, "months")) || (perMoment < moment().startOf('day').add(1, "day").subtract(1, "months")));
+                        // }}
                         theme={mobileM.dateTimeRange}
                     />
 
@@ -144,19 +111,19 @@ const MobileMBase = (props) => {
                         format={"YYYY-MM-DD"}
                         bascDefaultTheme={"DefaultTheme"}
                         // viewType
-                        isSearchableTaskHistoryPage
+                        isSearchableIncomePage
                         placeholder={""}
                         value={
-                            (globalContextService.get("TaskHistoryPage", "DateEnd")) ?
-                                moment(globalContextService.get("TaskHistoryPage", "DateEnd"), "YYYY-MM-DD")
+                            (globalContextService.get("IncomePage", "DateEnd")) ?
+                                moment(globalContextService.get("IncomePage", "DateEnd"), "YYYY-MM-DD")
                                 :
-                                moment().endOf("day").add(1, "day")
+                                moment().endOf("day")
                         }
                         onChange={(value, momentObj, OnInitial) => {
-                            let preSet = globalContextService.get("TaskHistoryPage", "DateEnd");
-                            if (!isEqual(value, globalContextService.get("TaskHistoryPage", "DateEnd"))) {
-                                if (!isUndefined(globalContextService.get("TaskHistoryPage", "firstUseAPIgetTodayTask"))) {
-                                    if (moment(value).isBefore(moment(globalContextService.get("TaskHistoryPage", "DateBegin")))) {
+                            let preSet = globalContextService.get("IncomePage", "DateEnd");
+                            if (!isEqual(value, globalContextService.get("IncomePage", "DateEnd"))) {
+                                if (!isUndefined(globalContextService.get("IncomePage", "firstUseAPIgetIncome"))) {
+                                    if (moment(value).isBefore(moment(globalContextService.get("IncomePage", "DateBegin")))) {
                                         modalsService.infoModal.warn({
                                             iconRightText: "迄日不可小於起日",
                                             yes: true,
@@ -169,26 +136,26 @@ const MobileMBase = (props) => {
                                             }
                                         })
                                     } else {
-                                        props.GetTodayTaskExecute(
+                                        props.GetIncomeExecute(
                                             true,
-                                            fmt(moment(globalContextService.get("TaskHistoryPage", "DateBegin"), "YYYY-MM-DD").startOf("day")),
+                                            fmt(moment(globalContextService.get("IncomePage", "DateBegin"), "YYYY-MM-DD").startOf("day")),
                                             fmt(moment(value, "YYYY-MM-DD").endOf("day"))
                                         )
                                     }
                                 }
 
-                                if (moment(value).isBefore(moment(globalContextService.get("TaskHistoryPage", "DateBegin")))) {
-                                    globalContextService.set("TaskHistoryPage", "DateEnd", preSet);
+                                if (moment(value).isBefore(moment(globalContextService.get("IncomePage", "DateBegin")))) {
+                                    globalContextService.set("IncomePage", "DateEnd", preSet);
                                 } else {
-                                    globalContextService.set("TaskHistoryPage", "DateEnd", value);
+                                    globalContextService.set("IncomePage", "DateEnd", value);
                                 }
                                 setForceUpdate(f => !f)
                             }
                         }}
-                        disabledDate={(perMoment) => {
-                            // 去除掉前後一個月外的日期
-                            return perMoment && ((perMoment > moment().startOf('day').add(1, "day").add(1, "months")) || (perMoment < moment().startOf('day').add(1, "day").subtract(1, "months")));
-                        }}
+                        // disabledDate={(perMoment) => {
+                        //     // 去除掉前後一個月外的日期
+                        //     return perMoment && ((perMoment > moment().startOf('day').add(1, "day").add(1, "months")) || (perMoment < moment().startOf('day').add(1, "day").subtract(1, "months")));
+                        // }}
                         theme={mobileM.dateTimeRange}
                     />
                 </Container>
@@ -209,7 +176,7 @@ const MobileMBase = (props) => {
                             訂單總計
                         </Text>
                         <Text theme={mobileM.totalAmtText}>
-                            109
+                            {OrderCount}
                         </Text>
                     </SubContainer>
 
@@ -219,7 +186,7 @@ const MobileMBase = (props) => {
                             現金總計
                         </Text>
                         <Text theme={mobileM.totalAmtText}>
-                            1919
+                            {CashTotal}
                         </Text>
                     </SubContainer>
 
@@ -229,7 +196,7 @@ const MobileMBase = (props) => {
                             非現金總計
                         </Text>
                         <Text theme={mobileM.totalAmtText2}>
-                            1900
+                            {VirtualTotal}
                         </Text>
                     </SubContainer>
 
@@ -241,16 +208,16 @@ const MobileMBase = (props) => {
                     {/* {props?.TodayTask?.map((item, index) => { */}
                     {/* return ( */}
                     <TaskCard
-                        // key={index}
+                        // key={""}
 
                         // data={props?.TodayTask} // 調度單資料
                         // nameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                         // timeNameType // timeNameType、nameType 顯示名字、或顯示時間與名字
                         // needAction // 是否需要點即後，文字變成執行中
-                        nameKeyName={"name"} // nameKeyName 對應資料 名字 的 key 名
-                        TimeKeyName={"reserveDate"} // TimeKeyName 對應資料 時間 的 key 名
+                        // nameKeyName={"name"} // nameKeyName 對應資料 名字 的 key 名
+                        // TimeKeyName={"reserveDate"} // TimeKeyName 對應資料 時間 的 key 名
                         // callBackKeyName 有需要回調 則在資料中補上回調，並指定 key名
-                        primaryKey={"orderId"}// primaryKey 對應資料 唯一鍵 的 key 名
+                        // primaryKey={"orderId"}// primaryKey 對應資料 唯一鍵 的 key 名
                         // defaultUsePrimaryKey={props?.defaultPrimary} // 初始要使用的分頁 (值要對應到 primaryKey)
                         theme={{
                             topContainer: {
@@ -274,23 +241,8 @@ const MobileMBase = (props) => {
                             }
                         }}
                         topContent={(data) => {
-                            // console.log("data", props?.TodayTask)
                             return (
                                 <>
-                                    {/* 下車地點註記 */}
-                                    {/* <Text
-                                        theme={mobileM.toAddrRemarkText}
-                                    >
-                                        {data.toAddrRemark}
-                                    </Text> */}
-
-                                    {/* 下車地點 */}
-                                    {/* <Text
-                                        theme={mobileM.toAddrText}
-                                    >
-                                        {data.toAddr}
-                                    </Text> */}
-
                                     {/* Table標題容器 */}
                                     <SubContainer
                                         theme={mobileM.tableTitleContainer}
@@ -325,26 +277,17 @@ const MobileMBase = (props) => {
                         }}
                         bottomContent={(data) => {
                             // console.log(data)
-
-
                             return (
                                 <>
 
-                                    {props?.TodayTask?.map((item, index) => {
-                                        let effectCount = 0;
+                                    {props?.Income?.map((item, index) => {
+                                        let effectCount = item.data?.length; // 
                                         let countNow = 1;
                                         const countNowAdd = () => {
                                             countNow++
                                         }
                                         return (
                                             <>
-                                                {/* 計算有效筆數 */}
-                                                {item.detail.map((detail) => {
-                                                    if (detail.count > 0) {
-                                                        effectCount++;
-                                                    }
-                                                    return ""
-                                                })}
 
                                                 <React.Fragment key={index}>
                                                     {/* 列表內容容器 */}
@@ -369,12 +312,12 @@ const MobileMBase = (props) => {
                                                                 <Text
                                                                     theme={mobileM.dateText}
                                                                 >
-                                                                    {item?.date?.substring(0, 4)}
+                                                                    {item?.reserveDate?.substring(0, 4)}
                                                                 </Text>
                                                                 <Text
                                                                     theme={mobileM.dateText}
                                                                 >
-                                                                    {item?.date?.substring(5, 7) + "/" + item?.date?.substring(8)}
+                                                                    {item?.reserveDate?.substring(5, 7) + "/" + item?.reserveDate?.substring(8, 10)}
                                                                 </Text>
                                                             </BasicContainer>
 
@@ -386,11 +329,11 @@ const MobileMBase = (props) => {
                                                         >
                                                             <SubContainer style={{ width: "100%" }}>
 
-                                                                {item.detail.map((item2, index2) => {
+                                                                {item.data.map((item2, index2) => {
                                                                     return (
                                                                         <>
                                                                             <React.Fragment key={index}>
-                                                                                {item2?.count > 0 &&
+                                                                                {item2?.orderCount > 0 &&
                                                                                     <>
                                                                                         {effectCount === countNow ?
                                                                                             <>
@@ -399,21 +342,23 @@ const MobileMBase = (props) => {
                                                                                                 <Text
                                                                                                     theme={mobileM.countLastText}
                                                                                                 >
-                                                                                                    {item2?.count}
+                                                                                                    {item2?.orderCount}
+                                                                                                    {/* {setOrderCount.bind(OrderCount + item2?.orderCount)} */}
+                                                                                                    {console.log(OrderCount)}
                                                                                                 </Text>
 
                                                                                                 {/* 收款方式 */}
                                                                                                 <Text
                                                                                                     theme={mobileM.payWayLastText}
                                                                                                 >
-                                                                                                    {item2?.typeName}
+                                                                                                    {item2?.payType}
                                                                                                 </Text>
 
                                                                                                 {/* 實收 */}
                                                                                                 <Text
                                                                                                     theme={mobileM.paidLastText}
                                                                                                 >
-                                                                                                    ${item2?.receivePay}
+                                                                                                    ${item2?.receiveTotal}
                                                                                                 </Text>
                                                                                             </>
                                                                                             :
@@ -423,21 +368,23 @@ const MobileMBase = (props) => {
                                                                                                 <Text
                                                                                                     theme={mobileM.countText}
                                                                                                 >
-                                                                                                    {item2?.count}
+                                                                                                    {item2?.orderCount}
+                                                                                                    {/* {setOrderCount.bind(OrderCount + item2?.orderCount)} */}
+                                                                                                    {console.log(OrderCount)}
                                                                                                 </Text>
 
                                                                                                 {/* 收款方式 */}
                                                                                                 <Text
                                                                                                     theme={mobileM.payWayText}
                                                                                                 >
-                                                                                                    {item2?.typeName}
+                                                                                                    {item2?.payType}
                                                                                                 </Text>
 
                                                                                                 {/* 實收 */}
                                                                                                 <Text
                                                                                                     theme={mobileM.paidText}
                                                                                                 >
-                                                                                                    ${item2?.receivePay}
+                                                                                                    ${item2?.receiveTotal}
                                                                                                 </Text>
 
                                                                                                 {countNowAdd()}
@@ -461,17 +408,12 @@ const MobileMBase = (props) => {
                                         )
                                     })}
 
-
-
-
-
                                 </>
                             )
                         }}
                     />
                     {/* ) */}
                     {/* })} */}
-
 
                 </BasicContainer>
 

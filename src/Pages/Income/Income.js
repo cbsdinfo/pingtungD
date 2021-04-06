@@ -67,6 +67,7 @@ export const Income = (props) => {
         },
 
     ]); //所有今日任務
+    const [Income, setIncome] = useState([]); // 類別下所有最新消息
     const [AllNews, setAllNews] = useState([]); // 類別下所有最新消息
     const [CheckDetail, setCheckDetail] = useState({}); // 詳細資料
     const [Width, Height] = useWindowSize();
@@ -77,8 +78,8 @@ export const Income = (props) => {
     useEffect(() => {
         const historyUnlisten = history.listen((location, action) => {
             // console.log(location, action)
-            globalContextService.remove("TaskHistoryPage", "firstUseAPIgetTodayTask");
-            globalContextService.remove("TaskHistoryPage");
+            globalContextService.remove("IncomePage", "firstUseAPIgetIncome");
+            globalContextService.remove("IncomePage");
         });
 
         return () => {
@@ -87,15 +88,15 @@ export const Income = (props) => {
     }, [])
     //#endregion
 
-    //#region 取得所有今日任務 選項 API
-    const getTodayTask = useCallback(async (useAPI = false, startDate = globalContextService.get("TaskHistoryPage", "DateBegin") ?? fmt(moment().startOf("day").add(1, "day")), endDate = fmt(moment().endOf("day").add(1, "day"))) => {
+    //#region 取得收入列表 選項 API
+    const getIncome = useCallback(async (useAPI = false, startDate = globalContextService.get("IncomePage", "DateBegin") ?? fmt(moment().startOf("day")), endDate = fmt(moment().endOf("day"))) => {
 
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
-        if (isUndefined(globalContextService.get("TaskHistoryPage", "firstUseAPIgetTodayTask")) || useAPI) {
+        if (isUndefined(globalContextService.get("IncomePage", "firstUseAPIgetIncome")) || useAPI) {
             //#endregion
-            //#region 取得所有任務歷程 API
-            await fetch(`${APIUrl}OrderOfCaseUsers/GetCaseOrderCourseByDriver?DriverId=${getParseItemLocalStorage("DriverID")}&StartDate=${startDate}&EndDate=${endDate}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
+            //#region 取得收入列表 API
+            fetch(`${APIUrl}DriverInfos/LoadIncome?DriverId=${getParseItemLocalStorage("DriverID")}&StartDate=${startDate}&EndDate=${endDate}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
                 {
                     headers: {
                         "X-Token": getParseItemLocalStorage("DAuth"),
@@ -110,13 +111,13 @@ export const Income = (props) => {
                 .then((PreResult) => {
 
                     if (PreResult.code === 200) {
-                        // 成功取得所有今日任務 API
+                        // 成功取得收入列表 API
                         // console.log(PreResult)
                         // console.log(PreResult?.data.sort((a, b) => {
                         //     return a.sortNo - b.sortNo;
                         // }).map(d => ({ data: { ...d }, value: d?.id, label: d?.name })))
-
-                        // setTodayTask(PreResult.result);
+                        console.log(PreResult.data)
+                        setIncome(PreResult.data);
                     }
                     else {
                         throw PreResult;
@@ -157,14 +158,14 @@ export const Income = (props) => {
                 })
                 .finally(() => {
                     //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
-                    globalContextService.set("TaskHistoryPage", "firstUseAPIgetTodayTask", false);
+                    globalContextService.set("IncomePage", "firstUseAPIgetIncome", false);
                     //#endregion
                 });
             //#endregion
         }
     }, [APIUrl, Switch])
 
-    const [GetTodayTaskExecute, GetTodayTaskPending] = useAsync(getTodayTask, true);
+    const [GetIncomeExecute, GetIncomePending] = useAsync(getIncome, true);
     //#endregion
 
     return (
@@ -198,13 +199,8 @@ export const Income = (props) => {
             {
                 // Width < 768 &&
                 <MobileM
-                    NowTab={NowTab} // 目前公告頁面
-                    setNowTab={setNowTab} // 設定目前公告頁面
-                    TodayTask={TodayTask} // 所有最新消息類別
-                    AllNews={AllNews} // 類別下所有最新消息
-                    CheckDetail={CheckDetail} // 詳細資料
-                    setCheckDetail={setCheckDetail} // 設定詳細資料
-                    GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
+                    Income={Income}
+                    GetIncomeExecute={GetIncomeExecute} // 選單更新值調用，取得特定類別所有最新消息
                 />
             }
         </>
