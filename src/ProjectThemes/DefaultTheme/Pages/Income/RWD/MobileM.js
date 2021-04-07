@@ -142,7 +142,7 @@ export default {
             border: "2px solid #F8A91E",
             borderRadius: "4px",
             height: "54px",
-            padding: "7px 8px"
+            padding: "7px 3px"
         })
     },
     //#endregion
