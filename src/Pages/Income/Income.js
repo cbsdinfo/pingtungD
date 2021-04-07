@@ -141,10 +141,10 @@ export const Income = (props) => {
                         setOrderCount(0)
                         setCashTotal(0)
                         setVirtualTotal(0)
+                        orderCount = 0;
+                        cashTotal = 0;
+                        virtualTotal = 0;
                         PreResult.data.map((item, index) => {
-                            orderCount = 0;
-                            cashTotal = 0;
-                            virtualTotal = 0;
                             let effectCount = item.data?.length;
                             let countNow = 1;
                             const countNowAdd = () => {
