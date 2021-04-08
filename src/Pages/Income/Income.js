@@ -138,42 +138,42 @@ export const Income = (props) => {
                         setIncome(PreResult.data);
 
 
-                        setOrderCount(0)
-                        setCashTotal(0)
-                        setVirtualTotal(0)
-                        orderCount = 0;
-                        cashTotal = 0;
-                        virtualTotal = 0;
-                        PreResult.data.map((item, index) => {
-                            let effectCount = item.data?.length;
-                            let countNow = 1;
-                            const countNowAdd = () => {
-                                countNow++
-                            }
-                            return (
-                                item.data.map((item2, index2) => {
-                                    return (
-                                        <>
-                                            {effectCount === countNow ?
-                                                <>
-                                                    {orderCountAdd(item2?.orderCount)}
-                                                    {setOrderCount(orderCount)}
-                                                    {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
-                                                    {setCashTotal(cashTotal)}
-                                                    {setVirtualTotal(virtualTotal)}
-                                                </>
-                                                :
-                                                <>
-                                                    {orderCountAdd(item2?.orderCount)}
-                                                    {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
-                                                    {countNowAdd()}
-                                                </>
-                                            }
-                                        </>
-                                    )
-                                })
-                            )
-                        })
+                        // setOrderCount(0)
+                        // setCashTotal(0)
+                        // setVirtualTotal(0)
+                        // orderCount = 0;
+                        // cashTotal = 0;
+                        // virtualTotal = 0;
+                        // PreResult.data.map((item, index) => {
+                        //     let effectCount = item.data?.length;
+                        //     let countNow = 1;
+                        //     const countNowAdd = () => {
+                        //         countNow++
+                        //     }
+                        //     return (
+                        //         item.data.map((item2, index2) => {
+                        //             return (
+                        //                 <>
+                        //                     {effectCount === countNow ?
+                        //                         <>
+                        //                             {orderCountAdd(item2?.orderCount)}
+                        //                             {setOrderCount(orderCount)}
+                        //                             {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
+                        //                             {setCashTotal(cashTotal)}
+                        //                             {setVirtualTotal(virtualTotal)}
+                        //                         </>
+                        //                         :
+                        //                         <>
+                        //                             {orderCountAdd(item2?.orderCount)}
+                        //                             {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
+                        //                             {countNowAdd()}
+                        //                         </>
+                        //                     }
+                        //                 </>
+                        //             )
+                        //         })
+                        //     )
+                        // })
 
 
 

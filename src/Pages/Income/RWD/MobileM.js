@@ -10,6 +10,7 @@ import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { isEqual, isNil, isUndefined } from 'lodash';
 import { toString } from 'lodash/lang';
+import { payWayshMapping } from '../../../Mappings/Mappings';
 
 const MobileMBase = (props) => {
 
@@ -18,6 +19,22 @@ const MobileMBase = (props) => {
     let history = useHistory()
     const [ForceUpdate, setForceUpdate] = useState(false); // 供強制刷新組件
     const [Width, Height] = useWindowSize();
+
+    // 去識別化
+    const deIdentification = (str = "") => {
+        const strLen = str.length
+        return (
+            strLen === 2 ?
+                str.substr(0, 1) + "O"
+                :
+                (
+                    strLen > 2 ?
+                        str.substr(0, 1) + "O".repeat(str.length - 2) + str.substr(str.length - 1)
+                        :
+                        str
+                )
+        )
+    }
 
     return (
         <>
@@ -163,7 +180,7 @@ const MobileMBase = (props) => {
                         basic: (style, props) => ({
                             ...style,
                             background: "#3c4856",
-                            padding: "0 4px"
+                            padding: "0 6px"
                         })
                     }}
                 >
@@ -173,7 +190,7 @@ const MobileMBase = (props) => {
                             訂單總計
                         </Text>
                         <Text theme={mobileM.totalAmtText}>
-                            {props.OrderCount}
+                            {props.Income?.orderCount}
                         </Text>
                     </SubContainer>
 
@@ -183,7 +200,7 @@ const MobileMBase = (props) => {
                             現金總計
                         </Text>
                         <Text theme={mobileM.totalAmtText}>
-                            {props.CashTotal}
+                            {props.Income?.cashTotal}
                         </Text>
                     </SubContainer>
 
@@ -193,7 +210,7 @@ const MobileMBase = (props) => {
                             非現金總計
                         </Text>
                         <Text theme={mobileM.totalAmtText2}>
-                            {props.VirtualTotal}
+                            {props.Income?.otherTotal}
                         </Text>
                     </SubContainer>
 
@@ -220,7 +237,7 @@ const MobileMBase = (props) => {
                             topContainer: {
                                 basic: (style, props) => ({
                                     ...style,
-                                    minHeight: "55px",
+                                    minHeight: "32px",
                                     height: "auto",
                                 })
                             },
@@ -233,42 +250,19 @@ const MobileMBase = (props) => {
                             outcontainer: {
                                 basic: (style, props) => ({
                                     ...style,
-                                    padding: "12px 5px 12px"
+                                    padding: "10px 10px 12px"
                                 })
                             }
                         }}
                         topContent={(data) => {
                             return (
                                 <>
-                                    {/* Table標題容器 */}
-                                    <SubContainer
-                                        theme={mobileM.tableTitleContainer}
+                                    {/* Table標題 */}
+                                    <Text
+                                        theme={mobileM.titleText}
                                     >
-                                        <SubContainer
-                                            theme={mobileM.tableTitleInsideContainer}
-                                        >
-                                            <Text
-                                                theme={mobileM.tableDateTitleText}
-                                            >
-                                                日期
-                                        </Text>
-                                            <Text
-                                                theme={mobileM.tableCountTitleText}
-                                            >
-                                                單數
-                                        </Text>
-                                            <Text
-                                                theme={mobileM.tablePayWayTitleText}
-                                            >
-                                                收款方式
-                                        </Text>
-                                            <Text
-                                                theme={mobileM.tablePaidTitleText}
-                                            >
-                                                實收
-                                        </Text>
-                                        </SubContainer>
-                                    </SubContainer>
+                                        車資
+                                    </Text>
                                 </>
                             )
                         }}
@@ -276,13 +270,53 @@ const MobileMBase = (props) => {
                             // console.log(data)
                             return (
                                 <>
+                                    {/* Table標題容器 */}
+                                    <Container
+                                        theme={mobileM.tableTitleContainer}
+                                    >
+                                        <SubContainer
+                                            theme={mobileM.tableTitleInsideContainer}
+                                        >
 
-                                    {props?.Income?.map((item, index) => {
-                                        let effectCount = item.data?.length; // 
-                                        let countNow = 1;
-                                        const countNowAdd = () => {
-                                            countNow++
-                                        }
+                                            <Text
+                                                theme={mobileM.tableDateTitleText}
+                                            >
+                                                日期
+                                            </Text>
+
+                                            <Text
+                                                theme={mobileM.tableDateTitleText}
+                                            >
+                                                時間
+                                            </Text>
+
+                                            <Text
+                                                theme={mobileM.tableCountTitleText}
+                                            >
+                                                乘客姓名
+                                            </Text>
+
+                                            <Text
+                                                theme={mobileM.tablePayWayTitleText}
+                                            >
+                                                付款方式
+                                            </Text>
+
+                                            <Text
+                                                theme={mobileM.tablePaidTitleText}
+                                            >
+                                                交易金額
+                                            </Text>
+
+                                        </SubContainer>
+                                    </Container>
+
+                                    {props?.Income?.payData?.map((item, index) => {
+                                        // let effectCount = item.data?.length; // 
+                                        // let countNow = 1;
+                                        // const countNowAdd = () => {
+                                        //     countNow++
+                                        // }
                                         return (
                                             <>
 
@@ -294,104 +328,64 @@ const MobileMBase = (props) => {
                                                         {/* 日期容器 */}
                                                         <SubContainer
                                                             theme={mobileM.dateInsideContainer}
-                                                            style={{ height: `${effectCount * 37 - 1}px` }}
+                                                        // style={{ height: `${effectCount * 37 - 1}px` }}
                                                         >
-
-                                                            <BasicContainer
-                                                                theme={{
-                                                                    basic: (style, props) => ({
-                                                                        ...style,
-                                                                        width: "100%"
-                                                                    })
-                                                                }}
+                                                            {/* 日期 */}
+                                                            <Text
+                                                                theme={mobileM.dateText}
                                                             >
-                                                                {/* 日期 */}
-                                                                <Text
-                                                                    theme={mobileM.dateText}
-                                                                >
-                                                                    {item?.reserveDate?.substring(0, 4)}
-                                                                </Text>
-                                                                <Text
-                                                                    theme={mobileM.dateText}
-                                                                >
-                                                                    {item?.reserveDate?.substring(5, 7) + "/" + item?.reserveDate?.substring(8, 10)}
-                                                                </Text>
-                                                            </BasicContainer>
+                                                                {fmt(moment(item?.reserveDate), "MM/DD")}
+                                                            </Text>
 
                                                         </SubContainer>
 
+                                                        {/* 時間容器 */}
                                                         <SubContainer
-
-                                                            theme={mobileM.countInsideContainer}
+                                                            theme={mobileM.timeInsideContainer}
                                                         >
-                                                            <SubContainer style={{ width: "100%" }}>
+                                                            <Text
+                                                                theme={mobileM.timeText}
+                                                            >
+                                                                {fmt(moment(item?.reserveDate), "HH:mm")}
+                                                            </Text>
 
-                                                                {item.data.map((item2, index2) => {
-                                                                    return (
-                                                                        <>
-                                                                            <React.Fragment key={index}>
-                                                                                {item2?.orderCount > 0 &&
-                                                                                    <>
-                                                                                        {effectCount === countNow ?
-                                                                                            <>
-                                                                                                {/* 單數容器 */}
-                                                                                                {/* 單數 */}
-                                                                                                <Text
-                                                                                                    theme={mobileM.countLastText}
-                                                                                                >
-                                                                                                    {item2?.orderCount}
-                                                                                                </Text>
+                                                        </SubContainer>
 
-                                                                                                {/* 收款方式 */}
-                                                                                                <Text
-                                                                                                    theme={mobileM.payWayLastText}
-                                                                                                >
-                                                                                                    {item2?.payType}
-                                                                                                </Text>
+                                                        {/* 乘客姓名容器 */}
+                                                        <SubContainer
+                                                            theme={mobileM.nameInsideContainer}
+                                                            tableHeight={props.height}
+                                                        >
+                                                            <Text
+                                                                theme={mobileM.nameText}
+                                                            >
+                                                                {deIdentification(item?.name)}
+                                                            </Text>
 
-                                                                                                {/* 實收 */}
-                                                                                                <Text
-                                                                                                    theme={mobileM.paidLastText}
-                                                                                                >
-                                                                                                    ${item2?.receiveTotal}
-                                                                                                </Text>
-                                                                                            </>
-                                                                                            :
-                                                                                            <>
-                                                                                                {/* 單數容器 */}
-                                                                                                {/* 單數 */}
-                                                                                                <Text
-                                                                                                    theme={mobileM.countText}
-                                                                                                >
-                                                                                                    {item2?.orderCount}
-                                                                                                </Text>
+                                                        </SubContainer>
 
-                                                                                                {/* 收款方式 */}
-                                                                                                <Text
-                                                                                                    theme={mobileM.payWayText}
-                                                                                                >
-                                                                                                    {item2?.payType}
-                                                                                                </Text>
+                                                        {/* 收款方式容器 */}
+                                                        <SubContainer
+                                                            theme={mobileM.paywayInsideContainer}
+                                                        >
+                                                            <Text
+                                                                theme={mobileM.payWayText}
+                                                            >
+                                                                {payWayshMapping[item?.payType]}
+                                                            </Text>
 
-                                                                                                {/* 實收 */}
-                                                                                                <Text
-                                                                                                    theme={mobileM.paidText}
-                                                                                                >
-                                                                                                    ${item2?.receiveTotal}
-                                                                                                </Text>
+                                                        </SubContainer>
 
-                                                                                                {countNowAdd()}
-                                                                                            </>
-                                                                                        }
+                                                        {/* 實收容器 */}
+                                                        <SubContainer
+                                                            theme={mobileM.paidInsideContainer}
+                                                        >
+                                                            <Text
+                                                                theme={mobileM.paidText}
+                                                            >
+                                                                ${item?.receivePay}
+                                                            </Text>
 
-                                                                                    </>
-                                                                                }
-                                                                            </React.Fragment>
-                                                                        </>
-                                                                    )
-                                                                })
-                                                                }
-                                                            </SubContainer>
                                                         </SubContainer>
 
                                                     </Container>

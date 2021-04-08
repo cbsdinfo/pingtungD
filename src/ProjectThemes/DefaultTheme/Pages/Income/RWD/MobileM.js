@@ -206,6 +206,23 @@ export default {
     },
     //#endregion
 
+    //#region Table標題 車資
+    titleText: {
+        basic: (style, props) => ({
+            ...style,
+            width: "100%",
+            fontSize: "20px",
+            fontWeight: 600,
+            color: "rgba(61,61,61,1)",
+            // lineHeight: "47px",
+            display: "inline-block",
+            // top: "11px",
+            textAlign: "center",
+            padding: "8px 0"
+        })
+    },
+    //#endregion
+
     //#region Table標題容器
     tableTitleContainer: {
         basic: (style, props) => ({
@@ -216,7 +233,7 @@ export default {
             // margin: "4px",
             // backgroundColor: "#F2F2F2",
             // height: "66px",
-            padding: "10px 18px"
+            padding: "8px 18px 4px 18px"
         })
     },
     //#endregion
@@ -240,7 +257,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "20%",
-            fontSize: "18px",
+            fontSize: "14px",
             fontWeight: 400,
             color: "rgba(61,61,61,1)",
             // lineHeight: "47px",
@@ -256,7 +273,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "20%",
-            fontSize: "18px",
+            fontSize: "14px",
             fontWeight: 400,
             color: "rgba(61,61,61,1)",
             // lineHeight: "47px",
@@ -271,8 +288,8 @@ export default {
     tablePayWayTitleText: {
         basic: (style, props) => ({
             ...style,
-            width: "40%",
-            fontSize: "18px",
+            width: "20%",
+            fontSize: "14px",
             fontWeight: 400,
             color: "rgba(61,61,61,1)",
             // lineHeight: "47px",
@@ -288,7 +305,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             width: "20%",
-            fontSize: "18px",
+            fontSize: "14px",
             fontWeight: 400,
             color: "rgba(61,61,61,1)",
             display: "inline-block",
@@ -305,7 +322,7 @@ export default {
             ...style,
             width: "100%",
             // display: "inline-block",
-            padding: "12px 18px",
+            padding: "4px 18px",
             height: "auto"
             // backgroundColor: "#F5F5F5",
         })
@@ -319,7 +336,7 @@ export default {
             display: "inline-flex",
             alignItems: "center",
             width: "20%",
-            minHeight: "55px",
+            minHeight: "32px",
             height: "auto",
             backgroundColor: "#3F3F3F",
         })
@@ -331,7 +348,7 @@ export default {
         basic: (style, props) => ({
             ...style,
             color: "#FFFFFF",
-            fontSize: "18px",
+            fontSize: "14px",
             fontWeight: 400,
             display: "block",
             width: "100%",
@@ -340,6 +357,66 @@ export default {
     },
     //#endregion   
 
+    //#region 列表內容時間容器
+    timeInsideContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-flex",
+            alignItems: "center",
+            width: "20%",
+            minHeight: "32px",
+            height: "auto",
+            backgroundColor: "#F2F2F2",
+        })
+    },
+    //#endregion   
+
+    //#region 列表內容時間文字
+    timeText: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#3D3D3D",
+            fontSize: "14px",
+            fontWeight: 400,
+            display: "inline-block",
+            width: "100%",
+            textAlign: "center",
+            padding: "5px 0",
+            // borderBottom: "1px dashed #D8D8D8",
+        })
+    },
+    //#endregion 
+
+    //#region 列表內容乘客姓名容器
+    nameInsideContainer: {
+        basic: (style, props) => ({
+            ...style,
+            display: "inline-flex",
+            alignItems: "center",
+            width: "20%",
+            minHeight: "32px",
+            height: "auto",
+            backgroundColor: "#F2F2F2",
+        })
+    },
+    //#endregion   
+
+    //#region 列表內容乘客姓名文字
+    nameText: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#3D3D3D",
+            fontSize: "14px",
+            fontWeight: 400,
+            display: "inline-block",
+            width: "100%",
+            textAlign: "center",
+            padding: "5px 0",
+            // borderBottom: "1px dashed #D8D8D8",
+        })
+    },
+    //#endregion  
+
     //#region 列表內容單數容器
     countInsideContainer: {
         basic: (style, props) => ({
@@ -347,47 +424,13 @@ export default {
             display: "inline-flex",
             alignItems: "center",
             // width: "20%",
-            width: "80%",
-            minHeight: "55px",
+            width: "60%",
+            minHeight: "32px",
             height: "auto",
             backgroundColor: "#F2F2F2",
         })
     },
     //#endregion   
-
-    //#region 列表內容單數文字
-    countText: {
-        basic: (style, props) => ({
-            ...style,
-            color: "#3D3D3D",
-            fontSize: "18px",
-            fontWeight: 600,
-            display: "inline-block",
-            // width: "100%",
-            width: "25%",
-            textAlign: "center",
-            padding: "5px 0",
-            borderBottom: "1px dashed #D8D8D8",
-        })
-    },
-    //#endregion  
-
-    //#region 列表內容單數文字
-    countLastText: {
-        basic: (style, props) => ({
-            ...style,
-            color: "#3D3D3D",
-            fontSize: "18px",
-            fontWeight: 600,
-            display: "inline-block",
-            // width: "100%",
-            width: "25%",
-            textAlign: "center",
-            padding: "5px 0",
-            // borderBottom: "1px dashed #D8D8D8",
-        })
-    },
-    //#endregion    
 
     //#region 列表內容收款方式容器
     paywayInsideContainer: {
@@ -395,8 +438,8 @@ export default {
             ...style,
             display: "inline-flex",
             alignItems: "center",
-            width: "40%",
-            minHeight: "55px",
+            width: "20%",
+            minHeight: "32px",
             height: "auto",
             backgroundColor: "#F2F2F2",
         })
@@ -408,29 +451,10 @@ export default {
         basic: (style, props) => ({
             ...style,
             color: "#3D3D3D",
-            fontSize: "18px",
+            fontSize: "14px",
             fontWeight: 400,
             display: "inline-block",
-            // width: "100%",
-            width: "50%",
-            textAlign: "center",
-            padding: "5px 0",
-            borderBottom: "1px dashed #D8D8D8",
-            borderRight: "1px solid #6B6B6B"
-        })
-    },
-    //#endregion 
-
-    //#region 列表內容收款方式文字
-    payWayLastText: {
-        basic: (style, props) => ({
-            ...style,
-            color: "#3D3D3D",
-            fontSize: "18px",
-            fontWeight: 400,
-            display: "inline-block",
-            // width: "100%",
-            width: "50%",
+            width: "100%",
             textAlign: "center",
             padding: "5px 0",
             // borderBottom: "1px dashed #D8D8D8",
@@ -446,7 +470,7 @@ export default {
             display: "inline-flex",
             alignItems: "center",
             width: "20%",
-            minHeight: "55px",
+            minHeight: "32px",
             height: "auto",
             backgroundColor: "#F2F2F2",
         })
@@ -461,11 +485,10 @@ export default {
             fontSize: "18px",
             fontWeight: 700,
             display: "inline-block",
-            // width: "100%",
-            width: "25%",
+            width: "100%",
             textAlign: "center",
-            padding: "5px 0",
-            borderBottom: "1px dashed #D8D8D8",
+            // padding: "5px 0",
+            // borderBottom: "1px dashed #D8D8D8",
         })
     },
     //#endregion 
@@ -481,7 +504,7 @@ export default {
             // width: "100%",
             width: "25%",
             textAlign: "center",
-            padding: "5px 0",
+            // padding: "5px 0",
             // borderBottom: "1px dashed #D8D8D8",
         })
     },
