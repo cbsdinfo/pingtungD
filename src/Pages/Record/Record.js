@@ -8,7 +8,7 @@ import { Tablet } from './RWD/Tablet';
 import { useHistory } from 'react-router-dom';
 import { useWindowSize } from '../../SelfHooks/useWindowSize';
 import { useAsync } from '../../SelfHooks/useAsync';
-import { clearSession, clearLocalStorage, getParseItemLocalStorage } from '../../Handlers';
+import { clearLogoutSession, clearLogoutLocalStorage, getParseItemLocalStorage } from '../../Handlers';
 import { isUndefined } from 'lodash';
 import { fmt } from '../../Handlers/DateHandler';
 import moment from 'moment';
@@ -109,8 +109,8 @@ export const Record = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -214,8 +214,8 @@ export const Record = (props) => {
                             backgroundClose: false,
                             yesOnClick: (e, close) => {
                                 if (Error.code === 401) {
-                                    clearSession();
-                                    clearLocalStorage();
+                                    clearLogoutSession();
+                                    clearLogoutLocalStorage();
                                     globalContextService.clear();
                                     Switch();
                                 }

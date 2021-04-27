@@ -6,7 +6,7 @@ import { Laptop } from './RWD/Laptop';
 import { MobileM } from './RWD/MobileM';
 import { Tablet } from './RWD/Tablet';
 import { useWindowSize } from '../../../../SelfHooks/useWindowSize';
-import { clearLocalStorage, clearSession, getParseItemLocalStorage } from '../../../../Handlers';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage } from '../../../../Handlers';
 import { useHistory } from 'react-router-dom';
 import { useAsync } from '../../../../SelfHooks/useAsync';
 import { isUndefined } from 'lodash';
@@ -108,8 +108,8 @@ export const DriversAdd = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -172,8 +172,8 @@ export const DriversAdd = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -236,8 +236,8 @@ export const DriversAdd = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -312,8 +312,8 @@ export const DriversAdd = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }

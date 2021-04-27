@@ -7,7 +7,7 @@ import { MobileM } from './RWD/MobileM';
 import { Tablet } from './RWD/Tablet';
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { useHistory } from 'react-router-dom';
-import { clearLocalStorage, clearSession, getParseItemLocalStorage, valid } from '../../../Handlers';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage, valid } from '../../../Handlers';
 import { useAsync } from '../../../SelfHooks/useAsync';
 import { isUndefined } from 'lodash';
 
@@ -95,8 +95,8 @@ export const WhiteOrder = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }

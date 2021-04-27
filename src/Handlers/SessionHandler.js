@@ -31,6 +31,10 @@ const clearSession = () => {
     sessionStorage.clear();
 };
 
+const clearLogoutSession = () => {
+    removeItemSession("Dtab");
+};
+
 //#region 用來刪除陣列內物件 "指定物件key的值" 等於 "指定value"
 const removeByKeyItemSession = (itemName, key, equalValue) => {
     //必為陣列
@@ -60,4 +64,4 @@ const pushAndNotExsistItemSession = (itemName, key, equalValue, item) => {
 }
 //#endregion
 
-export { setItemSession, setStringifyItemSession, getItemSession, getParseItemSession, removeItemSession, clearSession, removeByKeyItemSession, pushItemSession, pushAndNotExsistItemSession };
+export { setItemSession, setStringifyItemSession, getItemSession, getParseItemSession, removeItemSession, clearSession, clearLogoutSession, removeByKeyItemSession, pushItemSession, pushAndNotExsistItemSession };

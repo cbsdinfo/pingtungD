@@ -7,7 +7,7 @@ import { MobileM } from './RWD/MobileM';
 import { Tablet } from './RWD/Tablet';
 import { useAsync } from '../../../SelfHooks/useAsync';
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
-import { getParseItemLocalStorage, clearLocalStorage, clearSession } from '../../../Handlers';
+import { getParseItemLocalStorage, clearLogoutLocalStorage, clearLogoutSession } from '../../../Handlers';
 import { isUndefined } from 'lodash';
 import { useHistory } from 'react-router-dom';
 
@@ -140,8 +140,8 @@ export const OrgManager = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -225,8 +225,8 @@ export const OrgManager = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -315,8 +315,8 @@ export const OrgManager = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -387,8 +387,8 @@ export const OrgManager = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -458,8 +458,8 @@ export const OrgManager = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -513,8 +513,8 @@ export const OrgManager = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -581,8 +581,8 @@ export const OrgManager = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -655,8 +655,8 @@ export const OrgManager = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }

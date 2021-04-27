@@ -8,7 +8,7 @@ import { Tablet } from './RWD/Tablet';
 import { useWindowSize } from '../../../../SelfHooks/useWindowSize';
 import { isUndefined } from 'lodash';
 import { useAsync } from '../../../../SelfHooks/useAsync';
-import { clearLocalStorage, clearSession, getParseItemLocalStorage } from '../../../../Handlers';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage } from '../../../../Handlers';
 import { useHistory } from 'react-router-dom';
 
 export const BusRouteAdd = (props) => {
@@ -114,8 +114,8 @@ export const BusRouteAdd = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -190,8 +190,8 @@ export const BusRouteAdd = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }

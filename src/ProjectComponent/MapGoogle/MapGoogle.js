@@ -11,7 +11,7 @@ import { useWindowSize } from '../../SelfHooks/useWindowSize';
 import { isNil, isUndefined, debounce, throttle } from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import { cssifyObject } from 'css-in-js-utils';
-import { clearLocalStorage, clearSession, getParseItemLocalStorage, valid } from '../../Handlers';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage, valid } from '../../Handlers';
 import { useAsync } from '../../SelfHooks/useAsync';
 import { useCallback } from 'react';
 // import PrimaryTheme from './Theme/PrimaryTheme'
@@ -798,8 +798,8 @@ export const MapGoogleInputBase = (props) => {
                                                         backgroundClose: false,
                                                         yesOnClick: (e, close) => {
                                                             if (Error.code === 401) {
-                                                                clearSession();
-                                                                clearLocalStorage();
+                                                                clearLogoutSession();
+                                                                clearLogoutLocalStorage();
                                                                 globalContextService.clear();
                                                                 Switch();
                                                             }

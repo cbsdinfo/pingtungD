@@ -8,7 +8,7 @@ import { Tablet } from './RWD/Tablet';
 import { useWindowSize } from '../../../SelfHooks/useWindowSize';
 import { useHistory, useLocation } from 'react-router-dom';
 import { isUndefined } from 'lodash';
-import { clearLocalStorage, clearSession, getParseItemLocalStorage } from '../../../Handlers';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage } from '../../../Handlers';
 import { useAsync } from '../../../SelfHooks/useAsync';
 
 export const CaseEdit = (props) => {
@@ -179,8 +179,8 @@ export const CaseEdit = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -256,8 +256,8 @@ export const CaseEdit = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -337,8 +337,8 @@ export const CaseEdit = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -413,8 +413,8 @@ export const CaseEdit = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }

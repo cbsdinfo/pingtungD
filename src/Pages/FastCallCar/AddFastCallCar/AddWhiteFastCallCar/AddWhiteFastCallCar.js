@@ -9,7 +9,7 @@ import { useWindowSize } from '../../../../SelfHooks/useWindowSize';
 import { useHistory, useLocation } from 'react-router-dom';
 import { isUndefined } from 'lodash';
 import { mapGoogleControll } from '../../../../ProjectComponent';
-import { clearLocalStorage, clearSession, getParseItemLocalStorage } from '../../../../Handlers';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage } from '../../../../Handlers';
 import { useAsync } from '../../../../SelfHooks/useAsync';
 
 export const AddWhiteFastCallCar = (props) => {
@@ -138,8 +138,8 @@ export const AddWhiteFastCallCar = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }

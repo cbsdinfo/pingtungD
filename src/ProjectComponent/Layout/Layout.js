@@ -28,7 +28,7 @@ import { ReactComponent as Clock } from '../../Assets/img/Clock.svg'
 import { ReactComponent as CallWorkTime } from '../../Assets/img/CallWorkTime.svg'
 import { ReactComponent as DotOfmap } from '../../Assets/img/DotOfmap.svg'
 
-import { getParseItemLocalStorage, setStringifyItemSession, pushAndNotExsistItemSession, getParseItemSession, removeByKeyItemSession, clearLocalStorage, clearSession, setStringifyItemLocalStorage, valid } from '../../Handlers';
+import { getParseItemLocalStorage, setStringifyItemSession, pushAndNotExsistItemSession, getParseItemSession, removeByKeyItemSession, clearLogoutLocalStorage, clearLogoutSession, setStringifyItemLocalStorage, valid } from '../../Handlers';
 import { iconMap, pageTabBarUrlMapping, pageTextUrlMapping } from '../../Mappings/Mappings'
 import { useHistory, useLocation } from 'react-router-dom';
 import { isNil } from 'lodash';
@@ -47,8 +47,8 @@ export const Layout = (props) => {
     const [ExpandMenuName, setExpandMenuName] = useState([]); // 當前開啟的分頁
     const [IsHoverMenuName, setIsHoverMenuName] = useState([]); // 當前開啟的分頁
 
-    if (!getParseItemLocalStorage("MenuNameAndSubUrl")) {
-        setStringifyItemLocalStorage("MenuNameAndSubUrl",
+    if (!getParseItemLocalStorage("DMenuNameAndSubUrl")) {
+        setStringifyItemLocalStorage("DMenuNameAndSubUrl",
             {
                 "聯繫客服": ["/Contact"],
                 "常見問題": ["/QAndA"]
@@ -86,8 +86,8 @@ export const Layout = (props) => {
 
         //#region 處理當前應被標記與開啟的父層
         let canUseFunctions = getParseItemLocalStorage("Functions") ?? []
-        let menuNameAndSubUrl = getParseItemLocalStorage("MenuNameAndSubUrl")
-        let keys = Object.keys(getParseItemLocalStorage("MenuNameAndSubUrl") ?? []) ?? []
+        let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
+        let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl") ?? []) ?? []
         let res = [];
 
         //#region 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
@@ -253,8 +253,8 @@ export const Layout = (props) => {
                     // 成功 修改密碼 API 
 
                     //修改成功後強制登出
-                    clearSession();
-                    clearLocalStorage();
+                    clearLogoutSession();
+                    clearLogoutLocalStorage();
                     globalContextService.clear();
 
                     modalsService.infoModal.success({
@@ -284,8 +284,8 @@ export const Layout = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -498,8 +498,8 @@ export const Layout = (props) => {
                                 // autoClose: true,
                                 backgroundClose: false,
                                 yesOnClick: (e, close) => {
-                                    clearLocalStorage();
-                                    clearSession();
+                                    clearLogoutLocalStorage();
+                                    clearLogoutSession();
                                     globalContextService.clear();
                                     Switch();
                                     setDrawerCollapse(true);
@@ -889,7 +889,7 @@ const generateMenu = (menuData, history, location, ExpandMenuName, setExpandMenu
                                         //進入子頁面路由
                                         (
                                             (
-                                                getParseItemLocalStorage("MenuNameAndSubUrl")?.[menuData.item.name] ?? []
+                                                getParseItemLocalStorage("DMenuNameAndSubUrl")?.[menuData.item.name] ?? []
                                             ).includes(removeTailUrl(location.pathname)) && menuData.item.url.trim() === "/") &&
                                         {
                                             color: " #1890ff"
@@ -898,7 +898,7 @@ const generateMenu = (menuData, history, location, ExpandMenuName, setExpandMenu
                                         //進入一般分頁
                                         (
                                             (
-                                                getParseItemLocalStorage("MenuNameAndSubUrl")?.[menuData.item.name] ?? []
+                                                getParseItemLocalStorage("DMenuNameAndSubUrl")?.[menuData.item.name] ?? []
                                             ).includes(location.pathname) && menuData.item.url.trim() === "/") &&
                                         {
                                             color: " #1890ff"
@@ -927,8 +927,8 @@ const generateMenu = (menuData, history, location, ExpandMenuName, setExpandMenu
                             if (menuData.item.parentName.trim() === "根節點") {
                                 setExpandMenuName(e => {
                                     //#region 處理當前應被標記與開啟的父層
-                                    let menuNameAndSubUrl = getParseItemLocalStorage("MenuNameAndSubUrl")
-                                    let keys = Object.keys(getParseItemLocalStorage("MenuNameAndSubUrl")) ?? []
+                                    let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
+                                    let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl")) ?? []
                                     let res = [];
                                     let clickItem = menuNameAndSubUrl[menuData.item.name]; // 所點擊項目所包含的所有路由
 
@@ -955,8 +955,8 @@ const generateMenu = (menuData, history, location, ExpandMenuName, setExpandMenu
                             // 若是父層則伸縮側邊欄項目
                             setExpandMenuName(e => {
                                 //#region 處理當前應被標記與開啟的父層
-                                let menuNameAndSubUrl = getParseItemLocalStorage("MenuNameAndSubUrl")
-                                let keys = Object.keys(getParseItemLocalStorage("MenuNameAndSubUrl")) ?? []
+                                let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
+                                let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl")) ?? []
                                 let res = [];
                                 let clickItem = menuNameAndSubUrl[menuData.item.name]; // 所點擊項目所包含的所有路由
 
@@ -1090,8 +1090,8 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                             // 若是父層則伸縮側邊欄項目
                             setIsHoverMenuName(e => {
                                 //#region 處理當前應被標記與開啟的父層
-                                let menuNameAndSubUrl = getParseItemLocalStorage("MenuNameAndSubUrl")
-                                let keys = Object.keys(getParseItemLocalStorage("MenuNameAndSubUrl")) ?? []
+                                let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
+                                let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl")) ?? []
                                 let res = [];
                                 let clickItem = menuNameAndSubUrl[fatherName]; // 所點擊項目所包含的所有路由
 
@@ -1190,7 +1190,7 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                                 //進入子頁面路由
                                                 (
                                                     (
-                                                        getParseItemLocalStorage("MenuNameAndSubUrl")[menuData.item.name] ?? []
+                                                        getParseItemLocalStorage("DMenuNameAndSubUrl")[menuData.item.name] ?? []
                                                     ).includes(removeTailUrl(location.pathname)) && menuData.item.url.trim() === "/") &&
                                                 {
                                                     color: " #1890ff"
@@ -1199,7 +1199,7 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                                 //進入一般分頁
                                                 (
                                                     (
-                                                        getParseItemLocalStorage("MenuNameAndSubUrl")[menuData.item.name] ?? []
+                                                        getParseItemLocalStorage("DMenuNameAndSubUrl")[menuData.item.name] ?? []
                                                     ).includes(location.pathname) && menuData.item.url.trim() === "/") &&
                                                 {
                                                     color: " #1890ff"
@@ -1226,8 +1226,8 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                     // 若是父層則伸縮側邊欄項目
                                     setExpandMenuName(e => {
                                         //#region 處理當前應被標記與開啟的父層
-                                        let menuNameAndSubUrl = getParseItemLocalStorage("MenuNameAndSubUrl")
-                                        let keys = Object.keys(getParseItemLocalStorage("MenuNameAndSubUrl")) ?? []
+                                        let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
+                                        let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl")) ?? []
                                         let res = [];
                                         let clickItem = menuNameAndSubUrl[menuData.item.name]; // 所點擊項目所包含的所有路由
 
@@ -1261,8 +1261,8 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                     // 若是父層則伸縮側邊欄項目
                                     setIsHoverMenuName(e => {
                                         //#region 處理當前應被標記與開啟的父層
-                                        let menuNameAndSubUrl = getParseItemLocalStorage("MenuNameAndSubUrl")
-                                        let keys = Object.keys(getParseItemLocalStorage("MenuNameAndSubUrl")) ?? []
+                                        let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
+                                        let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl")) ?? []
                                         let res = [];
                                         let clickItem = menuNameAndSubUrl[menuData.item.name]; // 所點擊項目所包含的所有路由
 
@@ -1384,7 +1384,7 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                             //進入子頁面路由
                                             (
                                                 (
-                                                    getParseItemLocalStorage("MenuNameAndSubUrl")[menuData.item.name] ?? []
+                                                    getParseItemLocalStorage("DMenuNameAndSubUrl")[menuData.item.name] ?? []
                                                 ).includes(removeTailUrl(location.pathname)) && menuData.item.url.trim() === "/") &&
                                             {
                                                 color: " #1890ff"
@@ -1393,7 +1393,7 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                             //進入一般分頁
                                             (
                                                 (
-                                                    getParseItemLocalStorage("MenuNameAndSubUrl")[menuData.item.name] ?? []
+                                                    getParseItemLocalStorage("DMenuNameAndSubUrl")[menuData.item.name] ?? []
                                                 ).includes(location.pathname) && menuData.item.url.trim() === "/") &&
                                             {
                                                 color: " #1890ff"
@@ -1422,8 +1422,8 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                 // 若是父層則伸縮側邊欄項目
                                 setExpandMenuName(e => {
                                     //#region 處理當前應被標記與開啟的父層
-                                    let menuNameAndSubUrl = getParseItemLocalStorage("MenuNameAndSubUrl")
-                                    let keys = Object.keys(getParseItemLocalStorage("MenuNameAndSubUrl")) ?? []
+                                    let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
+                                    let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl")) ?? []
                                     let res = [];
                                     let clickItem = menuNameAndSubUrl[menuData.item.name]; // 所點擊項目所包含的所有路由
 
@@ -1450,8 +1450,8 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                             if (menuData.item.url.trim() === "/") {
                                 setIsHoverMenuName(e => {
                                     //#region 處理當前應被標記與開啟的父層
-                                    let menuNameAndSubUrl = getParseItemLocalStorage("MenuNameAndSubUrl")
-                                    let keys = Object.keys(getParseItemLocalStorage("MenuNameAndSubUrl")) ?? []
+                                    let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
+                                    let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl")) ?? []
                                     let res = [];
                                     let clickItem = menuNameAndSubUrl[menuData.item.name]; // 所點擊項目所包含的所有路由
 

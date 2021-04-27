@@ -5,7 +5,7 @@ import { LaptopL } from './RWD/LaptopL';
 import { Laptop } from './RWD/Laptop';
 import { MobileM } from './RWD/MobileM';
 import { Tablet } from './RWD/Tablet';
-import { clearLocalStorage, clearSession, getParseItemLocalStorage, valid } from '../../Handlers';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage, valid } from '../../Handlers';
 import { useHistory } from 'react-router-dom';
 import { useAsync } from '../../SelfHooks/useAsync';
 import { isUndefined } from 'lodash';
@@ -113,8 +113,8 @@ export const UserInfo = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -234,8 +234,8 @@ export const UserInfo = (props) => {
                                             backgroundClose: false,
                                             yesOnClick: (e, close) => {
                                                 if (Error.code === 401) {
-                                                    clearSession();
-                                                    clearLocalStorage();
+                                                    clearLogoutSession();
+                                                    clearLogoutLocalStorage();
                                                     globalContextService.clear();
                                                     Switch();
                                                 }
@@ -282,8 +282,8 @@ export const UserInfo = (props) => {
                         backgroundClose: false,
                         yesOnClick: (e, close) => {
                             if (Error.code === 401) {
-                                clearSession();
-                                clearLocalStorage();
+                                clearLogoutSession();
+                                clearLogoutLocalStorage();
                                 globalContextService.clear();
                                 Switch();
                             }
@@ -356,8 +356,8 @@ export const UserInfo = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -441,8 +441,8 @@ export const UserInfo = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -518,8 +518,8 @@ export const UserInfo = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }
@@ -601,8 +601,8 @@ export const UserInfo = (props) => {
                     backgroundClose: false,
                     yesOnClick: (e, close) => {
                         if (Error.code === 401) {
-                            clearSession();
-                            clearLocalStorage();
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
                             globalContextService.clear();
                             Switch();
                         }

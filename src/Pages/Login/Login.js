@@ -240,7 +240,7 @@ export const Login = (props) => {
         //             //成功取得左側欄資料
         //             setItemLocalStorage("ModulesTree", JSON.stringify(PreResult.result));
         //             // 所有左側欄父層 name 對應 子層 url
-        //             setStringifyItemLocalStorage("MenuNameAndSubUrl", AddChildsToFather(mapMenuNameAndSubUrl(PreResult.result)))
+        //             setStringifyItemLocalStorage("DMenuNameAndSubUrl", AddChildsToFather(mapMenuNameAndSubUrl(PreResult.result)))
         //         } else {
         //             throw PreResult.message;
         //         }

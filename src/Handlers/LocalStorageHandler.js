@@ -7,6 +7,30 @@ import React from 'react'
    @return : { setItem, getItem, removeItem, clear } ； 回傳值 : { setItem, getItem, removeItem, clear }
 */
 
+// const encode = (str) => {
+//     return btoa(escape(str));
+// }
+
+// const decode = (str) => {
+//     return unescape(atob(str));
+// }
+
+// const setItemLocalStorage = (itemName, item) => {
+//     localStorage.setItem(itemName, encode(item));
+// };
+
+// const setStringifyItemLocalStorage = (itemName, item) => {
+//     localStorage.setItem(itemName, encode(JSON.stringify(item)));
+// };
+
+// const getItemLocalStorage = (itemName) => {
+//     return localStorage.getItem(itemName) ? decode(localStorage.getItem(itemName)) : localStorage.getItem(itemName);
+// };
+
+// const getParseItemLocalStorage = (itemName) => {
+//     return localStorage.getItem(itemName) ? JSON.parse(decode(localStorage.getItem(itemName))) : localStorage.getItem(itemName);
+// };
+
 const setItemLocalStorage = (itemName, item) => {
     localStorage.setItem(itemName, item);
 };
@@ -30,6 +54,17 @@ const removeItemLocalStorage = (itemName) => {
 const clearLocalStorage = () => {
     localStorage.clear();
 };
+
+const clearLogoutLocalStorage = () => {
+    removeItemLocalStorage("DriverAccountStatus");
+    removeItemLocalStorage("DUserName");
+    removeItemLocalStorage("DAuth");
+    removeItemLocalStorage("DriverID");
+    removeItemLocalStorage("DriverAccount");
+    removeItemLocalStorage("DriverPic");
+    removeItemLocalStorage("DriverOrg");
+    removeItemLocalStorage("DMenuNameAndSubUrl");
+}
 
 //#region 用來刪除陣列內物件 "指定物件key的值" 等於 "指定value"
 const removeByKeyItemLocalStorage = (itemName, key, equalValue) => {
@@ -59,4 +94,4 @@ const pushAndNotExsistItemLocalStorage = (itemName, key, equalValue, item) => {
     }
 }
 //#endregion
-export { setItemLocalStorage, setStringifyItemLocalStorage, getItemLocalStorage, getParseItemLocalStorage, removeItemLocalStorage, clearLocalStorage, removeByKeyItemLocalStorage, pushItemLocalStorage, pushAndNotExsistItemLocalStorage };
+export { setItemLocalStorage, setStringifyItemLocalStorage, getItemLocalStorage, getParseItemLocalStorage, removeItemLocalStorage, clearLocalStorage, clearLogoutLocalStorage, removeByKeyItemLocalStorage, pushItemLocalStorage, pushAndNotExsistItemLocalStorage };

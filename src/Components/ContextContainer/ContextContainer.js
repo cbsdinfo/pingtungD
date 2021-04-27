@@ -8,7 +8,7 @@ import { useAsync } from '../../SelfHooks/useAsync';
 import { useContext } from 'react';
 import { Context } from '../../Store/Store';
 import { useCallback } from 'react';
-import { clearLocalStorage, clearSession, setItemLocalStorage } from '../../Handlers';
+import { clearLogoutLocalStorage, clearLogoutSession, setItemLocalStorage } from '../../Handlers';
 import { globalContextService } from '../../Store/GlobalContext';
 import { modalsService } from '../Modal/Modals/Modals';
 import isNil from 'lodash/isNil';
@@ -90,8 +90,8 @@ export const ContextContainerBase = (props) => {
           backgroundClose: false,
           yesOnClick: (e, close) => {
             if (Error.code === 401) {
-              clearSession();
-              clearLocalStorage();
+              clearLogoutSession();
+              clearLogoutLocalStorage();
               globalContextService.clear();
               Switch();
               history.push("/Login")
