@@ -36,6 +36,7 @@ import income from './Pages/Income/Income'
 import contact from './Pages/Contact/Contact'
 import school from './Pages/School/School'
 import dayCheck from './Pages/DayCheck/DayCheck'
+import privacy from './Pages/Privacy/Privacy'
 
 // import busRoute from './Pages/BusRouteAndStop/BusRoute/BusRoute'
 import pickUpData from './Pages/Report/PickUpData/PickUpData'
@@ -164,6 +165,7 @@ export default {
         contact, // 聯繫行控
         school, // 司機學院
         dayCheck, // 每日檢查
+        privacy, // 隱私權政策
         //#endregion
 
     }

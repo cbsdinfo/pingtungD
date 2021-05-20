@@ -331,6 +331,20 @@ export const Routers = (props) => {
                     }
                     }>
                 </Route>
+                <Route exact path={"/Privacy"}
+                    render={({ location }) => {
+                        return (getParseItemLocalStorage("DAuth") !== null) ? (
+                            urlMapping["/Privacy"]
+                        ) : (
+                            <Redirect
+                                to={{
+                                    pathname: "/Login",
+                                }}
+                            />
+                        );
+                    }
+                    }>
+                </Route>
                 {/* 
                    Date   : 2020-07-08 19:00:47
                    Author : Arhua Ho

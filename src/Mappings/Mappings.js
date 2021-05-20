@@ -20,6 +20,7 @@ import { ReactComponent as IncomeSvg } from '../Assets/img/BackstageLeftSideMenu
 import { ReactComponent as ContactsSvg } from '../Assets/img/BackstageLeftSideMenuBar/Contacts.svg'
 import { ReactComponent as SchoolSvg } from '../Assets/img/BackstageLeftSideMenuBar/School.svg'
 import { ReactComponent as DayCheckSvg } from '../Assets/img/BackstageLeftSideMenuBar/DayCheck.svg'
+import { ReactComponent as PrivacySvg } from '../Assets/img/BackstageLeftSideMenuBar/Privacy.svg'
 
 import { TodayTask } from '../Pages/TodayTask/TodayTask';
 import { PerDespatch } from '../Pages/PerDespatch/PerDespatch';
@@ -31,6 +32,7 @@ import { Income } from '../Pages/Income/Income';
 import { Contact } from '../Pages/Contact/Contact';
 import { School } from '../Pages/School/School';
 import { DayCheck } from '../Pages/DayCheck/DayCheck';
+import { Privacy } from '../Pages/Privacy/Privacy';
 
 //#region 快速叫車
 // import { FastCallCar } from '../Pages/FastCallCar/FastCallCar';
@@ -56,6 +58,7 @@ export const urlMapping = {
    "/Contact": <Contact />, // 聯繫行控
    "/School": <School />, // 司機學院
    "/DayCheck": <DayCheck />, // 每日檢查
+   "/Privacy": <Privacy />, // 隱私權政策
 
    "/Login": < Login />,// 登入畫面
    "/404": <Error404 />,// 404錯誤畫面
@@ -129,6 +132,10 @@ export const pageTabBarUrlMapping = {
    "/DriverAndCar/Drivers": "司機資料", // 司機車輛管理/司機資料
    "/DriverAndCar/Cars": "車輛資料", // 司機車輛管理/車輛資料
    "/DriverAndCar/CarFixedRecord": "車輛保養紀錄", // 司機車輛管理/車輛保養紀錄
+   //#endregion
+
+   //#region 隱私權政策
+   "/Privacy": "隱私權政策", // 隱私權政策
    //#endregion
 
    //#region 其他
@@ -345,6 +352,7 @@ export const iconMap = {
    "聯繫行控": (style, props) => <ContactsSvg style={{ ...style, left: "18px" }} {...props} />,
    "司機學院": (style, props) => <SchoolSvg style={{ ...style, left: "13px" }} {...props} />,
    "每日檢查": (style, props) => <DayCheckSvg style={{ ...style, left: "14px" }} {...props} />,
+   "隱私權政策": (style, props) => <PrivacySvg style={{ ...style, left: "9px", width: "auto" }} {...props} />,
 
 }
 //#endregion

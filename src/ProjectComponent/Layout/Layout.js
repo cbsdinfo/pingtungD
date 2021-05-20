@@ -797,6 +797,18 @@ export const Layout = (props) => {
                                     url: "/DayCheck",
                                 }
                             },
+                            {
+                                children: [],
+                                item: {
+                                    id: "77777777-33ca-6cc6-802e-16ee172aaaddd",
+                                    name: "隱私權政策",
+                                    parentId: null,
+                                    parentName: "根節點",
+                                    sortNo: 3,
+                                    status: 0,
+                                    url: "/Privacy",
+                                }
+                            },
                         ], history, location, ExpandMenuName, setExpandMenuName, setDrawerCollapse, true)}
 
                     </BasicContainer>
