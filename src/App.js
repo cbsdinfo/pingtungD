@@ -25,8 +25,8 @@ function App() {
   const [Theme, setTheme] = useReducer(reducer, themes.defaultTheme);
   // dev : http://openauth.react.dev.1966.org.tw:20025
   // uat : http://openauth.react.1966.org.tw:20026 
-  const [APIUrl, setAPIUrl] = useState("https://pingtungdev.1966.org.tw/api/")//useState("http://openauth.1966.org.tw/api/");
-  const [APIFileUrl, setAPIFileUrl] = useState("https://pingtungdev.1966.org.tw/WebContents/")//useState("http://openauth.1966.org.tw/");
+  const [APIUrl, setAPIUrl] = useState("https://itc.mass.org.tw/api/")//useState("http://openauth.1966.org.tw/api/");
+  const [APIFileUrl, setAPIFileUrl] = useState("https://itc.mass.org.tw/WebContents/")//useState("http://openauth.1966.org.tw/");
   const [APIAppKey, setAPIAppKey] = useState("driver");
   const [Value, Switch, Open, Close] = useSwitch();//控制重新渲染路由
   const [Collapse, setCollapse] = useState(false); // 控制768以上畫面，左側欄收合情況
