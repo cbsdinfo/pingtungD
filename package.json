@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "SET PORT=1803 && react-scripts start",
-    "build": "react-scripts build",
+    "build": "node ./update-build.js && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "doc": "start-storybook"
@@ -69,5 +69,6 @@
     "@storybook/theming": "^6.0.7",
     "babel-loader": "^8.1.0",
     "storybook-addon-theme-playground": "^1.3.3"
-  }
+  },
+  "buildDate": 1621878706546
 }

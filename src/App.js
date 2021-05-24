@@ -6,6 +6,7 @@ import { ContextContainer } from './Components/ContextContainer/ContextContainer
 import 'antd/dist/antd.css';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import withClearCache from './ClearCache';
 
 const reducer = (state, action) => {
 
@@ -21,7 +22,13 @@ const reducer = (state, action) => {
   }
 }
 
+const ClearCacheComponent = withClearCache(MainApp);
+
 function App() {
+  return <ClearCacheComponent />;
+}
+
+function MainApp() {
   const [Theme, setTheme] = useReducer(reducer, themes.defaultTheme);
   // dev : http://openauth.react.dev.1966.org.tw:20025
   // uat : http://openauth.react.1966.org.tw:20026 
