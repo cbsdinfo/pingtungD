@@ -27,11 +27,12 @@ export const DayCheck = (props) => {
     useEffect(() => {
         const historyUnlisten = history.listen((location, action) => {
             //console.log(location, action)
-            globalContextService.remove("NewsPage", "firstUseAPIgetNewsType");
+            globalContextService.remove("DayCheckPage");
         });
 
         return () => {
             historyUnlisten();
+            globalContextService.remove("DayCheckPage");
         }
     }, [])
     //#endregion

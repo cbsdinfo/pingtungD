@@ -35,6 +35,7 @@ export const TaskHistory = (props) => {
 
         return () => {
             historyUnlisten();
+            globalContextService.remove("TaskHistoryPage");
         }
     }, [])
     //#endregion

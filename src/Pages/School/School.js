@@ -34,6 +34,7 @@ export const School = (props) => {
 
         return () => {
             historyUnlisten();
+            globalContextService.remove("NewsPage");
         }
     }, [])
     //#endregion

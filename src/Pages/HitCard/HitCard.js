@@ -46,6 +46,7 @@ export const HitCard = (props) => {
 
         return () => {
             historyUnlisten();
+            globalContextService.remove("HitCardPage");
         }
     }, [])
     //#endregion

@@ -103,6 +103,7 @@ export const Income = (props) => {
 
         return () => {
             historyUnlisten();
+            globalContextService.remove("IncomePage");
         }
     }, [])
     //#endregion
