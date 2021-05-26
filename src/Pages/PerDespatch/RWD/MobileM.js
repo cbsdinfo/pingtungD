@@ -416,11 +416,11 @@ const MobileMBase = (props) => {
                                                                                                 onClick={() => {
                                                                                                     //#region 判斷有無付款
                                                                                                     if (isNil(data?.orderPay)) {
-                                                                                                        props.GetRealAmtExecute({
-                                                                                                            despatchNo: data.despatchNo,
-                                                                                                            orderId: data.orderId,
-                                                                                                            familyWith: data.familyWith,
-                                                                                                        })
+                                                                                                        // props.GetRealAmtExecute({
+                                                                                                        //     despatchNo: data.despatchNo,
+                                                                                                        //     orderId: data.orderId,
+                                                                                                        //     familyWith: data.familyWith,
+                                                                                                        // })
                                                                                                         props.setPayDetail([true, false])
                                                                                                     }
                                                                                                     //#region 有付款則顯示簽名
@@ -709,13 +709,13 @@ const MobileMBase = (props) => {
                                                                                 // console.log(value)
                                                                                 // console.log(globalContextService.get("PerDespatchPage", "payDetailFamilyWith"))
                                                                                 if (!isEqual(value, globalContextService.get("PerDespatchPage", "payDetailFamilyWith")) && isNumber(value)) {
-                                                                                    if (!onInitial) {
-                                                                                        props.GetRealAmtExecute({
-                                                                                            despatchNo: data.despatchNo,
-                                                                                            orderId: data.orderId,
-                                                                                            familyWith: value > 7 ? 7 : value,
-                                                                                        })
-                                                                                    }
+                                                                                    // if (!onInitial) {
+                                                                                    //     props.GetRealAmtExecute({
+                                                                                    //         despatchNo: data.despatchNo,
+                                                                                    //         orderId: data.orderId,
+                                                                                    //         familyWith: value > 7 ? 7 : value,
+                                                                                    //     })
+                                                                                    // }
                                                                                     // console.log(onInitial)
                                                                                     globalContextService.set("PerDespatchPage", "payDetailFamilyWith", value > 7 ? 7 : value);
                                                                                 }
@@ -727,25 +727,25 @@ const MobileMBase = (props) => {
                                                                         <Container>
 
                                                                             {/* 收款頁 應收車資 容器 */}
-                                                                            <Text
+                                                                            {/* <Text
                                                                                 theme={mobileM.etFareContainer}
                                                                             >
-                                                                                {`$`}
+                                                                                {`$`} */}
 
-                                                                                {/* 收款頁 應收車資 內文 */}
-                                                                                <Text
+                                                                            {/* 收款頁 應收車資 內文 */}
+                                                                            {/* <Text
                                                                                     theme={mobileM.etFareText}
                                                                                 >
                                                                                     {props?.RealAmt ?? 0}
-                                                                                </Text>
+                                                                                </Text> */}
 
-                                                                                {/* 收款頁 應收車資 標題 */}
-                                                                                <Text
+                                                                            {/* 收款頁 應收車資 標題 */}
+                                                                            {/* <Text
                                                                                     theme={mobileM.etFareTitle}
                                                                                 >
                                                                                     {`應收車資`}
                                                                                 </Text>
-                                                                            </Text>
+                                                                            </Text> */}
 
                                                                             {/* 收款頁 實收金額 容器 */}
                                                                             <Text
@@ -756,13 +756,13 @@ const MobileMBase = (props) => {
                                                                                     !props.PayDetail[1]
                                                                                         ?
                                                                                         <>
-                                                                                            {/* 收款頁 實收金額 */}
+                                                                                            {/* 收款頁 跳表金額 */}
                                                                                             <TextInput
                                                                                                 topLabel={""}
                                                                                                 baseDefaultTheme={"DefaultTheme"}
                                                                                                 type="text"
                                                                                                 placeholder={""}
-                                                                                                value={globalContextService.get("PerDespatchPage", "realFareText") ?? props?.RealAmt}
+                                                                                                value={globalContextService.get("PerDespatchPage", "realFareText") ?? 0}
                                                                                                 onChange={(e, value, onInitial) => {
                                                                                                     if (isEmpty(value.toString())) {
                                                                                                         globalContextService.set("PerDespatchPage", "realFareText", 0);
@@ -781,7 +781,7 @@ const MobileMBase = (props) => {
                                                                                         :
                                                                                         <>
                                                                                             {`$`}
-                                                                                            {/* 收款頁 實收金額 檢視 內文 */}
+                                                                                            {/* 收款頁 跳表金額 檢視 內文 */}
                                                                                             <Text
                                                                                                 theme={mobileM.realFareViewText}
                                                                                             >
@@ -790,11 +790,11 @@ const MobileMBase = (props) => {
                                                                                         </>
                                                                                 }
 
-                                                                                {/* 收款頁 實收金額 標題 */}
+                                                                                {/* 收款頁 跳表金額 標題 */}
                                                                                 <Text
                                                                                     theme={mobileM.realFareTitle}
                                                                                 >
-                                                                                    {`實收金額`}
+                                                                                    {`跳表金額`}
                                                                                 </Text>
 
                                                                             </Text>

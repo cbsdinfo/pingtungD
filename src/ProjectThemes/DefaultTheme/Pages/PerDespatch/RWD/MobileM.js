@@ -984,7 +984,7 @@ export default {
             ...style,
             color: "#fff",
             backgroundColor: "#000",
-            width: "50%",
+            width: "100%",
             height: "130px",
             margin: "16px 0 0",
             fontWeight: 400,
