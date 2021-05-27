@@ -61,7 +61,7 @@ const LaptopLBase = (props) => {
                             {/* 帳號解鎖按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/UserManager/btnUnlock") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/UserManager/btnUnlock") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 帳號解鎖按鈕 */}
@@ -109,7 +109,7 @@ const LaptopLBase = (props) => {
                             {/* 新增按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/UserManager/btnAdd") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/UserManager/btnAdd") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 新增按鈕 */}
@@ -311,7 +311,7 @@ const LaptopLBase = (props) => {
                             {/* 編輯按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/UserManager/btnEdit") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/UserManager/btnEdit") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 編輯按鈕 */}
@@ -546,7 +546,7 @@ const LaptopLBase = (props) => {
                             {/* 刪除按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/UserManager/btnDel") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/UserManager/btnDel") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 刪除按鈕 */}
@@ -605,7 +605,7 @@ const LaptopLBase = (props) => {
                             {/* 刷新按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/UserManager/btnRefresh") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/UserManager/btnRefresh") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 刷新按鈕 */}
@@ -632,7 +632,7 @@ const LaptopLBase = (props) => {
                             {/* 為用戶分配角色按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/UserManager/btnAccessRole") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/UserManager/btnAccessRole") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 為用戶分配角色按鈕 */}
@@ -846,7 +846,7 @@ const LaptopLBase = (props) => {
                                                         {/* 編輯按鈕 */}
                                                         {
                                                             // 權限判斷
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Base/UserManager/btnEdit") &&
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/UserManager/btnEdit") &&
                                                             (
                                                                 <NativeLineButton
                                                                     baseDefaultTheme={"DefaultTheme"}
@@ -1055,7 +1055,7 @@ const LaptopLBase = (props) => {
 
                                                         {
                                                             // 權限判斷
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Base/UserManager/btnEnableAndDisable") &&
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/UserManager/btnEnableAndDisable") &&
                                                             (
                                                                 rowData.status !== 1 ?
                                                                     <>

@@ -68,7 +68,7 @@ const LaptopLBase = (props) => {
                             {/* 新增按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/OrgManager/btnAdd") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/OrgManager/btnAdd") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 新增按鈕 */}
@@ -286,7 +286,7 @@ const LaptopLBase = (props) => {
                             {/* 分配用戶按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/OrgManager/btnAssignOrgUser") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/OrgManager/btnAssignOrgUser") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 分配用戶按鈕 */}
@@ -340,7 +340,7 @@ const LaptopLBase = (props) => {
                             {/* 編輯按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/OrgManager/btnEdit") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/OrgManager/btnEdit") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 編輯按鈕 */}
@@ -568,7 +568,7 @@ const LaptopLBase = (props) => {
                             {/* 刪除按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/OrgManager/btnDel") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/OrgManager/btnDel") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 刪除按鈕 */}
@@ -627,7 +627,7 @@ const LaptopLBase = (props) => {
                             {/* 刷新按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/OrgManager/btnRefresh") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/OrgManager/btnRefresh") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 刷新按鈕 */}
@@ -865,7 +865,7 @@ const LaptopLBase = (props) => {
                                                         {/* 編輯按鈕 */}
                                                         {
                                                             // 權限判斷
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Base/OrgManager/btnEdit") &&
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/OrgManager/btnEdit") &&
                                                             (
 
                                                                 < NativeLineButton
@@ -1063,7 +1063,7 @@ const LaptopLBase = (props) => {
 
                                                         {
                                                             // 權限判斷
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Base/OrgManager/btnEnableAndDisable") &&
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/OrgManager/btnEnableAndDisable") &&
                                                             (rowData.status !== 1 ?
                                                                 <>
                                                                     {/* 停用按鈕 */}

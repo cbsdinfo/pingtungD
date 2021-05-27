@@ -60,7 +60,7 @@ const LaptopBase = (props) => {
                             {/* 新增按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/RoleManager/btnAdd") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/RoleManager/btnAdd") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 新增按鈕 */}
@@ -189,7 +189,7 @@ const LaptopBase = (props) => {
                             {/* 編輯按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/RoleManager/btnEdit") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/RoleManager/btnEdit") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 編輯按鈕 */}
@@ -338,7 +338,7 @@ const LaptopBase = (props) => {
                             {/* 刪除按鈕容器 */}
                             {
                                 // 權限判斷
-                                (getParseItemLocalStorage("Functions") ?? []).includes("/Base/RoleManager/btnDel") &&
+                                (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/RoleManager/btnDel") &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         {/* 刪除按鈕 */}
@@ -397,7 +397,7 @@ const LaptopBase = (props) => {
                             {/* 角色分配按鈕容器 */}
                             {
                                 // 權限判斷 btnAccessModule、btnRoleAccessUser 其中一個存在
-                                ((getParseItemLocalStorage("Functions") ?? []).includes("/Base/RoleManager/btnAccessModule") || (getParseItemLocalStorage("Functions") ?? []).includes("/Base/RoleManager/btnRoleAccessUser")) &&
+                                ((getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/RoleManager/btnAccessModule") || (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/RoleManager/btnRoleAccessUser")) &&
                                 (
                                     <SubContainer baseDefaultTheme={"DefaultTheme"}>
                                         <DropDown
@@ -630,7 +630,7 @@ const LaptopBase = (props) => {
                                                 {/* 編輯按鈕 */}
                                                 {
                                                     // 權限判斷
-                                                    (getParseItemLocalStorage("Functions") ?? []).includes("/Base/RoleManager/btnEdit") &&
+                                                    (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/RoleManager/btnEdit") &&
                                                     (
                                                         < NativeLineButton
                                                             baseDefaultTheme={"DefaultTheme"}
@@ -747,7 +747,7 @@ const LaptopBase = (props) => {
 
                                                 {
                                                     // 權限判斷
-                                                    (getParseItemLocalStorage("Functions") ?? []).includes("/Base/RoleManager/btnEnableAndDisable") &&
+                                                    (getParseItemLocalStorage("DFunctions") ?? []).includes("/Base/RoleManager/btnEnableAndDisable") &&
                                                     (rowData.status !== 1 ?
                                                         <>
                                                             {/* 停用按鈕 */}

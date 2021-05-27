@@ -134,11 +134,11 @@ const mapRouters = (data) => {
                     }
 
                     //另外將可使用的功能加到 LocalStorage 裡面
-                    if (!getParseItemLocalStorage("Functions")) {
-                        setStringifyItemLocalStorage("Functions", [])
+                    if (!getParseItemLocalStorage("DFunctions")) {
+                        setStringifyItemLocalStorage("DFunctions", [])
                     }
-                    if (!(getParseItemLocalStorage("Functions") ?? []).includes(`${data.item.url}/${func.domId}`)) {
-                        pushItemLocalStorage("Functions", `${data.item.url}/${func.domId}`)
+                    if (!(getParseItemLocalStorage("DFunctions") ?? []).includes(`${data.item.url}/${func.domId}`)) {
+                        pushItemLocalStorage("DFunctions", `${data.item.url}/${func.domId}`)
                     }
                 });
             }
@@ -408,7 +408,7 @@ export const Routers = (props) => {
                    Author : Arhua Ho
                    Content: 中間遍歷段
                 */}
-                {getParseItemLocalStorage("ModulesTree") && mapRouters(getParseItemLocalStorage("ModulesTree"))}
+                {getParseItemLocalStorage("DModulesTree") && mapRouters(getParseItemLocalStorage("DModulesTree"))}
 
                 {/* 
                    Date   : 2020-06-17 16:52:02

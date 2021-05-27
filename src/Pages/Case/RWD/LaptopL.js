@@ -85,7 +85,7 @@ const LaptopLBase = (props) => {
 
                                 {/* 帳號解鎖按鈕 */}
                                 {/* 權限判斷 */}
-                                {(getParseItemLocalStorage("Functions") ?? []).includes("/Case/btnUnlock")
+                                {(getParseItemLocalStorage("DFunctions") ?? []).includes("/Case/btnUnlock")
                                     &&
                                     <NativeLineButton
                                         baseDefaultTheme={"DefaultTheme"}
@@ -129,7 +129,7 @@ const LaptopLBase = (props) => {
 
                                 {/* 新增用戶按鈕 */}
                                 {/* 權限判斷 */}
-                                {(getParseItemLocalStorage("Functions") ?? []).includes("/Case/AddUser")
+                                {(getParseItemLocalStorage("DFunctions") ?? []).includes("/Case/AddUser")
                                     &&
                                     <NativeLineButton
                                         baseDefaultTheme={"DefaultTheme"}
@@ -609,7 +609,7 @@ const LaptopLBase = (props) => {
 
                                                     {/* 新增身份按鈕 */}
                                                     {/* 權限判斷 */}
-                                                    {(getParseItemLocalStorage("Functions") ?? []).includes("/Case/AddCaseList")
+                                                    {(getParseItemLocalStorage("DFunctions") ?? []).includes("/Case/AddCaseList")
                                                         &&
                                                         <NativeLineButton
                                                             baseDefaultTheme={"DefaultTheme"}
@@ -873,7 +873,7 @@ const LaptopLBase = (props) => {
                                                     {/* 具功能權限時，且選擇"長照", "白牌", "幸福巴士"時 顯示 */}
                                                     {
                                                         (
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Case/btnCallCar")
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Case/btnCallCar")
                                                             &&
                                                             showCallCar.some(c => globalContextService.get("CasePage", `CaseList_${rowData.id}`)?.label?.includes(c))
                                                         )
@@ -925,7 +925,7 @@ const LaptopLBase = (props) => {
                                                     {/* 具功能權限時，且選擇"基本資料", "長照", "白牌", "幸福巴士", "日照"時 顯示 */}
                                                     {
                                                         (
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Case/btnEdit")
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Case/btnEdit")
                                                             &&
                                                             showEditButton.some(c => globalContextService.get("CasePage", `CaseList_${rowData.id}`)?.label?.includes(c))
                                                         )
@@ -1152,7 +1152,7 @@ const LaptopLBase = (props) => {
                                                     {/* 具功能權限時，且選擇"基本資料", "長照", "白牌", "幸福巴士"時 顯示 */}
                                                     {
                                                         (
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Case/btnToView")
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Case/btnToView")
                                                             &&
                                                             showToViewButton.some(c => globalContextService.get("CasePage", `CaseList_${rowData.id}`)?.label?.includes(c))
                                                         )
@@ -1326,7 +1326,7 @@ const LaptopLBase = (props) => {
                                                     {/* 具功能權限時，且選擇"長照"時 顯示 */}
                                                     {
                                                         (
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Case/btnQuota")
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Case/btnQuota")
                                                             &&
                                                             showQuotaButton.some(c => globalContextService.get("CasePage", `CaseList_${rowData.id}`)?.label?.includes(c))
                                                         )
@@ -1354,7 +1354,7 @@ const LaptopLBase = (props) => {
                                                     {/* 具功能權限時，且選擇"長照"時 顯示 */}
                                                     {
                                                         (
-                                                            (getParseItemLocalStorage("Functions") ?? []).includes("/Case/btnBUnit")
+                                                            (getParseItemLocalStorage("DFunctions") ?? []).includes("/Case/btnBUnit")
                                                             &&
                                                             showBUnitButton.some(c => globalContextService.get("CasePage", `CaseList_${rowData.id}`)?.label?.includes(c))
                                                         )

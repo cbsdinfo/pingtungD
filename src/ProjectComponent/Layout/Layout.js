@@ -85,7 +85,7 @@ export const Layout = (props) => {
         //#endregion
 
         //#region 處理當前應被標記與開啟的父層
-        let canUseFunctions = getParseItemLocalStorage("Functions") ?? []
+        let canUseFunctions = getParseItemLocalStorage("DFunctions") ?? []
         let menuNameAndSubUrl = getParseItemLocalStorage("DMenuNameAndSubUrl")
         let keys = Object.keys(getParseItemLocalStorage("DMenuNameAndSubUrl") ?? []) ?? []
         let res = [];
@@ -875,7 +875,7 @@ const generateMenu = (menuData, history, location, ExpandMenuName, setExpandMenu
                                 //#region 被選中的左側欄項目樣式
                                 ...(
                                     // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
-                                    (getParseItemLocalStorage("Functions") ?? []).includes(location.pathname) ?
+                                    (getParseItemLocalStorage("DFunctions") ?? []).includes(location.pathname) ?
                                         //進入子頁面路由
                                         (removeTailUrl(location.pathname) === menuData.item.url && menuData.item.url.trim() !== "/") &&
                                         {
@@ -897,7 +897,7 @@ const generateMenu = (menuData, history, location, ExpandMenuName, setExpandMenu
                                 //#region 被選中的左側欄父層項目樣式
                                 ...(
                                     // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
-                                    (getParseItemLocalStorage("Functions") ?? []).includes(location.pathname) ?
+                                    (getParseItemLocalStorage("DFunctions") ?? []).includes(location.pathname) ?
                                         //進入子頁面路由
                                         (
                                             (
@@ -1176,7 +1176,7 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                         //#region 被選中的左側欄項目樣式
                                         ...(
                                             // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
-                                            (getParseItemLocalStorage("Functions") ?? []).includes(location.pathname) ?
+                                            (getParseItemLocalStorage("DFunctions") ?? []).includes(location.pathname) ?
                                                 //進入子頁面路由
                                                 (removeTailUrl(location.pathname) === menuData.item.url && menuData.item.url.trim() !== "/") &&
                                                 {
@@ -1198,7 +1198,7 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                         //#region 被選中的左側欄父層項目樣式
                                         ...(
                                             // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
-                                            (getParseItemLocalStorage("Functions") ?? []).includes(location.pathname) ?
+                                            (getParseItemLocalStorage("DFunctions") ?? []).includes(location.pathname) ?
                                                 //進入子頁面路由
                                                 (
                                                     (
@@ -1370,7 +1370,7 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                     //#region 被選中的左側欄項目樣式
                                     ...(
                                         // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
-                                        (getParseItemLocalStorage("Functions") ?? []).includes(location.pathname) ?
+                                        (getParseItemLocalStorage("DFunctions") ?? []).includes(location.pathname) ?
                                             //進入子頁面路由
                                             (removeTailUrl(location.pathname) === menuData.item.url && menuData.item.url.trim() !== "/") &&
                                             {
@@ -1392,7 +1392,7 @@ const generateThinMenu = (menuData, history, location, ExpandMenuName, setExpand
                                     //#region 被選中的左側欄父層項目樣式
                                     ...(
                                         // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
-                                        (getParseItemLocalStorage("Functions") ?? []).includes(location.pathname) ?
+                                        (getParseItemLocalStorage("DFunctions") ?? []).includes(location.pathname) ?
                                             //進入子頁面路由
                                             (
                                                 (

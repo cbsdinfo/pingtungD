@@ -86,7 +86,7 @@ const mapOpenHistory = (openHistory = [], urlMapping = {}, pathname = "", histor
                 ref={(tag) => (tagsRef.current[index] = tag)}
                 baseDefaultTheme={
                     // 處理進入子頁面如新增、修改等，標記於父層路由標籤 Functions
-                    getParseItemLocalStorage("Functions").includes(pathname) ?
+                    getParseItemLocalStorage("DFunctions").includes(pathname) ?
                         //進入子頁面路由
                         (removeTailUrl(pathname) === item.path ? tagBaseDefaultTheme : tagActivebaseDefaultTheme)
                         :
