@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import packageJson from "../package.json";
 import moment from "moment";
+import { clearLogoutLocalStorage } from "./Handlers";
 
 const buildDateGreaterThan = (latestDate, currentDate) => {
   const momLatestDateTime = moment(latestDate);
@@ -30,7 +31,9 @@ function withClearCache(Component) {
           );
           if (shouldForceRefresh) {
             setIsLatestBuildDate(false);
+            clearLogoutLocalStorage();
             refreshCacheAndReload();
+            console.log("新版本更新...")
           } else {
             setIsLatestBuildDate(true);
           }

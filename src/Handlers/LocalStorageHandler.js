@@ -7,45 +7,45 @@ import React from 'react'
    @return : { setItem, getItem, removeItem, clear } ； 回傳值 : { setItem, getItem, removeItem, clear }
 */
 
-// const encode = (str) => {
-//     return btoa(escape(str));
-// }
+const encode = (str) => {
+    return btoa(escape(str));
+}
 
-// const decode = (str) => {
-//     return unescape(atob(str));
-// }
-
-// const setItemLocalStorage = (itemName, item) => {
-//     localStorage.setItem(itemName, encode(item));
-// };
-
-// const setStringifyItemLocalStorage = (itemName, item) => {
-//     localStorage.setItem(itemName, encode(JSON.stringify(item)));
-// };
-
-// const getItemLocalStorage = (itemName) => {
-//     return localStorage.getItem(itemName) ? decode(localStorage.getItem(itemName)) : localStorage.getItem(itemName);
-// };
-
-// const getParseItemLocalStorage = (itemName) => {
-//     return localStorage.getItem(itemName) ? JSON.parse(decode(localStorage.getItem(itemName))) : localStorage.getItem(itemName);
-// };
+const decode = (str) => {
+    return unescape(atob(str));
+}
 
 const setItemLocalStorage = (itemName, item) => {
-    localStorage.setItem(itemName, item);
+    localStorage.setItem(itemName, encode(item));
 };
 
 const setStringifyItemLocalStorage = (itemName, item) => {
-    localStorage.setItem(itemName, JSON.stringify(item));
+    localStorage.setItem(itemName, encode(JSON.stringify(item)));
 };
 
 const getItemLocalStorage = (itemName) => {
-    return localStorage.getItem(itemName);
+    return localStorage.getItem(itemName) ? decode(localStorage.getItem(itemName)) : localStorage.getItem(itemName);
 };
 
 const getParseItemLocalStorage = (itemName) => {
-    return JSON.parse(localStorage.getItem(itemName));
+    return localStorage.getItem(itemName) ? JSON.parse(decode(localStorage.getItem(itemName))) : localStorage.getItem(itemName);
 };
+
+// const setItemLocalStorage = (itemName, item) => {
+//     localStorage.setItem(itemName, item);
+// };
+
+// const setStringifyItemLocalStorage = (itemName, item) => {
+//     localStorage.setItem(itemName, JSON.stringify(item));
+// };
+
+// const getItemLocalStorage = (itemName) => {
+//     return localStorage.getItem(itemName);
+// };
+
+// const getParseItemLocalStorage = (itemName) => {
+//     return JSON.parse(localStorage.getItem(itemName));
+// };
 
 const removeItemLocalStorage = (itemName) => {
     localStorage.removeItem(itemName);
