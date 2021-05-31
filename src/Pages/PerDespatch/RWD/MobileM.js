@@ -702,7 +702,7 @@ const MobileMBase = (props) => {
                                                                             type="number"
                                                                             placeholder={""}
                                                                             min={0}
-                                                                            max={7}
+                                                                            max={2}
                                                                             view={props.PayDetail[1]}
                                                                             value={globalContextService.get("PerDespatchPage", "payDetailFamilyWith") ?? data.familyWith}
                                                                             onChange={(e, value, onInitial) => {
