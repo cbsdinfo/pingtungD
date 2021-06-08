@@ -150,7 +150,7 @@ const MobileMBase = (props) => {
                                         <Text
                                             theme={mobileM.titleBarLogoContainerTextMobileM}
                                         >
-                                            屏東市政府
+                                            屏東縣政府
                                             <br />
                                             長照交通接送統一預約服務及管理系統
                                         </Text>

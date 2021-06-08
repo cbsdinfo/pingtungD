@@ -62,7 +62,7 @@ export default {
         })
     },
     //#endregion
-    //#region 屏東市政府標題容器
+    //#region 屏東縣政府標題容器
     bigTitleContainer: {
         basic: (style, props) => ({
             ...style,
@@ -72,7 +72,7 @@ export default {
         })
     },
     //#endregion
-    //#region 屏東市政府標題文字
+    //#region 屏東縣政府標題文字
     bigTitleText: {
         basic: (style, props) => ({
             ...style,
@@ -87,14 +87,14 @@ export default {
         })
     },
     //#endregion
-    //#region 屏東市政府標題Logo
+    //#region 屏東縣政府標題Logo
     bigTitleLogo: {
         position: "absolute",
         cursor: "default",
         userSelect: "none"
     },
     //#endregion
-    //#region 屏東市政府次標題容器
+    //#region 屏東縣政府次標題容器
     subTitleContainer: {
         basic: (style, props) => ({
             ...style,
@@ -104,7 +104,7 @@ export default {
         })
     },
     //#endregion
-    //#region 屏東市政府次標題文字
+    //#region 屏東縣政府次標題文字
     subTitleText: {
         basic: (style, props) => ({
             ...style,

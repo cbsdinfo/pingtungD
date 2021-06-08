@@ -82,7 +82,7 @@ const LaptopBase = (props) => {
                                 <LoginLogoLaptop style={laptop.loginFormLogo} />
 
                                 {/* Logo單位名稱 */}
-                                <Text theme={laptop.loginFormLogoName}>屏東市政府</Text>
+                                <Text theme={laptop.loginFormLogoName}>屏東縣政府</Text>
 
                                 {/* Logo單位說明文字 */}
                                 <Text theme={laptop.loginFormLogoNOteText}> 長照交通接送預約服務管理系統</Text>
