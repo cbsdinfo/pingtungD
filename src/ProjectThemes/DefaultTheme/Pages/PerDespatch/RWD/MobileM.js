@@ -940,6 +940,12 @@ export default {
     etFareContainer: {
         basic: (style, props) => ({
             ...style,
+            ...(
+                !props.view &&
+                {
+                    display: "none"
+                }
+            ),
             width: "50%",
             height: "130px",
             backgroundColor: "#F5F5F5",
@@ -984,7 +990,7 @@ export default {
             ...style,
             color: "#fff",
             backgroundColor: "#000",
-            width: "100%",
+            width: "50%",
             height: "130px",
             margin: "16px 0 0",
             fontWeight: 400,
@@ -1058,6 +1064,86 @@ export default {
 
     //#region 收款頁 實收金額 標題
     realFareTitle: {
+        basic: (style, props) => ({
+            ...style,
+            display: "block",
+            fontWeight: 700,
+            fontSize: "18px",
+            lineHeight: "18px",
+            margin: "4px 0 0",
+            textAlign: "center",
+            color: "#fff"
+        })
+    },
+    //#endregion
+
+    //#region 收款頁 跳表金額 容器
+    jumpAmtContainer: {
+        basic: (style, props) => ({
+            ...style,
+            color: "#fff",
+            backgroundColor: "#000",
+            width: "100%",
+            height: "130px",
+            margin: "16px 0 0",
+            fontWeight: 400,
+            fontSize: "20px",
+            textAlign: "center",
+            padding: props.view ? "32px 0" : "21px 0"
+        })
+    },
+    //#endregion
+
+    //#region 收款頁 跳表金額 文字
+    jumpAmtText: {
+        container: {
+            basic: (style, props) => ({
+                ...style,
+                ...style.occupy(12),
+                padding: "0 12px"
+            })
+        },
+        topLabel: {
+            basic: (style, props) => ({
+                ...style,
+                height: "0px"
+            })
+        },
+        textInputContainer: {
+            basic: (style, props) => {
+
+                return {
+                    ...style,
+                    color: (props.focus || props.hover) ? "#1890ff" : "rgba(0, 0, 0, 0.65)"
+                }
+            }
+        },
+        textInput: {
+            basic: (style, props) => {
+                //console.log(style, props)
+                return {
+                    ...style,
+                    //#region 當有開啟 openEye 並且 hover 或 focus 時變色
+                    ...(
+                        props.openEye && {
+                            border: `1px solid ${(props.focus || props.hover) ? "#1890ff" : "#d9d9d9"}`,
+                            boxShadow: (props.focus) ? "0px 0px 0px 2px rgba(24, 144, 255, 0.2)" : null
+                        }
+                    ),
+                    //#endregion
+                    height: "58px",
+                    textAlign: "center",
+                    fontWeight: 700,
+                    fontSize: "48px",
+                    padding: "5px 8px"
+                }
+            }
+        }
+    },
+    //#endregion
+
+    //#region 收款頁 跳表金額 標題
+    jumpAmtTitle: {
         basic: (style, props) => ({
             ...style,
             display: "block",
@@ -1201,6 +1287,14 @@ export default {
         hover: (style, props) => ({
         }),
         focus: (style, props) => ({})
+    },
+    //#endregion
+
+    //#region 收款頁 修改付款方式按鈕 容器
+    goBackSvg: {
+        position: "absolute",
+        top: "12px",
+        left: "58px"
     },
     //#endregion
 

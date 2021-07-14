@@ -23,7 +23,7 @@ export const PerDespatch = (props) => {
     const [CheckDetail, setCheckDetail] = useState(false); // 確認身分
     const [PayDetail, setPayDetail] = useState([false, false]); // 收款(第一頁,第二頁)
     const [DriverSign, setDriverSign] = useState(false); // 簽名
-    // const [RealAmt, setRealAmt] = useState(null); // 金額
+    const [RealAmt, setRealAmt] = useState(null); // 應收金額
     const [PayWay, setPayWay] = useState(""); // 付款方式
 
     const [Width, Height] = useWindowSize();
@@ -294,6 +294,76 @@ export const PerDespatch = (props) => {
     // const [GetRealAmtExecute, GetRealAmtPending] = useAsync(getRealAmt, false);
     //#endregion 
 
+    //#region 訂單金額查詢(跳表金額查詢應收金額) API
+    const getRealAmt = useCallback(async (getRealAmtRowdata) => {
+
+        // console.log(updateRowdata)
+        //#region 更改訂單狀態 API
+        fetch(`${APIUrl}OrderOfCaseUsers/GetRealAmtFromDriver`,
+            {
+                headers: {
+                    "X-Token": getParseItemLocalStorage("DAuth"),
+                    "content-type": "application/json; charset=utf-8",
+                },
+                method: "POST",
+                body: JSON.stringify({ ...getRealAmtRowdata })
+            })
+            .then(Result => {
+                const ResultJson = Result.clone().json();//Respone.clone()
+                return ResultJson;
+            })
+            .then((PreResult) => {
+
+                if (PreResult.code === 200) {
+                    // 更改訂單狀態 API
+                    // console.log(PreResult)
+                    setRealAmt(PreResult.result)
+                }
+                else {
+                    throw PreResult;
+                }
+            })
+            .catch((Error) => {
+                modalsService.infoModal.warn({
+                    iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                    yes: true,
+                    yesText: "確認",
+                    // no: true,
+                    // autoClose: true,
+                    backgroundClose: false,
+                    yesOnClick: (e, close) => {
+                        if (Error.code === 401) {
+                            clearLogoutSession();
+                            clearLogoutLocalStorage();
+                            globalContextService.clear();
+                            Switch();
+                        }
+                        close();
+                    }
+                    // theme: {
+                    //     yesButton: {
+                    //         text: {
+                    //             basic: (style, props) => {
+                    //                 console.log(style)
+                    //                 return {
+                    //                     ...style,
+                    //                     color: "red"
+                    //                 }
+                    //             },
+                    //         }
+                    //     }
+                    // }
+                })
+                throw Error.message;
+            })
+            .finally(() => {
+            });
+        //#endregion
+    }, [APIUrl, Switch])
+
+    const [GetRealAmtExecute, GetRealAmtPending] = useAsync(getRealAmt, false);
+    //#endregion 
+
     //#region 付款 API
     const addPay = useCallback(async (AddPayRowdata) => {
 
@@ -469,8 +539,8 @@ export const PerDespatch = (props) => {
                 <MobileM
                     defaultPrimary={urlParams.get("defaultPrimary")}
                     TodayTask={TodayTask} // 所有最新消息類別
-                    // RealAmt={RealAmt} // 金額
-                    // setRealAmt={setRealAmt} // 設定金額
+                    RealAmt={RealAmt} // 金額
+                    setRealAmt={setRealAmt} // 設定金額
                     Open={Open} // 展開
                     setOpen={setOpen} // 設定展開
                     PayWay={PayWay} // 付款方式
@@ -487,7 +557,7 @@ export const PerDespatch = (props) => {
                     setNowTabOrderData={setNowTabOrderData}
                     ChangeStatussExecute={ChangeStatussExecute} // 更改訂單狀態
                     GetTodayTaskExecute={GetTodayTaskExecute} // 選單更新值調用，取得特定類別所有最新消息
-                    // GetRealAmtExecute={GetRealAmtExecute} // 金額查詢
+                    GetRealAmtExecute={GetRealAmtExecute} // 金額查詢
                     AddPayExecute={AddPayExecute} // 付款
                     UpdatePayExecute={UpdatePayExecute} // 更新付款資料(簽名)
 

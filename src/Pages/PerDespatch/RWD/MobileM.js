@@ -13,6 +13,7 @@ import { ReactComponent as Cross } from '../../../Assets/img/PerDespatchPage/Cro
 import { ReactComponent as Warning } from '../../../Assets/img/PerDespatchPage/Warning.svg'
 import { ReactComponent as GrayCheck } from '../../../Assets/img/PerDespatchPage/GrayCheck.svg'
 import { ReactComponent as GreenCheck } from '../../../Assets/img/PerDespatchPage/GreenCheck.svg'
+import { ReactComponent as GoBack } from '../../../Assets/img/PerDespatchPage/GoBack.svg'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SystemNewsComponent } from '../SystemNewsComponent/SystemNewsComponent'
@@ -53,11 +54,20 @@ const MobileMBase = (props) => {
                         props.setPayDetail([false, false])
                         setDefaultPrimary(props?.NowTabOrderData?.orderId)
                     } else if (props.PayDetail[0]) {
-                        props.setPayDetail([false, false])
-                        props.controllGCS("return")
-                        props.setRealAmt(null)
-                        props.setPayWay("")
-                        setDefaultPrimary(props?.NowTabOrderData?.orderId)
+                        if (isNil(props.RealAmt)) {
+                            props.controllGCS("return")
+                            props.setPayDetail([false, false]);
+                            setDefaultPrimary(props?.NowTabOrderData?.orderId);
+                        }
+                        else if (!props.PayDetail[1]) {
+                            props.controllGCS("return")
+                            props.setRealAmt(null);
+                        }
+                        else {
+                            props.setPayDetail([true, false]);
+                            props.setPayWay("");
+                        }
+
                     } else {
                         history.goBack();
                     }
@@ -689,10 +699,10 @@ const MobileMBase = (props) => {
                                                                     >
                                                                         {/* 收款頁 陪同人數 */}
                                                                         <Text
-                                                                            view={props.PayDetail[1]}
+                                                                            view={!isNil(props.RealAmt)}
                                                                             theme={mobileM.payDetailFamilyWithTitle}
                                                                         >
-                                                                            {props.PayDetail[1] ? `陪同人數：${globalContextService.get("PerDespatchPage", "payDetailFamilyWith")}` : `陪同人數`}
+                                                                            {!isNil(props.RealAmt) ? `陪同人數：${globalContextService.get("PerDespatchPage", "payDetailFamilyWith")}` : `陪同人數`}
                                                                         </Text>
 
                                                                         {/* 收款頁 陪同人數 */}
@@ -703,7 +713,7 @@ const MobileMBase = (props) => {
                                                                             placeholder={""}
                                                                             min={0}
                                                                             max={2}
-                                                                            view={props.PayDetail[1]}
+                                                                            view={!isNil(props.RealAmt)}
                                                                             value={globalContextService.get("PerDespatchPage", "payDetailFamilyWith") ?? data.familyWith}
                                                                             onChange={(e, value, onInitial) => {
                                                                                 // console.log(value)
@@ -727,78 +737,154 @@ const MobileMBase = (props) => {
                                                                         <Container>
 
                                                                             {/* 收款頁 應收車資 容器 */}
-                                                                            {/* <Text
+                                                                            <Text
+                                                                                view={props.PayDetail[0] && !isNil(props.RealAmt)}
                                                                                 theme={mobileM.etFareContainer}
                                                                             >
-                                                                                {`$`} */}
+                                                                                {`$`}
 
-                                                                            {/* 收款頁 應收車資 內文 */}
-                                                                            {/* <Text
+                                                                                {/* 收款頁 應收車資 內文 */}
+                                                                                <Text
                                                                                     theme={mobileM.etFareText}
                                                                                 >
                                                                                     {props?.RealAmt ?? 0}
-                                                                                </Text> */}
+                                                                                </Text>
 
-                                                                            {/* 收款頁 應收車資 標題 */}
-                                                                            {/* <Text
+                                                                                {/* 收款頁 應收車資 標題 */}
+                                                                                <Text
                                                                                     theme={mobileM.etFareTitle}
                                                                                 >
                                                                                     {`應收車資`}
                                                                                 </Text>
-                                                                            </Text> */}
+                                                                            </Text>
 
-                                                                            {/* 收款頁 實收金額 容器 */}
-                                                                            <Text
-                                                                                view={props.PayDetail[1]}
-                                                                                theme={mobileM.realFareContainer}
-                                                                            >
-                                                                                {
-                                                                                    !props.PayDetail[1]
-                                                                                        ?
-                                                                                        <>
+                                                                            {
+                                                                                !isNil(props.RealAmt)
+                                                                                    ?
+                                                                                    <>
+
+                                                                                        {/* 收款頁 實收金額 容器 */}
+                                                                                        <Text
+                                                                                            view={props.PayDetail[1]}
+                                                                                            theme={mobileM.realFareContainer}
+                                                                                        >
+                                                                                            {
+                                                                                                !props.PayDetail[1]
+                                                                                                    ?
+                                                                                                    <>
+                                                                                                        {/* 收款頁 實收金額 */}
+                                                                                                        <TextInput
+                                                                                                            topLabel={""}
+                                                                                                            baseDefaultTheme={"DefaultTheme"}
+                                                                                                            type="text"
+                                                                                                            placeholder={""}
+                                                                                                            value={globalContextService.get("PerDespatchPage", "realFareText") ?? props.RealAmt}
+                                                                                                            onChange={(e, value, onInitial) => {
+                                                                                                                if (isEmpty(value.toString())) {
+                                                                                                                    globalContextService.set("PerDespatchPage", "realFareText", props.RealAmt);
+                                                                                                                }
+                                                                                                                else if (value / 10000 < 1 && !isNaN(value)) {
+                                                                                                                    globalContextService.set("PerDespatchPage", "realFareText", parseInt(value));
+                                                                                                                }
+                                                                                                                else {
+                                                                                                                    setForceUpdate(f => !f)
+                                                                                                                }
+
+                                                                                                            }}
+                                                                                                            theme={mobileM.realFareText}
+                                                                                                        />
+                                                                                                    </>
+                                                                                                    :
+                                                                                                    <>
+                                                                                                        {`$`}
+                                                                                                        {/* 收款頁 實收金額 檢視 內文 */}
+                                                                                                        <Text
+                                                                                                            theme={mobileM.realFareViewText}
+                                                                                                        >
+                                                                                                            {globalContextService.get("PerDespatchPage", "realFareText") ?? props.RealAmt}
+                                                                                                        </Text>
+                                                                                                    </>
+                                                                                            }
+
+                                                                                            {/* 收款頁 實收金額 標題 */}
+                                                                                            <Text
+                                                                                                theme={mobileM.realFareTitle}
+                                                                                            >
+                                                                                                {`實收金額`}
+                                                                                            </Text>
+
+                                                                                        </Text>
+                                                                                    </>
+                                                                                    :
+                                                                                    <>
+                                                                                        {/* 收款頁 跳表金額 容器 */}
+                                                                                        <Text
+                                                                                            view={props.PayDetail[1]}
+                                                                                            theme={mobileM.jumpAmtContainer}
+                                                                                        >
+
                                                                                             {/* 收款頁 跳表金額 */}
                                                                                             <TextInput
                                                                                                 topLabel={""}
                                                                                                 baseDefaultTheme={"DefaultTheme"}
                                                                                                 type="text"
                                                                                                 placeholder={""}
-                                                                                                value={globalContextService.get("PerDespatchPage", "realFareText") ?? 0}
+                                                                                                value={globalContextService.get("PerDespatchPage", "JumpAmtText") ?? 0}
                                                                                                 onChange={(e, value, onInitial) => {
                                                                                                     if (isEmpty(value.toString())) {
-                                                                                                        globalContextService.set("PerDespatchPage", "realFareText", 0);
+                                                                                                        globalContextService.set("PerDespatchPage", "JumpAmtText", 0);
                                                                                                     }
                                                                                                     else if (value / 10000 < 1 && !isNaN(value)) {
-                                                                                                        globalContextService.set("PerDespatchPage", "realFareText", parseInt(value));
+                                                                                                        globalContextService.set("PerDespatchPage", "JumpAmtText", parseInt(value));
                                                                                                     }
                                                                                                     else {
                                                                                                         setForceUpdate(f => !f)
                                                                                                     }
 
                                                                                                 }}
-                                                                                                theme={mobileM.realFareText}
+                                                                                                theme={mobileM.jumpAmtText}
                                                                                             />
-                                                                                        </>
-                                                                                        :
-                                                                                        <>
-                                                                                            {`$`}
-                                                                                            {/* 收款頁 跳表金額 檢視 內文 */}
+
+
+                                                                                            {/* 收款頁 跳表金額 標題 */}
                                                                                             <Text
-                                                                                                theme={mobileM.realFareViewText}
+                                                                                                theme={mobileM.jumpAmtTitle}
                                                                                             >
-                                                                                                {globalContextService.get("PerDespatchPage", "realFareText") ?? props.RealAmt}
+                                                                                                {`跳表金額`}
                                                                                             </Text>
-                                                                                        </>
-                                                                                }
 
-                                                                                {/* 收款頁 跳表金額 標題 */}
-                                                                                <Text
-                                                                                    theme={mobileM.realFareTitle}
-                                                                                >
-                                                                                    {`跳表金額`}
-                                                                                </Text>
-
-                                                                            </Text>
+                                                                                        </Text>
+                                                                                    </>
+                                                                            }
                                                                         </Container>
+
+                                                                        {/* 收款頁 返回修改 容器 */}
+                                                                        <SubContainer
+                                                                            theme={mobileM.editPayWayButtonContainer}
+                                                                        >
+                                                                            {/* 收款頁 返回修改 按鈕 */}
+                                                                            <NativeLineButton
+                                                                                theme={mobileM.editPayWayButton}
+                                                                                onClick={() => {
+                                                                                    if (isNil(props.RealAmt)) {
+                                                                                        props.controllGCS("return")
+                                                                                        props.setPayDetail([false, false]);
+                                                                                        setDefaultPrimary(props?.NowTabOrderData?.orderId);
+                                                                                    }
+                                                                                    else if (!props.PayDetail[1]) {
+                                                                                        props.controllGCS("return")
+                                                                                        props.setRealAmt(null);
+                                                                                        props.setPayWay("");
+                                                                                    }
+                                                                                    else {
+                                                                                        props.setPayDetail([true, false]);
+                                                                                    }
+                                                                                }}
+                                                                            >
+                                                                                <GoBack style={mobileM.goBackSvg} />
+                                                                                {`返回${!isNil(props.RealAmt) ? "修改" : ""}`}
+                                                                            </NativeLineButton>
+                                                                        </SubContainer>
 
                                                                         {
                                                                             !props.PayDetail[1]
@@ -825,49 +911,41 @@ const MobileMBase = (props) => {
 
                                                                                     </Text>
 
-                                                                                    {/* 收款頁 客戶付款方式 標題 */}
-                                                                                    <Text
-                                                                                        theme={mobileM.payDetailWaysTitle}
-                                                                                    >
-                                                                                        {`客戶付款方式`}
-                                                                                    </Text>
-
+                                                                                    {/* 有查出應收金額 */}
                                                                                     {
-                                                                                        Object.keys(payWayshMapping).map((key) => {
-                                                                                            return (
-                                                                                                <>
-                                                                                                    <NativeLineButton
-                                                                                                        isSelect={props?.PayWay === key}
-                                                                                                        theme={mobileM.payDetailWaysButton}
-                                                                                                        onClick={() => {
-                                                                                                            props.setPayWay(key)
-                                                                                                            // setForceUpdate(f => !f)
-                                                                                                        }}
-                                                                                                    >
-                                                                                                        {payWayshMapping[key]}
-                                                                                                    </NativeLineButton>
-                                                                                                </>
-                                                                                            )
-                                                                                        })
+                                                                                        !isNil(props.RealAmt)
+                                                                                        &&
+                                                                                        <>
+                                                                                            {/* 收款頁 客戶付款方式 標題 */}
+                                                                                            <Text
+                                                                                                theme={mobileM.payDetailWaysTitle}
+                                                                                            >
+                                                                                                {`客戶付款方式`}
+                                                                                            </Text>
+
+                                                                                            {
+                                                                                                Object.keys(payWayshMapping).map((key) => {
+                                                                                                    return (
+                                                                                                        <>
+                                                                                                            <NativeLineButton
+                                                                                                                isSelect={props?.PayWay === key}
+                                                                                                                theme={mobileM.payDetailWaysButton}
+                                                                                                                onClick={() => {
+                                                                                                                    props.setPayWay(key)
+                                                                                                                    // setForceUpdate(f => !f)
+                                                                                                                }}
+                                                                                                            >
+                                                                                                                {payWayshMapping[key]}
+                                                                                                            </NativeLineButton>
+                                                                                                        </>
+                                                                                                    )
+                                                                                                })
+                                                                                            }
+                                                                                        </>
                                                                                     }
                                                                                 </>
                                                                                 :
                                                                                 <>
-                                                                                    {/* 收款頁 修改付款方式按鈕 容器 */}
-                                                                                    <SubContainer
-                                                                                        theme={mobileM.editPayWayButtonContainer}
-                                                                                    >
-                                                                                        {/* 收款頁 修改實收車資或付款方式 按鈕 */}
-                                                                                        <NativeLineButton
-                                                                                            theme={mobileM.editPayWayButton}
-                                                                                            onClick={() => {
-                                                                                                props.setPayDetail([true, false])
-                                                                                            }}
-                                                                                        >
-                                                                                            {`修改實收車資或付款方式`}
-                                                                                        </NativeLineButton>
-                                                                                    </SubContainer>
-
                                                                                     {/* 收款頁 付款方式 檢視 */}
                                                                                     <Text
                                                                                         theme={mobileM.payDetailWaysViewText}
@@ -891,7 +969,16 @@ const MobileMBase = (props) => {
                                                                                         theme={mobileM.comfirmButton}
                                                                                         onClick={() => {
                                                                                             // console.log(props.PayWay)
-                                                                                            if (isEmpty(props.PayWay)) {
+                                                                                            if (isNil(props.RealAmt)) {
+                                                                                                props.GetRealAmtExecute({
+                                                                                                    despatchNo: data.despatchNo,
+                                                                                                    orderId: data.orderId,
+                                                                                                    familyWith: globalContextService.get("PerDespatchPage", "payDetailFamilyWith"),
+                                                                                                    amt: globalContextService.get("PerDespatchPage", "JumpAmtText"),
+                                                                                                    maidWith: 0
+                                                                                                })
+                                                                                            }
+                                                                                            else if (isEmpty(props.PayWay)) {
                                                                                                 modalsService.infoModal.error({
                                                                                                     id: "top1", //注意 這裡要加上固定id
                                                                                                     iconRightText: "請選擇付款方式",
@@ -958,6 +1045,7 @@ const MobileMBase = (props) => {
                                                                                     // realDiscountAmt: props.RealAmt.realDiscountAmt,
                                                                                     // totalDiscountAmt: props.RealAmt.totalDiscountAmt,
                                                                                     // realSelfPay: props.RealAmt.realSelfPay,
+                                                                                    jumpAmt: globalContextService.get("PerDespatchPage", "JumpAmtText"),
                                                                                     receivePay: globalContextService.get("PerDespatchPage", "realFareText"),
                                                                                     payType: props.PayWay,
                                                                                     remark: globalContextService.get("PerDespatchPage", "NoteText") ?? ""
