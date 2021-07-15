@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { Routers } from '../../Routers/Routers'
 import { Layout } from '../../ProjectComponent/Layout/Layout'
-import { Modals, Container, BackstagePageTabBar, SubContainer, BasicContainer, ScrollBar, BasicButton, LineButton, Text, NativeBasicButton, NativeLineButton } from '../';
+import { Modals } from '../';
 import styled from 'styled-components'
 import { useHistory, useLocation } from 'react-router';
 import { useAsync } from '../../SelfHooks/useAsync';
@@ -12,7 +12,6 @@ import { clearLogoutLocalStorage, clearLogoutSession, setItemLocalStorage } from
 import { globalContextService } from '../../Store/GlobalContext';
 import { modalsService } from '../Modal/Modals/Modals';
 import isNil from 'lodash/isNil';
-import { useEffect } from 'react';
 //#region 引入預設字體
 // import NotoSansTCBlackotf from '../../Assets/fonts/NotoSansTC/NotoSansTC-Black.otf'
 // import NotoSansTCBoldotf from '../../Assets/fonts/NotoSansTC/NotoSansTC-Bold.otf'
@@ -39,19 +38,22 @@ export const ContextContainerBase = (props) => {
   //const { } = Theme;
   let urlParams = new URLSearchParams(useLocation().search);//取得參數
   let history = useHistory();
+  let location = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let token = urlParams.get("token"); //會是最新的值
-    console.log(token)
+
+    console.log(token, location.pathname)
 
     if (!isNil(token)) {
+      setItemLocalStorage("DAuth", JSON.stringify(token));
       setItemLocalStorage("DriverAccountStatus", JSON.stringify(""));
-      LoginExecute()
+      LoginExecute(location.pathname)
     }
   }, [])
 
   //#region 登入 API
-  const login = useCallback(async () => {
+  const login = useCallback(async (pathname) => {
     let token = urlParams.get("token");
 
 
@@ -102,7 +104,8 @@ export const ContextContainerBase = (props) => {
         throw Error.message;
       })
       .finally(() => {
-        Switch();
+        // Switch();
+        history.push(pathname)
       });
     //#endregion
 
