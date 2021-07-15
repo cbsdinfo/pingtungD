@@ -96,6 +96,9 @@ const MobileMBase = (props) => {
                             let preSet = globalContextService.get("TaskHistoryPage", "DateBegin");
                             if (!isEqual(value, globalContextService.get("TaskHistoryPage", "DateBegin"))) {
                                 if (!isUndefined(globalContextService.get("TaskHistoryPage", "firstUseAPIgetTodayTask"))) {
+                                    if (isUndefined(globalContextService.get("TaskHistoryPage", "DateEnd"))) {
+                                        return;
+                                    }
                                     if (moment(value).startOf("day").isAfter(moment(globalContextService.get("TaskHistoryPage", "DateEnd")))) {
                                         modalsService.infoModal.warn({
                                             iconRightText: "起日不可大於迄日",
@@ -156,6 +159,9 @@ const MobileMBase = (props) => {
                             let preSet = globalContextService.get("TaskHistoryPage", "DateEnd");
                             if (!isEqual(value, globalContextService.get("TaskHistoryPage", "DateEnd"))) {
                                 if (!isUndefined(globalContextService.get("TaskHistoryPage", "firstUseAPIgetTodayTask"))) {
+                                    if (isUndefined(globalContextService.get("TaskHistoryPage", "DateBegin"))) {
+                                        return;
+                                    }
                                     if (moment(value).isBefore(moment(globalContextService.get("TaskHistoryPage", "DateBegin")))) {
                                         modalsService.infoModal.warn({
                                             iconRightText: "迄日不可小於起日",

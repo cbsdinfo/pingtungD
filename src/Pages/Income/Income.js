@@ -111,6 +111,7 @@ export const Income = (props) => {
     //#region 取得收入列表 選項 API
     const getIncome = useCallback(async (useAPI = false, startDate = globalContextService.get("IncomePage", "DateBegin") ?? fmt(moment().startOf("day")), endDate = fmt(moment().endOf("day"))) => {
 
+        if (endDate === "Invalid date" || startDate === "Invalid date") return;
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
         if (isUndefined(globalContextService.get("IncomePage", "firstUseAPIgetIncome")) || useAPI) {

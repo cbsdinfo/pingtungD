@@ -52,6 +52,7 @@ export const HitCardList = (props) => {
 
     //#region 取得打卡紀錄 選項 API
     const getDriverPunch = useCallback(async (useAPI = false, start = fmt(moment().startOf("day")), end = fmt(moment().startOf("day"))) => {
+        if (end === "Invalid date" || start === "Invalid date") return;
         let defaultLoad;
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
         if (isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetDriverPunch")) || useAPI) {
