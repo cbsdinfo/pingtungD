@@ -99,6 +99,7 @@ export const HitCardList = (props) => {
                     }
                 })
                 .catch((Error) => {
+                    console.log(Error)
                     modalsService.infoModal.warn({
                         iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
                         yes: true,

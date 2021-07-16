@@ -78,6 +78,15 @@ export const ContextContainerBase = (props) => {
           setItemLocalStorage("DriverAccount", JSON.stringify(PreResult.result?.account));
           setItemLocalStorage("DriverPic", JSON.stringify(PreResult.result?.pic));
           setItemLocalStorage("DriverOrg", JSON.stringify({ orgId: PreResult.result?.orgId, orgName: PreResult.result?.orgName }));
+
+          globalContextService.remove("TodayTaskPage");
+          globalContextService.remove("TaskHistoryPage");
+          globalContextService.remove("IncomePage");
+          globalContextService.remove("HitCardListPage");
+          globalContextService.remove("HitCardPage");
+          globalContextService.remove("ContactPage");
+          globalContextService.remove("DayCheckPage");
+          globalContextService.remove("PrivacyPage");
         } else {
           throw PreResult;
         }
@@ -104,7 +113,6 @@ export const ContextContainerBase = (props) => {
         throw Error.message;
       })
       .finally(() => {
-        // Switch();
         history.push(pathname)
       });
     //#endregion
