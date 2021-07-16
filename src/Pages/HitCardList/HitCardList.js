@@ -6,8 +6,8 @@ import { SubContainer, globalContextService, Text, FormContainer, FormRow, TextI
 import { MobileM } from './RWD/MobileM';
 // import { Tablet } from './RWD/Tablet';
 import { useWindowSize } from '../../SelfHooks/useWindowSize';
-import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage, valid } from '../../Handlers';
-import { useHistory } from 'react-router-dom';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage, setItemLocalStorage, valid } from '../../Handlers';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useAsync } from '../../SelfHooks/useAsync';
 import { isUndefined } from 'lodash';
 import { fmt } from '../../Handlers/DateHandler';
@@ -21,6 +21,7 @@ export const HitCardList = (props) => {
     const [Width, Height] = useWindowSize();
 
     let history = useHistory();
+    let urlParams = new URLSearchParams(useLocation().search);//取得參數
 
     //#region 當頁 GlobalContextService (GCS) 值 控制
     const controllGCS = (type, payload) => {
@@ -58,87 +59,222 @@ export const HitCardList = (props) => {
         if (isUndefined(globalContextService.get("HitCardListPage", "firstUseAPIgetDriverPunch")) || useAPI) {
             //#endregion
 
-            //#region 取得打卡紀錄 API
-            await fetch(`${APIUrl}DriverPunch/Load?page=1&limit=99999&driverid=${getParseItemLocalStorage("DriverID")}&StartDate=${start}&EndDate=${end}`, //DriverPunch/Load
-                {
-                    headers: {
-                        "X-Token": getParseItemLocalStorage("DAuth"),
-                        "content-type": "application/json; charset=utf-8",
-                    },
-                    method: "GET"
-                })
-                .then(Result => {
-                    const ResultJson = Result.clone().json();//Respone.clone()
-                    return ResultJson;
-                })
-                .then((PreResult) => {
-
-                    if (PreResult.code === 200) {
-                        // 成功取得打卡紀錄 API
-                        // console.log(PreResult)
-                        let dateMap = [...new Set((PreResult.data ?? []).map(item => item.punchTime.split(' ')[0]))]
-
-                        let data = (dateMap ?? []).map((item) => {
-                            let reqData = [...(PreResult.data ?? [])];
-                            let reqReData = [...(PreResult.data ?? [])];
-                            let start = reqData.find((it => it.punchTime.split(' ')[0] === item))
-                            let end = reqReData.reverse().find((it => it.punchTime.split(' ')[0] === item))
-
-                            return {
-                                date: item, start,
-                                end,
-                                ...((start?.punchTime === end?.punchTime) && { end: null })
+            let token = urlParams.get("token");
+            if (token) {
+                //#region 取得使用者名稱 與 ID
+                await fetch(`${APIUrl}DriverInfos/GetByToken`, //Check/GetUserProfile
+                    {
+                        headers: {
+                            "X-Token": token,
+                        }
+                    })
+                    .then(Result => {
+                        //portalService.clear();
+                        const ResultJson = Result.clone().json();//Respone.clone()
+                        return ResultJson;
+                    })
+                    .then((PreResult) => {
+                        if (PreResult.code === 200) {
+                            //成功取得使用者名稱 與 ID
+                            setItemLocalStorage("DUserName", JSON.stringify(PreResult.result?.name));
+                            setItemLocalStorage("DAuth", JSON.stringify(token));
+                            setItemLocalStorage("DriverID", JSON.stringify(PreResult.result?.id));
+                            setItemLocalStorage("DriverAccount", JSON.stringify(PreResult.result?.account));
+                            setItemLocalStorage("DriverPic", JSON.stringify(PreResult.result?.pic));
+                            setItemLocalStorage("DriverOrg", JSON.stringify({ orgId: PreResult.result?.orgId, orgName: PreResult.result?.orgName }));
+                        } else {
+                            throw PreResult;
+                        }
+                    })
+                    .catch((Error) => {
+                        modalsService.infoModal.warn({
+                            iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                            yes: true,
+                            yesText: "確認",
+                            // no: true,
+                            // autoClose: true,
+                            backgroundClose: false,
+                            yesOnClick: (e, close) => {
+                                if (Error.code === 401) {
+                                    clearLogoutSession();
+                                    clearLogoutLocalStorage();
+                                    globalContextService.clear();
+                                    Switch();
+                                    history.push("/Login")
+                                }
+                                close();
                             }
                         })
-
-                        // console.log(data)
-                        setDriverPunch(data);
-                    }
-                    else {
-                        throw PreResult;
-                    }
-                })
-                .catch((Error) => {
-                    console.log(Error)
-                    modalsService.infoModal.warn({
-                        iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
-                        yes: true,
-                        yesText: "確認",
-                        // no: true,
-                        // autoClose: true,
-                        backgroundClose: false,
-                        yesOnClick: (e, close) => {
-                            if (Error.code === 401) {
-                                clearLogoutSession();
-                                clearLogoutLocalStorage();
-                                globalContextService.clear();
-                                Switch();
-                            }
-                            close();
-                        }
-                        // theme: {
-                        //     yesButton: {
-                        //         text: {
-                        //             basic: (style, props) => {
-                        //                 console.log(style)
-                        //                 return {
-                        //                     ...style,
-                        //                     color: "red"
-                        //                 }
-                        //             },
-                        //         }
-                        //     }
-                        // }
+                        throw Error.message;
                     })
-                    throw Error.message;
-                })
-                .finally(() => {
-                    //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
-                    globalContextService.set("HitCardListPage", "firstUseAPIgetDriverPunch", false);
-                    //#endregion
-                });
-            //#endregion
+                    .finally(() => {
+                    });
+                //#endregion
 
+                //#region 取得打卡紀錄 API
+                await fetch(`${APIUrl}DriverPunch/Load?page=1&limit=99999&driverid=${getParseItemLocalStorage("DriverID")}&StartDate=${start}&EndDate=${end}`, //DriverPunch/Load
+                    {
+                        headers: {
+                            "X-Token": getParseItemLocalStorage("DAuth"),
+                            "content-type": "application/json; charset=utf-8",
+                        },
+                        method: "GET"
+                    })
+                    .then(Result => {
+                        const ResultJson = Result.clone().json();//Respone.clone()
+                        return ResultJson;
+                    })
+                    .then((PreResult) => {
+
+                        if (PreResult.code === 200) {
+                            // 成功取得打卡紀錄 API
+                            // console.log(PreResult)
+                            let dateMap = [...new Set((PreResult.data ?? []).map(item => item.punchTime.split(' ')[0]))]
+
+                            let data = (dateMap ?? []).map((item) => {
+                                let reqData = [...(PreResult.data ?? [])];
+                                let reqReData = [...(PreResult.data ?? [])];
+                                let start = reqData.find((it => it.punchTime.split(' ')[0] === item))
+                                let end = reqReData.reverse().find((it => it.punchTime.split(' ')[0] === item))
+
+                                return {
+                                    date: item, start,
+                                    end,
+                                    ...((start?.punchTime === end?.punchTime) && { end: null })
+                                }
+                            })
+
+                            // console.log(data)
+                            setDriverPunch(data);
+                        }
+                        else {
+                            throw PreResult;
+                        }
+                    })
+                    .catch((Error) => {
+                        console.log(Error)
+                        modalsService.infoModal.warn({
+                            iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                            yes: true,
+                            yesText: "確認",
+                            // no: true,
+                            // autoClose: true,
+                            backgroundClose: false,
+                            yesOnClick: (e, close) => {
+                                if (Error.code === 401) {
+                                    clearLogoutSession();
+                                    clearLogoutLocalStorage();
+                                    globalContextService.clear();
+                                    Switch();
+                                }
+                                close();
+                            }
+                            // theme: {
+                            //     yesButton: {
+                            //         text: {
+                            //             basic: (style, props) => {
+                            //                 console.log(style)
+                            //                 return {
+                            //                     ...style,
+                            //                     color: "red"
+                            //                 }
+                            //             },
+                            //         }
+                            //     }
+                            // }
+                        })
+                        throw Error.message;
+                    })
+                    .finally(() => {
+                        //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
+                        globalContextService.set("HitCardListPage", "firstUseAPIgetDriverPunch", false);
+                        //#endregion
+                    });
+                //#endregion
+            }
+            else {
+                //#region 取得打卡紀錄 API
+                await fetch(`${APIUrl}DriverPunch/Load?page=1&limit=99999&driverid=${getParseItemLocalStorage("DriverID")}&StartDate=${start}&EndDate=${end}`, //DriverPunch/Load
+                    {
+                        headers: {
+                            "X-Token": getParseItemLocalStorage("DAuth"),
+                            "content-type": "application/json; charset=utf-8",
+                        },
+                        method: "GET"
+                    })
+                    .then(Result => {
+                        const ResultJson = Result.clone().json();//Respone.clone()
+                        return ResultJson;
+                    })
+                    .then((PreResult) => {
+
+                        if (PreResult.code === 200) {
+                            // 成功取得打卡紀錄 API
+                            // console.log(PreResult)
+                            let dateMap = [...new Set((PreResult.data ?? []).map(item => item.punchTime.split(' ')[0]))]
+
+                            let data = (dateMap ?? []).map((item) => {
+                                let reqData = [...(PreResult.data ?? [])];
+                                let reqReData = [...(PreResult.data ?? [])];
+                                let start = reqData.find((it => it.punchTime.split(' ')[0] === item))
+                                let end = reqReData.reverse().find((it => it.punchTime.split(' ')[0] === item))
+
+                                return {
+                                    date: item, start,
+                                    end,
+                                    ...((start?.punchTime === end?.punchTime) && { end: null })
+                                }
+                            })
+
+                            // console.log(data)
+                            setDriverPunch(data);
+                        }
+                        else {
+                            throw PreResult;
+                        }
+                    })
+                    .catch((Error) => {
+                        console.log(Error)
+                        modalsService.infoModal.warn({
+                            iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                            yes: true,
+                            yesText: "確認",
+                            // no: true,
+                            // autoClose: true,
+                            backgroundClose: false,
+                            yesOnClick: (e, close) => {
+                                if (Error.code === 401) {
+                                    clearLogoutSession();
+                                    clearLogoutLocalStorage();
+                                    globalContextService.clear();
+                                    Switch();
+                                }
+                                close();
+                            }
+                            // theme: {
+                            //     yesButton: {
+                            //         text: {
+                            //             basic: (style, props) => {
+                            //                 console.log(style)
+                            //                 return {
+                            //                     ...style,
+                            //                     color: "red"
+                            //                 }
+                            //             },
+                            //         }
+                            //     }
+                            // }
+                        })
+                        throw Error.message;
+                    })
+                    .finally(() => {
+                        //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
+                        globalContextService.set("HitCardListPage", "firstUseAPIgetDriverPunch", false);
+                        //#endregion
+                    });
+                //#endregion
+
+            }
         }
     }, [APIUrl, Switch])
 

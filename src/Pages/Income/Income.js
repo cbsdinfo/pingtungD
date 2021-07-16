@@ -6,8 +6,8 @@ import { SubContainer, globalContextService, Text, FormContainer, FormRow, TextI
 import { MobileM } from './RWD/MobileM';
 // import { Tablet } from './RWD/Tablet';
 import { useWindowSize } from '../../SelfHooks/useWindowSize';
-import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage, valid } from '../../Handlers';
-import { useHistory } from 'react-router-dom';
+import { clearLogoutLocalStorage, clearLogoutSession, getParseItemLocalStorage, setItemLocalStorage, valid } from '../../Handlers';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useAsync } from '../../SelfHooks/useAsync';
 import { isUndefined } from 'lodash';
 import { fmt } from '../../Handlers/DateHandler';
@@ -92,6 +92,7 @@ export const Income = (props) => {
     }
 
     let history = useHistory();
+    let urlParams = new URLSearchParams(useLocation().search);//取得參數
 
     //#region 路由監聽，清除API紀錄 (渲染即觸發的每一個API都要有)
     useEffect(() => {
@@ -116,113 +117,274 @@ export const Income = (props) => {
         //#region 規避左側欄收合影響組件重新渲染 (渲染即觸發的每一個API都要有，useAPI (預設) = 0、globalContextService.set 第二個參數要隨API改變)
         if (isUndefined(globalContextService.get("IncomePage", "firstUseAPIgetIncome")) || useAPI) {
             //#endregion
-            //#region 取得收入列表 API
-            fetch(`${APIUrl}DriverInfos/LoadIncome?DriverId=${getParseItemLocalStorage("DriverID")}&StartDate=${startDate}&EndDate=${endDate}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
-                {
-                    headers: {
-                        "X-Token": getParseItemLocalStorage("DAuth"),
-                        "content-type": "application/json; charset=utf-8",
-                    },
-                    method: "GET"
-                })
-                .then(Result => {
-                    const ResultJson = Result.clone().json();//Respone.clone()
-                    return ResultJson;
-                })
-                .then((PreResult) => {
-
-                    if (PreResult.code === 200) {
-                        // 成功取得收入列表 API
-                        // console.log(PreResult)
-                        // console.log(PreResult?.data.sort((a, b) => {
-                        //     return a.sortNo - b.sortNo;
-                        // }).map(d => ({ data: { ...d }, value: d?.id, label: d?.name })))
-                        setIncome(PreResult.data);
-
-
-                        // setOrderCount(0)
-                        // setCashTotal(0)
-                        // setVirtualTotal(0)
-                        // orderCount = 0;
-                        // cashTotal = 0;
-                        // virtualTotal = 0;
-                        // PreResult.data.map((item, index) => {
-                        //     let effectCount = item.data?.length;
-                        //     let countNow = 1;
-                        //     const countNowAdd = () => {
-                        //         countNow++
-                        //     }
-                        //     return (
-                        //         item.data.map((item2, index2) => {
-                        //             return (
-                        //                 <>
-                        //                     {effectCount === countNow ?
-                        //                         <>
-                        //                             {orderCountAdd(item2?.orderCount)}
-                        //                             {setOrderCount(orderCount)}
-                        //                             {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
-                        //                             {setCashTotal(cashTotal)}
-                        //                             {setVirtualTotal(virtualTotal)}
-                        //                         </>
-                        //                         :
-                        //                         <>
-                        //                             {orderCountAdd(item2?.orderCount)}
-                        //                             {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
-                        //                             {countNowAdd()}
-                        //                         </>
-                        //                     }
-                        //                 </>
-                        //             )
-                        //         })
-                        //     )
-                        // })
-
-
-
-                    }
-                    else {
-                        throw PreResult;
-                    }
-                })
-                .catch((Error) => {
-                    modalsService.infoModal.warn({
-                        iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
-                        yes: true,
-                        yesText: "確認",
-                        // no: true,
-                        // autoClose: true,
-                        backgroundClose: false,
-                        yesOnClick: (e, close) => {
-                            if (Error.code === 401) {
-                                clearLogoutSession();
-                                clearLogoutLocalStorage();
-                                globalContextService.clear();
-                                Switch();
-                            }
-                            close();
+            let token = urlParams.get("token");
+            if (token) {
+                //#region 取得使用者名稱 與 ID
+                await fetch(`${APIUrl}DriverInfos/GetByToken`, //Check/GetUserProfile
+                    {
+                        headers: {
+                            "X-Token": token,
                         }
-                        // theme: {
-                        //     yesButton: {
-                        //         text: {
-                        //             basic: (style, props) => {
-                        //                 console.log(style)
-                        //                 return {
-                        //                     ...style,
-                        //                     color: "red"
-                        //                 }
-                        //             },
-                        //         }
-                        //     }
-                        // }
                     })
-                    throw Error.message;
-                })
-                .finally(() => {
-                    //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
-                    globalContextService.set("IncomePage", "firstUseAPIgetIncome", false);
-                    //#endregion
-                });
-            //#endregion
+                    .then(Result => {
+                        //portalService.clear();
+                        const ResultJson = Result.clone().json();//Respone.clone()
+                        return ResultJson;
+                    })
+                    .then((PreResult) => {
+                        if (PreResult.code === 200) {
+                            //成功取得使用者名稱 與 ID
+                            setItemLocalStorage("DUserName", JSON.stringify(PreResult.result?.name));
+                            setItemLocalStorage("DAuth", JSON.stringify(token));
+                            setItemLocalStorage("DriverID", JSON.stringify(PreResult.result?.id));
+                            setItemLocalStorage("DriverAccount", JSON.stringify(PreResult.result?.account));
+                            setItemLocalStorage("DriverPic", JSON.stringify(PreResult.result?.pic));
+                            setItemLocalStorage("DriverOrg", JSON.stringify({ orgId: PreResult.result?.orgId, orgName: PreResult.result?.orgName }));
+                        } else {
+                            throw PreResult;
+                        }
+                    })
+                    .catch((Error) => {
+                        modalsService.infoModal.warn({
+                            iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                            yes: true,
+                            yesText: "確認",
+                            // no: true,
+                            // autoClose: true,
+                            backgroundClose: false,
+                            yesOnClick: (e, close) => {
+                                if (Error.code === 401) {
+                                    clearLogoutSession();
+                                    clearLogoutLocalStorage();
+                                    globalContextService.clear();
+                                    Switch();
+                                    history.push("/Login")
+                                }
+                                close();
+                            }
+                        })
+                        throw Error.message;
+                    })
+                    .finally(() => {
+                    });
+                //#endregion
+
+                //#region 取得收入列表 API
+                fetch(`${APIUrl}DriverInfos/LoadIncome?DriverId=${getParseItemLocalStorage("DriverID")}&StartDate=${startDate}&EndDate=${endDate}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
+                    {
+                        headers: {
+                            "X-Token": getParseItemLocalStorage("DAuth"),
+                            "content-type": "application/json; charset=utf-8",
+                        },
+                        method: "GET"
+                    })
+                    .then(Result => {
+                        const ResultJson = Result.clone().json();//Respone.clone()
+                        return ResultJson;
+                    })
+                    .then((PreResult) => {
+
+                        if (PreResult.code === 200) {
+                            // 成功取得收入列表 API
+                            // console.log(PreResult)
+                            // console.log(PreResult?.data.sort((a, b) => {
+                            //     return a.sortNo - b.sortNo;
+                            // }).map(d => ({ data: { ...d }, value: d?.id, label: d?.name })))
+                            setIncome(PreResult.data);
+
+
+                            // setOrderCount(0)
+                            // setCashTotal(0)
+                            // setVirtualTotal(0)
+                            // orderCount = 0;
+                            // cashTotal = 0;
+                            // virtualTotal = 0;
+                            // PreResult.data.map((item, index) => {
+                            //     let effectCount = item.data?.length;
+                            //     let countNow = 1;
+                            //     const countNowAdd = () => {
+                            //         countNow++
+                            //     }
+                            //     return (
+                            //         item.data.map((item2, index2) => {
+                            //             return (
+                            //                 <>
+                            //                     {effectCount === countNow ?
+                            //                         <>
+                            //                             {orderCountAdd(item2?.orderCount)}
+                            //                             {setOrderCount(orderCount)}
+                            //                             {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
+                            //                             {setCashTotal(cashTotal)}
+                            //                             {setVirtualTotal(virtualTotal)}
+                            //                         </>
+                            //                         :
+                            //                         <>
+                            //                             {orderCountAdd(item2?.orderCount)}
+                            //                             {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
+                            //                             {countNowAdd()}
+                            //                         </>
+                            //                     }
+                            //                 </>
+                            //             )
+                            //         })
+                            //     )
+                            // })
+
+
+
+                        }
+                        else {
+                            throw PreResult;
+                        }
+                    })
+                    .catch((Error) => {
+                        modalsService.infoModal.warn({
+                            iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                            yes: true,
+                            yesText: "確認",
+                            // no: true,
+                            // autoClose: true,
+                            backgroundClose: false,
+                            yesOnClick: (e, close) => {
+                                if (Error.code === 401) {
+                                    clearLogoutSession();
+                                    clearLogoutLocalStorage();
+                                    globalContextService.clear();
+                                    Switch();
+                                }
+                                close();
+                            }
+                            // theme: {
+                            //     yesButton: {
+                            //         text: {
+                            //             basic: (style, props) => {
+                            //                 console.log(style)
+                            //                 return {
+                            //                     ...style,
+                            //                     color: "red"
+                            //                 }
+                            //             },
+                            //         }
+                            //     }
+                            // }
+                        })
+                        throw Error.message;
+                    })
+                    .finally(() => {
+                        //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
+                        globalContextService.set("IncomePage", "firstUseAPIgetIncome", false);
+                        //#endregion
+                    });
+                //#endregion
+            } else {
+                //#region 取得收入列表 API
+                fetch(`${APIUrl}DriverInfos/LoadIncome?DriverId=${getParseItemLocalStorage("DriverID")}&StartDate=${startDate}&EndDate=${endDate}`, //categorys/load?page=1&limit=20&TypeId=SYS_DRIVER_LICENSE
+                    {
+                        headers: {
+                            "X-Token": getParseItemLocalStorage("DAuth"),
+                            "content-type": "application/json; charset=utf-8",
+                        },
+                        method: "GET"
+                    })
+                    .then(Result => {
+                        const ResultJson = Result.clone().json();//Respone.clone()
+                        return ResultJson;
+                    })
+                    .then((PreResult) => {
+
+                        if (PreResult.code === 200) {
+                            // 成功取得收入列表 API
+                            // console.log(PreResult)
+                            // console.log(PreResult?.data.sort((a, b) => {
+                            //     return a.sortNo - b.sortNo;
+                            // }).map(d => ({ data: { ...d }, value: d?.id, label: d?.name })))
+                            setIncome(PreResult.data);
+
+
+                            // setOrderCount(0)
+                            // setCashTotal(0)
+                            // setVirtualTotal(0)
+                            // orderCount = 0;
+                            // cashTotal = 0;
+                            // virtualTotal = 0;
+                            // PreResult.data.map((item, index) => {
+                            //     let effectCount = item.data?.length;
+                            //     let countNow = 1;
+                            //     const countNowAdd = () => {
+                            //         countNow++
+                            //     }
+                            //     return (
+                            //         item.data.map((item2, index2) => {
+                            //             return (
+                            //                 <>
+                            //                     {effectCount === countNow ?
+                            //                         <>
+                            //                             {orderCountAdd(item2?.orderCount)}
+                            //                             {setOrderCount(orderCount)}
+                            //                             {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
+                            //                             {setCashTotal(cashTotal)}
+                            //                             {setVirtualTotal(virtualTotal)}
+                            //                         </>
+                            //                         :
+                            //                         <>
+                            //                             {orderCountAdd(item2?.orderCount)}
+                            //                             {item2?.payType === "Cash" ? cashTotalAdd(item2?.receiveTotal) : virtualTotalAdd(item2?.receiveTotal)}
+                            //                             {countNowAdd()}
+                            //                         </>
+                            //                     }
+                            //                 </>
+                            //             )
+                            //         })
+                            //     )
+                            // })
+
+
+
+                        }
+                        else {
+                            throw PreResult;
+                        }
+                    })
+                    .catch((Error) => {
+                        modalsService.infoModal.warn({
+                            iconRightText: Error.code === 401 ? "請重新登入。" : Error.message,
+                            yes: true,
+                            yesText: "確認",
+                            // no: true,
+                            // autoClose: true,
+                            backgroundClose: false,
+                            yesOnClick: (e, close) => {
+                                if (Error.code === 401) {
+                                    clearLogoutSession();
+                                    clearLogoutLocalStorage();
+                                    globalContextService.clear();
+                                    Switch();
+                                }
+                                close();
+                            }
+                            // theme: {
+                            //     yesButton: {
+                            //         text: {
+                            //             basic: (style, props) => {
+                            //                 console.log(style)
+                            //                 return {
+                            //                     ...style,
+                            //                     color: "red"
+                            //                 }
+                            //             },
+                            //         }
+                            //     }
+                            // }
+                        })
+                        throw Error.message;
+                    })
+                    .finally(() => {
+                        //#region 規避左側欄收合影響組件重新渲染 (每一個API都要有)
+                        globalContextService.set("IncomePage", "firstUseAPIgetIncome", false);
+                        //#endregion
+                    });
+                //#endregion
+            }
         }
     }, [APIUrl, Switch])
 

@@ -1,6 +1,7 @@
+import { isNil } from 'lodash';
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { getParseItemLocalStorage, pushItemLocalStorage, setStringifyItemLocalStorage } from '../Handlers';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { getParseItemLocalStorage, pushItemLocalStorage, setItemLocalStorage, setStringifyItemLocalStorage } from '../Handlers';
 import { urlMapping } from '../Mappings/Mappings'
 
 //#region 以下內容供參考用，請依照實際專案調整路由
@@ -157,7 +158,8 @@ const mapRouters = (data) => {
 
 //#region 路由組件
 export const Routers = (props) => {
-
+    let urlParams = new URLSearchParams(useLocation().search);//取得參數
+    let token = urlParams.get("token"); //會是最新的值
     return (
         <>
             <Switch>
@@ -169,6 +171,9 @@ export const Routers = (props) => {
                 */}
                 <Route exact path={"/"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/TodayTask"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             // urlMapping["/"]
                             <Redirect
@@ -193,6 +198,9 @@ export const Routers = (props) => {
                 */}
                 <Route exact path={"/TodayTask"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/TodayTask"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/TodayTask"]
                         ) : (
@@ -207,6 +215,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/PerDespatch"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/PerDespatch"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/PerDespatch"]
                         ) : (
@@ -221,6 +232,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/HitCard"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/HitCard"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/HitCard"]
                         ) : (
@@ -235,6 +249,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/HitCardList"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/HitCardList"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/HitCardList"]
                         ) : (
@@ -249,6 +266,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/TaskHistory"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/TaskHistory"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/TaskHistory"]
                         ) : (
@@ -263,6 +283,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/PerTaskHistory"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/PerTaskHistory"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/PerTaskHistory"]
                         ) : (
@@ -277,6 +300,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/Income"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/Income"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/Income"]
                         ) : (
@@ -291,6 +317,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/Contact"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/Contact"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/Contact"]
                         ) : (
@@ -305,6 +334,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/School"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/School"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/School"]
                         ) : (
@@ -319,6 +351,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/DayCheck"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/DayCheck"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/DayCheck"]
                         ) : (
@@ -333,6 +368,9 @@ export const Routers = (props) => {
                 </Route>
                 <Route exact path={"/Privacy"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/Privacy"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/Privacy"]
                         ) : (
@@ -371,6 +409,9 @@ export const Routers = (props) => {
                 */}
                 <Route path={"/Login"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/TodayTask"];
+                        }
                         return (getParseItemLocalStorage("DAuth") === null) ? (
                             urlMapping["/Login"]
                         ) : (
@@ -390,6 +431,9 @@ export const Routers = (props) => {
                 */}
                 <Route path={"/404"}
                     render={({ location }) => {
+                        if (token) {
+                            return urlMapping["/404"];
+                        }
                         return (getParseItemLocalStorage("DAuth") !== null) ? (
                             urlMapping["/404"]
                         ) : (

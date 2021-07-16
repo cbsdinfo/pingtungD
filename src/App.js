@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useState, useLayoutEffect } from 'react';
 import { Context } from './Store/Store'
 import themes from './ProjectThemes/Themes';
 import { useSwitch } from './SelfHooks/useSwitch';
@@ -7,6 +7,9 @@ import 'antd/dist/antd.css';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import withClearCache from './ClearCache';
+import { useLocation, useHistory } from 'react-router-dom';
+import { isNil } from 'lodash';
+import { setItemLocalStorage } from './Handlers';
 
 const reducer = (state, action) => {
 
@@ -38,6 +41,21 @@ function MainApp() {
   const [Value, Switch, Open, Close] = useSwitch();//控制重新渲染路由
   const [Collapse, setCollapse] = useState(false); // 控制768以上畫面，左側欄收合情況
   const [DrawerCollapse, setDrawerCollapse] = useState(true); // 抽屜收合
+
+  let urlParams = new URLSearchParams(useLocation().search);//取得參數
+  let history = useHistory();
+  let location = useLocation();
+
+  useLayoutEffect(() => {
+    let token = urlParams.get("token"); //會是最新的值
+
+    console.log(token, location.pathname)
+
+    if (!isNil(token)) {
+      setItemLocalStorage("DAuth", JSON.stringify(token));
+      setItemLocalStorage("DriverAccountStatus", JSON.stringify(""));
+    }
+  }, [])
 
   return (
     <>
